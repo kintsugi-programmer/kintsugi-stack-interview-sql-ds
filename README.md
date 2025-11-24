@@ -3,12 +3,14 @@
 
 - Author: [Kintsugi-Programmer](https://github.com/kintsugi-programmer)
 
+![alt text](image.png)
+
 > Disclaimer: The content presented here is a curated blend of my personal learning journey, experiences, open-source documentation, and invaluable knowledge gained from diverse sources. I do not claim sole ownership over all the material; this is a community-driven effort to learn, share, and grow together.
 
 ## Table of Contents
 - [kintsugi-stack-sql](#kintsugi-stack-sql)
   - [Table of Contents](#table-of-contents)
-  - [Fundamentals](#fundamentals)
+  - [Database Fundamentals](#database-fundamentals)
     - [What is a Database?](#what-is-a-database)
       - [Database Characteristics:](#database-characteristics)
     - [What is DBMS?](#what-is-dbms)
@@ -19,7 +21,6 @@
       - [2. Non-Relational (NoSQL) Databases](#2-non-relational-nosql-databases)
     - [What is RDBMS?](#what-is-rdbms)
       - [RDBMS Characteristics:](#rdbms-characteristics)
-  - [Databases and DBMS](#databases-and-dbms)
     - [Database Structure](#database-structure)
     - [What is a Table?](#what-is-a-table)
       - [Table Components:](#table-components)
@@ -197,7 +198,7 @@
 
 ---
 
-## Fundamentals
+## Database Fundamentals
 
 ### What is a Database?
 
@@ -264,10 +265,6 @@ RDBMS stands for **Relational Database Management System**.
 - Tables can have relationships with other tables
 - Uses SQL as the query language
 - Examples: MySQL, PostgreSQL, Oracle, SQL Server
-
----
-
-## Databases and DBMS
 
 ### Database Structure
 
