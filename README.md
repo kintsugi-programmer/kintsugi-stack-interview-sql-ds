@@ -1,4 +1,7 @@
 # kintsugi-stack-sql
+
+Comprehensive SQL Learning Guide for Data Analytics | Mastery in 50+ SQL Queries
+
 > The relational model is founded on logic.
 
 - Author: [Kintsugi-Programmer](https://github.com/kintsugi-programmer)
@@ -10,2719 +13,1491 @@
 ## Table of Contents
 - [kintsugi-stack-sql](#kintsugi-stack-sql)
   - [Table of Contents](#table-of-contents)
-  - [Database Fundamentals](#database-fundamentals)
-    - [What is a Database?](#what-is-a-database)
-      - [Database Characteristics:](#database-characteristics)
-    - [What is DBMS?](#what-is-dbms)
-      - [Primary Functions of DBMS:](#primary-functions-of-dbms)
-      - [How DBMS Works:](#how-dbms-works)
-    - [Types of Databases](#types-of-databases)
-      - [1. Relational Databases](#1-relational-databases)
-      - [2. Non-Relational (NoSQL) Databases](#2-non-relational-nosql-databases)
-    - [What is RDBMS?](#what-is-rdbms)
-      - [RDBMS Characteristics:](#rdbms-characteristics)
-    - [Database Structure](#database-structure)
-    - [What is a Table?](#what-is-a-table)
-      - [Table Components:](#table-components)
-      - [Example Student Table:](#example-student-table)
-      - [Table Concepts:](#table-concepts)
-  - [SQL Basics](#sql-basics)
-    - [What is SQL?](#what-is-sql)
-      - [Key Points about SQL:](#key-points-about-sql)
-    - [CRUD Operations](#crud-operations)
-    - [SQL vs MySQL](#sql-vs-mysql)
-    - [Original vs Current Naming](#original-vs-current-naming)
-  - [Data Types](#data-types)
-    - [Numeric Data Types](#numeric-data-types)
-      - [Integer Types](#integer-types)
-      - [Decimal Types](#decimal-types)
-    - [String Data Types](#string-data-types)
-    - [Date and Time Data Types](#date-and-time-data-types)
-    - [Boolean Data Type](#boolean-data-type)
-    - [Important Notes on Data Types](#important-notes-on-data-types)
-    - [Reference](#reference)
-  - [SQL Commands Types](#sql-commands-types)
-    - [1. DQL - Data Query Language](#1-dql---data-query-language)
-    - [2. DDL - Data Definition Language](#2-ddl---data-definition-language)
-    - [3. DML - Data Manipulation Language](#3-dml---data-manipulation-language)
-    - [4. DCL - Data Control Language](#4-dcl---data-control-language)
-    - [5. TCL - Transaction Control Language](#5-tcl---transaction-control-language)
-  - [Data Definition Language (DDL)](#data-definition-language-ddl)
-    - [CREATE DATABASE](#create-database)
-    - [DROP DATABASE](#drop-database)
-    - [USE DATABASE](#use-database)
-    - [SHOW DATABASES](#show-databases)
-    - [SHOW TABLES](#show-tables)
-    - [CREATE TABLE](#create-table)
-    - [DROP TABLE](#drop-table)
-    - [TRUNCATE TABLE](#truncate-table)
-    - [ALTER TABLE](#alter-table)
-      - [ADD COLUMN](#add-column)
-      - [DROP COLUMN](#drop-column)
-      - [RENAME TABLE](#rename-table)
-      - [MODIFY COLUMN](#modify-column)
-      - [CHANGE COLUMN](#change-column)
-    - [CREATE INDEX](#create-index)
-    - [DROP INDEX](#drop-index)
-    - [CREATE and DROP CONSTRAINT](#create-and-drop-constraint)
-  - [Constraints in SQL](#constraints-in-sql)
-    - [NOT NULL](#not-null)
-    - [UNIQUE](#unique)
-    - [PRIMARY KEY](#primary-key)
-    - [FOREIGN KEY](#foreign-key)
-    - [DEFAULT](#default)
-    - [CHECK](#check)
-  - [Data Query Language (DQL)](#data-query-language-dql)
-    - [SELECT Statement](#select-statement)
-    - [WHERE Clause](#where-clause)
-    - [Operators in WHERE Clause](#operators-in-where-clause)
-      - [Comparison Operators](#comparison-operators)
-      - [Logical Operators](#logical-operators)
-      - [Advanced Operators](#advanced-operators)
-      - [Bitwise Operators](#bitwise-operators)
-      - [Arithmetic Operators](#arithmetic-operators)
-    - [DISTINCT Keyword](#distinct-keyword)
-    - [LIMIT Clause](#limit-clause)
-    - [ORDER BY Clause](#order-by-clause)
-      - [Ascending Order](#ascending-order)
-      - [Descending Order](#descending-order)
-      - [Multiple Column Sorting](#multiple-column-sorting)
-      - [Sorting by Expression](#sorting-by-expression)
-      - [Sorting by Column Position](#sorting-by-column-position)
-      - [Handling NULL Values](#handling-null-values)
-    - [AS Keyword](#as-keyword)
-    - [GROUP BY Clause](#group-by-clause)
-      - [Grouping by Multiple Columns](#grouping-by-multiple-columns)
-      - [GROUP BY with ORDER BY](#group-by-with-order-by)
-    - [HAVING Clause](#having-clause)
-    - [Aggregate Functions](#aggregate-functions)
-      - [COUNT()](#count)
-      - [SUM()](#sum)
-      - [AVG()](#avg)
-      - [MAX()](#max)
-      - [MIN()](#min)
-    - [General SELECT Query Order](#general-select-query-order)
-  - [Data Manipulation Language (DML)](#data-manipulation-language-dml)
-    - [INSERT Statement](#insert-statement)
-    - [UPDATE Statement](#update-statement)
-    - [DELETE Statement](#delete-statement)
-  - [Data Control Language (DCL)](#data-control-language-dcl)
-    - [GRANT Command](#grant-command)
-    - [REVOKE Command](#revoke-command)
-    - [DCL and Database Security](#dcl-and-database-security)
-  - [Transaction Control Language (TCL)](#transaction-control-language-tcl)
-    - [What is a Transaction?](#what-is-a-transaction)
-    - [COMMIT Command](#commit-command)
-    - [ROLLBACK Command](#rollback-command)
-    - [SAVEPOINT Command](#savepoint-command)
-    - [Transaction Example Workflow](#transaction-example-workflow)
-    - [TCL and Transaction Management](#tcl-and-transaction-management)
-  - [Joins](#joins)
-    - [Importance of Joins](#importance-of-joins)
-    - [Primary Key and Foreign Key](#primary-key-and-foreign-key)
-    - [Types of Joins](#types-of-joins)
-      - [1. INNER JOIN](#1-inner-join)
-      - [2. LEFT JOIN (Left Outer Join)](#2-left-join-left-outer-join)
-      - [3. RIGHT JOIN (Right Outer Join)](#3-right-join-right-outer-join)
-      - [4. FULL OUTER JOIN (Full Join)](#4-full-outer-join-full-join)
-      - [5. CROSS JOIN](#5-cross-join)
-      - [6. SELF JOIN](#6-self-join)
-    - [Join Comparison Table](#join-comparison-table)
-  - [Set Operations](#set-operations)
-    - [UNION](#union)
-    - [UNION ALL](#union-all)
-    - [INTERSECT](#intersect)
-    - [EXCEPT (or MINUS)](#except-or-minus)
-    - [Set Operations vs Joins](#set-operations-vs-joins)
-  - [Subqueries](#subqueries)
-    - [Importance of Subqueries](#importance-of-subqueries)
-    - [Basic Subquery Syntax](#basic-subquery-syntax)
-    - [Subquery Types and Examples](#subquery-types-and-examples)
-      - [Single Value Subquery](#single-value-subquery)
-      - [List-Based Subquery with IN](#list-based-subquery-with-in)
-      - [Subquery with FROM Clause](#subquery-with-from-clause)
-      - [Subquery with HAVING Clause](#subquery-with-having-clause)
-    - [Subquery Operators](#subquery-operators)
-    - [Subqueries vs Joins](#subqueries-vs-joins)
-    - [Correlated Subqueries](#correlated-subqueries)
-  - [Views](#views)
-    - [Characteristics of Views](#characteristics-of-views)
-    - [Advantages of Views](#advantages-of-views)
-    - [Disadvantages of Views](#disadvantages-of-views)
-    - [Creating Views](#creating-views)
-    - [Using Views](#using-views)
-    - [Dropping Views](#dropping-views)
-    - [View Best Practices](#view-best-practices)
-  - [Installing and Setting Up MySQL and MySQL Workbench](#installing-and-setting-up-mysql-and-mysql-workbench)
-    - [System Requirements](#system-requirements)
-    - [Installation on macOS](#installation-on-macos)
-      - [Step 1: Download MySQL Community Server](#step-1-download-mysql-community-server)
-      - [Step 2: Install MySQL Server](#step-2-install-mysql-server)
-      - [Step 3: Download MySQL Workbench](#step-3-download-mysql-workbench)
-      - [Step 4: Install MySQL Workbench](#step-4-install-mysql-workbench)
-    - [Installation on Windows](#installation-on-windows)
-      - [Step 1: Download MySQL Installer](#step-1-download-mysql-installer)
-      - [Step 2: Run Installation Wizard](#step-2-run-installation-wizard)
-      - [Step 3: Configure MySQL Server](#step-3-configure-mysql-server)
-      - [Step 4: Install MySQL Workbench](#step-4-install-mysql-workbench-1)
-    - [Connecting to MySQL in Workbench](#connecting-to-mysql-in-workbench)
-      - [Creating a Connection (macOS)](#creating-a-connection-macos)
-      - [Creating a Connection (Windows)](#creating-a-connection-windows)
-    - [First Steps in MySQL Workbench](#first-steps-in-mysql-workbench)
-      - [Workbench Interface](#workbench-interface)
-      - [Opening a Connection](#opening-a-connection)
-      - [Writing Your First Query](#writing-your-first-query)
-      - [Organizing Your Queries](#organizing-your-queries)
-    - [Best Practices for Setup](#best-practices-for-setup)
-  - [Common SQL Patterns and Examples](#common-sql-patterns-and-examples)
-    - [Practice Problem Example: Student Table Modifications](#practice-problem-example-student-table-modifications)
-    - [Real-World Query Examples](#real-world-query-examples)
-  - [SQL Quick Reference](#sql-quick-reference)
-    - [Database Commands](#database-commands)
-    - [Table Commands](#table-commands)
-    - [Data Commands](#data-commands)
-    - [Filtering and Sorting](#filtering-and-sorting)
-    - [Aggregation](#aggregation)
-    - [Joins](#joins-1)
-    - [Set Operations](#set-operations-1)
-    - [Subqueries and Views](#subqueries-and-views)
-  - [Key Concepts Summary](#key-concepts-summary)
-    - [Normalization](#normalization)
-    - [Relationships](#relationships)
-    - [Indexes](#indexes)
-    - [Transactions](#transactions)
-    - [Database Security](#database-security)
-  - [Tips for SQL Mastery](#tips-for-sql-mastery)
-  - [Important Websites and Resources](#important-websites-and-resources)
+  - [Overview](#overview)
+  - [Getting Started with SQL](#getting-started-with-sql)
+    - [Setting Up Your Environment](#setting-up-your-environment)
+    - [Creating Your First Query](#creating-your-first-query)
+    - [Understanding the Database Structure](#understanding-the-database-structure)
+      - [Available Tables in Awesome Chocolates Database](#available-tables-in-awesome-chocolates-database)
+      - [Exploring Table Contents](#exploring-table-contents)
+      - [Important Concept](#important-concept)
+    - [Output Display](#output-display)
+  - [Part 1: SELECT Statements and Basic Queries](#part-1-select-statements-and-basic-queries)
+    - [SELECT All Columns](#select-all-columns)
+    - [SELECT Specific Columns](#select-specific-columns)
+    - [Reordering Columns](#reordering-columns)
+    - [Adding Calculations to Queries](#adding-calculations-to-queries)
+    - [Creating Aliases for Calculated Columns](#creating-aliases-for-calculated-columns)
+    - [Key Takeaway on Aliases](#key-takeaway-on-aliases)
+  - [Part 2: WHERE Clauses - Filtering Data](#part-2-where-clauses---filtering-data)
+    - [Understanding WHERE Clauses](#understanding-where-clauses)
+    - [Basic WHERE Clause with Greater Than](#basic-where-clause-with-greater-than)
+    - [Combining WHERE with ORDER BY](#combining-where-with-order-by)
+    - [Multiple Sort Criteria](#multiple-sort-criteria)
+    - [WHERE Clause with AND Operator](#where-clause-with-and-operator)
+    - [Using YEAR Function with WHERE](#using-year-function-with-where)
+    - [WHERE Clause with BETWEEN](#where-clause-with-between)
+    - [Weekday Function Example](#weekday-function-example)
+  - [Part 3: Logical Operators - AND, OR, NOT](#part-3-logical-operators---and-or-not)
+    - [The OR Operator](#the-or-operator)
+    - [The IN Operator](#the-in-operator)
+    - [The LIKE Operator - Pattern Matching](#the-like-operator---pattern-matching)
+    - [The NOT Operator](#the-not-operator)
+  - [Part 4: Conditional Logic with CASE](#part-4-conditional-logic-with-case)
+    - [Understanding CASE Statements](#understanding-case-statements)
+    - [CASE Statement Structure](#case-statement-structure)
+    - [CASE with Multiple Conditions](#case-with-multiple-conditions)
+    - [Use Cases for CASE](#use-cases-for-case)
+  - [Part 5: JOINs - Combining Multiple Tables](#part-5-joins---combining-multiple-tables)
+    - [Understanding JOINs](#understanding-joins)
+    - [Database Relationships in Awesome Chocolates](#database-relationships-in-awesome-chocolates)
+    - [Basic JOIN Example](#basic-join-example)
+    - [Table Aliases](#table-aliases)
+    - [Column Qualification](#column-qualification)
+    - [LEFT JOIN vs JOIN](#left-join-vs-join)
+    - [JOIN with WHERE Clause](#join-with-where-clause)
+    - [Multiple JOINs](#multiple-joins)
+    - [JOIN with Null Handling](#join-with-null-handling)
+    - [Three-Table JOIN Example](#three-table-join-example)
+  - [Part 6: GROUP BY and Aggregation Functions](#part-6-group-by-and-aggregation-functions)
+    - [Understanding GROUP BY](#understanding-group-by)
+    - [Aggregation Functions](#aggregation-functions)
+    - [Basic GROUP BY Example](#basic-group-by-example)
+    - [Multiple Aggregation Functions](#multiple-aggregation-functions)
+    - [GROUP BY with JOINs](#group-by-with-joins)
+    - [Multi-Level Grouping](#multi-level-grouping)
+    - [Filtering GROUP BY Results with WHERE](#filtering-group-by-results-with-where)
+    - [Sorting GROUP BY Results](#sorting-group-by-results)
+    - [LIMIT for Top N Results](#limit-for-top-n-results)
+  - [Advanced Tips and Best Practices](#advanced-tips-and-best-practices)
+    - [Query Writing Best Practices](#query-writing-best-practices)
+    - [Common Mistakes to Avoid](#common-mistakes-to-avoid)
+    - [Understanding NULL in SQL](#understanding-null-in-sql)
+    - [Date Functions](#date-functions)
+    - [Saving Your Work](#saving-your-work)
+  - [Learning Resources and Next Steps](#learning-resources-and-next-steps)
+    - [Recommended Learning Path](#recommended-learning-path)
+    - [Where to Use SQL](#where-to-use-sql)
+    - [Practice Importance](#practice-importance)
+  - [Quick Reference](#quick-reference)
+    - [Comparison Operators](#comparison-operators)
+    - [Logical Operators](#logical-operators)
+    - [Aggregation Functions](#aggregation-functions-1)
+    - [Key Clauses](#key-clauses)
+    - [Query Structure (Proper Order)](#query-structure-proper-order)
+  - [Conclusion](#conclusion)
+
+## Overview
+
+This guide covers mastery of SQL through 50 practical queries. Topics include SELECT operations, WHERE clauses, logical operators (AND, OR, NOT), JOINs, GROUP BY, ORDER BY, and advanced SQL techniques. The guide uses the "Awesome Chocolates" database with real-world examples and practical tips.
+
+## Getting Started with SQL
+
+### Setting Up Your Environment
+
+**Tool Used**: MySQL Workbench / BeeKeeper Studio
+
+**Database**: Awesome Chocolates (must be downloaded and loaded)
+
+**Instructions**: Refer to video description for database setup instructions
+
+### Creating Your First Query
+
+1. Click the **Plus SQL button** in the corner to open the query editor
+2. View output results directly in the workbench grid
+3. Execute queries using **Ctrl + Enter** or the Run command
+
+**Note**: Shortcuts differ depending on your system and SQL management tool:
+- **MySQL Workbench**: Ctrl + Enter
+- **SQL Server Management Studio (SSMS)**: Different shortcut
+- **Oracle**: Different shortcut
+
+### Understanding the Database Structure
+
+#### Available Tables in Awesome Chocolates Database
 
+The database contains four main tables:
 
----
+- **Geography** table
+- **People** table
+- **Products** table
+- **Sales** table
 
-## Database Fundamentals
+#### Exploring Table Contents
 
-### What is a Database?
+Before writing queries, understand your data structure.
 
-A database is a collection of interrelated data stored in a easily accessible, organized format. In modern systems, databases are digital collections stored on computer systems, allowing for easy retrieval, modification, and deletion of data.
-
-#### Database Characteristics:
-- Organized collection of related data
-- Digital format storage
-- Easily accessible and manageable
-- Supports multiple tables and relationships
-- Examples: Company employee records, college student information, e-commerce product catalogs
-
-### What is DBMS?
-
-DBMS stands for **Database Management System**. It is a software application designed to manage databases efficiently.
-
-#### Primary Functions of DBMS:
-- Create and organize databases
-- Add new data to databases
-- Delete old or unnecessary data
-- Update existing data
-- Search and retrieve data from databases
-- Manage database access and security
-
-#### How DBMS Works:
-```
-User ←→ DBMS ←→ Database
-```
-
-The user does not access the database directly. Instead, the DBMS acts as an intermediary layer, processing user requests and performing corresponding operations on the database.
-
-### Types of Databases
-
-#### 1. Relational Databases
-- Data is stored in **table format** (rows and columns)
-- Follows strict structure with predefined schemas
-- Tables contain interrelated data
-- Use SQL for interaction
-- Examples:
-  - MySQL
-  - Oracle Database
-  - PostgreSQL
-  - Microsoft SQL Server
-
-#### 2. Non-Relational (NoSQL) Databases
-- Data is stored **without table structure**
-- More flexible and schema-less
-- Data can be stored as documents, key-value pairs, graphs, etc.
-- Do not use SQL
-- Examples:
-  - MongoDB
-  - Cassandra
-  - Redis
-
-**Note**: This course focuses on **Relational Databases** since we are learning SQL.
-
-### What is RDBMS?
-
-RDBMS stands for **Relational Database Management System**.
-
-#### RDBMS Characteristics:
-- Based on the concept of tables (relations)
-- Data organized into rows (records) and columns (attributes)
-- Tables can have relationships with other tables
-- Uses SQL as the query language
-- Examples: MySQL, PostgreSQL, Oracle, SQL Server
-
-### Database Structure
-
-A database contains multiple tables, each with its own data structure:
-
-```
-Database
-├── Table 1
-│   ├── Column 1
-│   ├── Column 2
-│   └── Column 3
-├── Table 2
-│   ├── Column 1
-│   └── Column 2
-└── Table 3
-    ├── Column 1
-    ├── Column 2
-    └── Column 3
-```
-
-### What is a Table?
-
-A table is the fundamental data structure in a relational database.
-
-#### Table Components:
-- **Columns (Attributes/Fields)**: Vertical structure defining what data is stored
-- **Rows (Tuples/Records)**: Horizontal structure representing individual data entries
-
-#### Example Student Table:
-
-| Roll_No | Full_Name | Class | DOB | Gender | City | Marks |
-|---------|-----------|-------|-----|--------|------|-------|
-| 101 | Raj Kumar | 10A | 2005-05-15 | M | Mumbai | 85 |
-| 102 | Priya Sharma | 10A | 2005-08-22 | F | Delhi | 92 |
-| 103 | Amit Patel | 10B | 2006-01-10 | M | Bangalore | 78 |
-
-#### Table Concepts:
-- **Rows**: Each row represents one complete student's data
-- **Columns**: Each column represents a specific attribute (Roll_No, Name, etc.)
-- **Schema**: The design/structure defined by columns
-- **Data**: The actual values stored in rows
-
----
-
-## SQL Basics
-
-### What is SQL?
-
-SQL stands for **Structured Query Language**. It is a programming language used to interact with relational databases.
-
-#### Key Points about SQL:
-- SQL is NOT a database; it is a language for database interaction
-- SQL keywords are NOT case sensitive (SELECT = select)
-- Used to perform CRUD operations
-- Standardized language understood by all RDBMS
-
-### CRUD Operations
-
-SQL enables four major operations:
-
-1. **CREATE** - Create databases, tables, insert new data
-2. **READ** - Retrieve and view data from the database
-3. **UPDATE** - Modify existing data
-4. **DELETE** - Remove database objects or data
-
-### SQL vs MySQL
-
-| Aspect | SQL | MySQL |
-|--------|-----|-------|
-| Type | Programming Language | Database Management System (DBMS) |
-| Purpose | Used to interact with databases | Manages and organizes relational databases |
-| Functionality | Provides commands for CRUD operations | Implements SQL language |
-| Independence | Not a database itself | Uses SQL to operate |
-| Usage | Applies to multiple RDBMS systems | Specific RDBMS software |
-
-**Note**: SQL is the language; MySQL is the system that uses SQL.
-
-### Original vs Current Naming
-
-- **Original Name**: Structured **English** Query Language (SEQUEL)
-- **Current Name**: Structured Query Language (SQL)
-- **Pronunciation**: Both "SQL" (pronounced as letters) and "Sequel" are acceptable
-
----
-
-## Data Types
-
-SQL data types define the kind of data that can be stored in columns or variables.
-
-### Numeric Data Types
-
-#### Integer Types
-
-| Data Type | Range | Usage | Example |
-|-----------|-------|-------|---------|
-| TINYINT | -128 to 127 | Very small integers | TINYINT |
-| TINYINT UNSIGNED | 0 to 255 | Small positive integers | TINYINT UNSIGNED |
-| INT | -2,147,483,648 to 2,147,483,647 | Standard integers | INT |
-| BIGINT | -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 | Large integers | BIGINT |
-| BIT | x-bit values (x: 1-64) | Binary values | BIT(2) |
-
-#### Decimal Types
-
-| Data Type | Description | Usage | Example |
-|-----------|-------------|-------|---------|
-| FLOAT | Decimal with precision to 23 digits | Single precision decimals | FLOAT |
-| DOUBLE | Decimal with 24 to 53 digits | Double precision decimals | DOUBLE |
-| DECIMAL | Fixed-point decimal numbers | Exact decimal calculations | DECIMAL(10, 2) |
-
-### String Data Types
-
-| Data Type | Range | Description | Usage | Example |
-|-----------|-------|-------------|-------|---------|
-| CHAR | 0-255 characters | Fixed length strings | Names, codes | CHAR(50) |
-| VARCHAR | 0-65,535 characters | Variable length strings | Addresses, descriptions | VARCHAR(50) |
-| BLOB | 0-65,535 bytes | Binary large object data | Images, files | BLOB(1000) |
-| TEXT | 0-65,535 characters | Long text data | Comments, paragraphs | TEXT |
-
-### Date and Time Data Types
-
-| Data Type | Format | Range | Usage | Example |
-|-----------|--------|-------|-------|---------|
-| DATE | YYYY-MM-DD | 1000-01-01 to 9999-12-31 | Dates | DATE |
-| TIME | HH:MM:SS | Time values | Time records | TIME |
-| YEAR | YYYY | 1901 to 2155 | Year values | YEAR |
-| DATETIME | YYYY-MM-DD HH:MM:SS | Date and time combined | Timestamps | DATETIME |
-| TIMESTAMP | YYYY-MM-DD HH:MM:SS | Automatic timestamps | Update tracking | TIMESTAMP |
-
-### Boolean Data Type
-
-| Data Type | Values | Usage | Example |
-|-----------|--------|-------|---------|
-| BOOLEAN | 0 or 1 | True/False values | BOOLEAN |
-
-### Important Notes on Data Types
-
-**String Length Considerations**:
-- **CHAR**: Fixed length - reserves all space even if not fully used
-- **VARCHAR**: Variable length - uses only necessary space
-- **Recommendation**: Use VARCHAR for better memory efficiency and performance
-
-**UNSIGNED Modifier**:
-- Used when you only need positive values
-- Example: `UNSIGNED INT` for ages, counts, IDs
-- Increases positive value range at the expense of negative values
-
-### Reference
-For all MySQL data types, visit: https://dev.mysql.com/doc/refman/8.0/en/data-types.html
-
----
-
-## SQL Commands Types
-
-SQL commands are categorized into five main types based on their functionality:
-
-### 1. DQL - Data Query Language
-**Purpose**: Retrieve and query data from databases
-
-**Commands**: SELECT
-
-**Description**: Used to select and retrieve data from one or more tables
-
-### 2. DDL - Data Definition Language
-**Purpose**: Create, modify, and delete database objects
-
-**Commands**: CREATE, DROP, ALTER, RENAME, TRUNCATE
-
-**Description**: 
-- Manages the structure and schema of database objects
-- Creates tables and databases
-- Modifies existing structures
-- Removes database objects
-
-### 3. DML - Data Manipulation Language
-**Purpose**: Modify and manage data within tables
-
-**Commands**: INSERT, UPDATE, DELETE
-
-**Description**:
-- Adds new records to tables
-- Updates existing records
-- Removes records from tables
-
-### 4. DCL - Data Control Language
-**Purpose**: Control access rights and permissions
-
-**Commands**: GRANT, REVOKE
-
-**Description**:
-- Grants privileges to users or roles
-- Revokes previously granted privileges
-- Manages database security and access control
-
-### 5. TCL - Transaction Control Language
-**Purpose**: Manage transactions and ensure data consistency
-
-**Commands**: COMMIT, ROLLBACK, SAVEPOINT, START TRANSACTION
-
-**Description**:
-- Controls transaction execution
-- Ensures data integrity
-- Manages rollback and commit operations
-
----
-
-## Data Definition Language (DDL)
-
-DDL is a subset of SQL responsible for defining and managing the structure of databases and their objects.
-
-### CREATE DATABASE
-
-Used to create a new database in the system.
-
-**Syntax**:
-```sql
-CREATE DATABASE database_name;
-```
-
-**Example**:
-```sql
-CREATE DATABASE college_db;
-```
-
-**Safe Creation**:
-```sql
-CREATE DATABASE IF NOT EXISTS college_db;
-```
-
-### DROP DATABASE
-
-Permanently deletes a database and all its contents.
-
-**Syntax**:
-```sql
-DROP DATABASE database_name;
-```
-
-**Example**:
-```sql
-DROP DATABASE college_db;
-```
-
-**Safe Deletion**:
-```sql
-DROP DATABASE IF EXISTS college_db;
-```
-
-### USE DATABASE
-
-Selects a database for use in subsequent operations.
-
-**Syntax**:
-```sql
-USE database_name;
-```
-
-**Example**:
-```sql
-USE college_db;
-```
-
-### SHOW DATABASES
-
-Displays all existing databases in the system.
-
-**Syntax**:
-```sql
-SHOW DATABASES;
-```
-
-### SHOW TABLES
-
-Displays all tables in the currently selected database.
-
-**Syntax**:
+**View all tables in database**:
 ```sql
 SHOW TABLES;
 ```
 
-### CREATE TABLE
+| Tables_in_awesome chocolates |
+| ---------------------------- |
+| geo                          |
+| people                       |
+| products                     |
+| sales                        |
 
-Creates a new table with specified columns and constraints.
-
-**Syntax**:
+**View table structure and columns**:
 ```sql
-CREATE TABLE table_name (
-    column_name1 datatype constraint,
-    column_name2 datatype constraint,
-    column_name3 datatype constraint
-);
+DESCRIBE sales;
 ```
 
-**Example**:
+| Field     | Type     | Null | Key | Default | Extra |
+| --------- | -------- | ---- | --- | ------- | ----- |
+| SPID      | text     | YES  |     | null    |       |
+| GeoID     | text     | YES  |     | null    |       |
+| PID       | text     | YES  |     | null    |       |
+| SaleDate  | datetime | YES  |     | null    |       |
+| Amount    | int      | YES  |     | null    |       |
+| Customers | int      | YES  |     | null    |       |
+| Boxes     | int      | YES  |     | null    |       |
+
+**What this returns**:
+- Column names
+- Data types
+- Additional information about each column
+
+#### Important Concept
+
+**Critical Rule**: When writing SQL queries, you must be familiar with underlying tables and their relationships. Without this knowledge, writing SQL becomes extremely difficult.
+
+### Output Display
+
+**Query Limit**: MySQL Workbench displays a maximum of 1000 rows at a time, even if the table contains more data.
+
+**Example**: Sales table contains ~7000 rows, but only 1000 display in the workbench
+
+**When to Adjust Limits**:
+- When building queries: You only need to verify it works correctly
+- When exporting data: You may need to remove or increase the limit to see all data
+- When using data elsewhere: Export to Power BI or other systems
+
+---
+
+## Part 1: SELECT Statements and Basic Queries
+
+### SELECT All Columns
+
+**Query**:
 ```sql
-CREATE TABLE students (
-    roll_no INT PRIMARY KEY,
-    full_name VARCHAR(50) NOT NULL,
-    class VARCHAR(10),
-    dob DATE,
-    gender CHAR(1),
-    city VARCHAR(50),
-    marks INT
-);
+SELECT * FROM sales;
 ```
 
-### DROP TABLE
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP01 | G4    | P04 | 2021-01-01 00:00:00 | 8414   | 276       | 495   |
+| SP02 | G3    | P14 | 2021-01-01 00:00:00 | 532    | 317       | 54    |
+| SP12 | G2    | P08 | 2021-01-01 00:00:00 | 5376   | 178       | 269   |
+| SP01 | G4    | P15 | 2021-01-01 00:00:00 | 259    | 32        | 22    |
+| SP19 | G2    | P18 | 2021-01-01 00:00:00 | 5530   | 4         | 179   |
+| SP17 | G1    | P13 | 2021-01-01 00:00:00 | 2184   | 63        | 122   |
+| SP20 | G6    | P04 | 2021-01-01 00:00:00 | 1057   | 295       | 71    |
+| SP14 | G5    | P16 | 2021-01-01 00:00:00 | 1036   | 370       | 37    |
+| SP10 | G5    | P17 | 2021-01-01 00:00:00 | 4039   | 536       | 176   |
+| SP06 | G4    | P01 | 2021-01-01 00:00:00 | 12894  | 115       | 478   |
+| SP18 | G2    | P01 | 2021-01-01 00:00:00 | 4669   | 121       | 180   |
+| SP04 | G4    | P16 | 2021-01-01 00:00:00 | 6377   | 184       | 246   |
+| SP22 | G3    | P05 | 2021-01-01 00:00:00 | 4599   | 106       | 256   |
+| SP22 | G2    | P09 | 2021-01-01 00:00:00 | 2751   | 228       | 251   |
 
-Removes a table along with its structure and data.
+...
 
-**Syntax**:
+**Explanation**:
+- `SELECT *` means select everything (all columns)
+- `FROM sales` specifies the table name
+- Displays all rows and all columns from the sales table
+
+**Output**: Complete sales table with all data visible in grid format
+
+### SELECT Specific Columns
+
+**Query**:
 ```sql
-DROP TABLE table_name;
+SELECT sale_date, amount, customers FROM sales;
 ```
 
-**Example**:
+| SaleDate            | Amount | Customers |
+| ------------------- | ------ | --------- |
+| 2021-01-01 00:00:00 | 8414   | 276       |
+| 2021-01-01 00:00:00 | 532    | 317       |
+| 2021-01-01 00:00:00 | 5376   | 178       |
+| 2021-01-01 00:00:00 | 259    | 32        |
+| 2021-01-01 00:00:00 | 5530   | 4         |
+| 2021-01-01 00:00:00 | 2184   | 63        |
+| 2021-01-01 00:00:00 | 1057   | 295       |
+| 2021-01-01 00:00:00 | 1036   | 370       |
+| 2021-01-01 00:00:00 | 4039   | 536       |
+| 2021-01-01 00:00:00 | 12894  | 115       |
+| 2021-01-01 00:00:00 | 4669   | 121       |
+| 2021-01-01 00:00:00 | 6377   | 184       |
+| 2021-01-01 00:00:00 | 4599   | 106       |
+| 2021-01-01 00:00:00 | 2751   | 228       |
+| 2021-01-01 00:00:00 | 15596  | 32        |
+| 2021-01-01 00:00:00 | 8561   | 111       |
+| 2021-01-01 00:00:00 | 14273  | 335       |
+
+...
+
+**Explanation**:
+- Specify only the columns you want to see
+- Columns are separated by commas
+- Result shows only these three columns for all rows
+
+**Auto-Suggest Feature**: Type the table name first, then add columns. This enables auto-suggest to help prevent spelling mistakes.
+
+**Better Practice**:
 ```sql
-DROP TABLE students;
+SELECT 
+FROM sales
 ```
 
-**Key Difference from TRUNCATE**: 
-- DROP removes table structure and data
-- TRUNCATE removes only data but keeps structure
+Then come back and add columns between SELECT and FROM.
 
-### TRUNCATE TABLE
+### Reordering Columns
 
-Removes all data from a table but preserves the table structure.
-
-**Syntax**:
+**Query**:
 ```sql
-TRUNCATE TABLE table_name;
+SELECT amount, customers, geo_id FROM sales;
 ```
 
-**Example**:
+| Amount | Customers | GeoID |
+| ------ | --------- | ----- |
+| 8414   | 276       | G4    |
+| 532    | 317       | G3    |
+| 5376   | 178       | G2    |
+| 259    | 32        | G4    |
+| 5530   | 4         | G2    |
+| 2184   | 63        | G1    |
+| 1057   | 295       | G6    |
+| 1036   | 370       | G5    |
+| 4039   | 536       | G5    |
+| 12894  | 115       | G4    |
+| 4669   | 121       | G2    |
+| 6377   | 184       | G4    |
+| 4599   | 106       | G3    |
+| 2751   | 228       | G2    |
+| 15596  | 32        | G1    |
+| 8561   | 111       | G1    |
+
+...
+
+**Explanation**:
+- Columns do not have to appear in their original database order
+- They display in the order you specify in the SELECT statement
+- Results are rearranged automatically based on your specification
+
+### Adding Calculations to Queries
+
+**Calculate Amount Per Box**:
 ```sql
-TRUNCATE TABLE students;
+SELECT 
+  sale_date,
+  amount,
+  boxes,
+  amount / boxes
+FROM sales;
 ```
 
-**Advantages of TRUNCATE over DELETE**:
-- Faster execution
-- Uses less memory
-- Resets identity seeds
-- Cannot be rolled back in some systems
+| SaleDate            | Amount | Boxes | Amount/Boxes
+ |
+| ------------------- | ------ | ----- | ------------- |
+| 2021-01-01 00:00:00 | 8414   | 495   | 16.9980       |
+| 2021-01-01 00:00:00 | 532    | 54    | 9.8519        |
+| 2021-01-01 00:00:00 | 5376   | 269   | 19.9851       |
+| 2021-01-01 00:00:00 | 259    | 22    | 11.7727       |
+| 2021-01-01 00:00:00 | 5530   | 179   | 30.8939       |
+| 2021-01-01 00:00:00 | 2184   | 122   | 17.9016       |
+| 2021-01-01 00:00:00 | 1057   | 71    | 14.8873       |
+| 2021-01-01 00:00:00 | 1036   | 37    | 28.0000       |
+| 2021-01-01 00:00:00 | 4039   | 176   | 22.9489       |
+| 2021-01-01 00:00:00 | 12894  | 478   | 26.9749       |
+| 2021-01-01 00:00:00 | 4669   | 180   | 25.9389       |
+| 2021-01-01 00:00:00 | 6377   | 246   | 25.9228       |
+| 2021-01-01 00:00:00 | 4599   | 256   | 17.9648       |
+| 2021-01-01 00:00:00 | 2751   | 251   | 10.9602       |
+| 2021-01-01 00:00:00 | 15596  | 975   | 15.9959       |
 
-### ALTER TABLE
+...
 
-Modifies the structure of an existing table.
+**Explanation**:
+- You can perform arithmetic operations directly in SELECT statements
+- Operations include addition (+), subtraction (-), multiplication (*), division (/)
+- Results appear as an extra column in the output
+- The calculated column name defaults to the operation itself
 
-#### ADD COLUMN
+### Creating Aliases for Calculated Columns
 
-Adds a new column to the table.
+**Problem**: Column name `amount / boxes` is not user-friendly
 
-**Syntax**:
+**Solution: Add Column Aliases Using AS**:
 ```sql
-ALTER TABLE table_name 
-ADD COLUMN column_name datatype constraint;
+SELECT 
+  sale_date,
+  amount,
+  boxes,
+  amount / boxes AS 'amount_per_box'
+FROM sales;
 ```
 
-**Example**:
+| SaleDate            | Amount | Boxes | amount_per_box |
+| ------------------- | ------ | ----- | -------------- |
+| 2021-01-01 00:00:00 | 8414   | 495   | 16.9980        |
+| 2021-01-01 00:00:00 | 532    | 54    | 9.8519         |
+| 2021-01-01 00:00:00 | 5376   | 269   | 19.9851        |
+| 2021-01-01 00:00:00 | 259    | 22    | 11.7727        |
+| 2021-01-01 00:00:00 | 5530   | 179   | 30.8939        |
+| 2021-01-01 00:00:00 | 2184   | 122   | 17.9016        |
+| 2021-01-01 00:00:00 | 1057   | 71    | 14.8873        |
+| 2021-01-01 00:00:00 | 1036   | 37    | 28.0000        |
+| 2021-01-01 00:00:00 | 4039   | 176   | 22.9489        |
+
+...
+
+**Alternative Without AS Keyword**:
 ```sql
-ALTER TABLE students 
-ADD COLUMN email VARCHAR(100);
+SELECT 
+  sale_date,
+  amount,
+  boxes,
+  amount / boxes 'amount_per_box'
+FROM sales;
 ```
 
-#### DROP COLUMN
+| SaleDate            | Amount | Boxes | amount_per_box |
+| ------------------- | ------ | ----- | -------------- |
+| 2021-01-01 00:00:00 | 8414   | 495   | 16.9980        |
+| 2021-01-01 00:00:00 | 532    | 54    | 9.8519         |
+| 2021-01-01 00:00:00 | 5376   | 269   | 19.9851        |
+| 2021-01-01 00:00:00 | 259    | 22    | 11.7727        |
+| 2021-01-01 00:00:00 | 5530   | 179   | 30.8939        |
+| 2021-01-01 00:00:00 | 2184   | 122   | 17.9016        |
+| 2021-01-01 00:00:00 | 1057   | 71    | 14.8873        |
+| 2021-01-01 00:00:00 | 1036   | 37    | 28.0000        |
+| 2021-01-01 00:00:00 | 4039   | 176   | 22.9489        |
 
-Removes a column from the table.
+**Note**: Both methods produce identical results. The AS keyword creates a synonym for the column.
 
-**Syntax**:
+### Key Takeaway on Aliases
+
+The alias makes your output more readable and professional. Many times you want to give calculated columns proper names for clarity.
+
+---
+
+## Part 2: WHERE Clauses - Filtering Data
+
+### Understanding WHERE Clauses
+
+**Definition**: The WHERE clause allows you to impose conditions on your query results.
+
+**Concept**: WHERE clause in SQL is like filtering in Excel. Set filter criteria to show only specific data.
+
+**Importance**: WHERE clauses are one of the most important aspects of SQL for data analysis.
+
+### Basic WHERE Clause with Greater Than
+
+**Query**:
 ```sql
-ALTER TABLE table_name 
-DROP COLUMN column_name;
+SELECT * FROM sales
+WHERE amount > 10000;
 ```
 
-**Example**:
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP06 | G4    | P01 | 2021-01-01 00:00:00 | 12894  | 115       | 478   |
+| SP10 | G1    | P06 | 2021-01-01 00:00:00 | 15596  | 32        | 975   |
+| SP25 | G6    | P05 | 2021-01-01 00:00:00 | 14273  | 335       | 752   |
+| SP18 | G2    | P21 | 2021-01-04 00:00:00 | 19229  | 64        | 1013  |
+| SP23 | G1    | P16 | 2021-01-05 00:00:00 | 17248  | 163       | 664   |
+| SP05 | G3    | P02 | 2021-01-07 00:00:00 | 10451  | 155       | 1307  |
+| SP18 | G1    | P18 | 2021-01-07 00:00:00 | 11228  | 236       | 388   |
+| SP08 | G3    | P10 | 2021-01-08 00:00:00 | 12726  | 179       | 579   |
+| SP10 | G2    | P12 | 2021-01-12 00:00:00 | 11739  | 22        | 903   |
+| SP15 | G2    | P21 | 2021-01-13 00:00:00 | 12334  | 119       | 686   |
+| SP11 | G1    | P19 | 2021-01-14 00:00:00 | 13090  | 17        | 935   |
+| SP05 | G6    | P20 | 2021-01-14 00:00:00 | 15785  | 209       | 1128  |
+| SP20 | G5    | P12 | 2021-01-14 00:00:00 | 14574  | 86        | 810   |
+| SP02 | G2    | P12 | 2021-01-14 00:00:00 | 14532  | 142       | 969   |
+| SP17 | G2    | P01 | 2021-01-14 00:00:00 | 10339  | 207       | 357   |
+| SP24 | G2    | P11 | 2021-01-14 00:00:00 | 18704  | 78        | 585   |
+
+...
+
+**Explanation**:
+- `WHERE` specifies the filter condition
+- `amount > 10000` means only rows where amount is greater than 10,000
+- All rows where amount is NOT greater than 10,000 are excluded
+- Only qualifying rows display in results
+
+**Comparison Operators**:
+- `>` Greater than
+- `<` Less than
+- `=` Equal to
+- `>=` Greater than or equal to
+- `<=` Less than or equal to
+- `!=` or `<>` Not equal to
+
+### Combining WHERE with ORDER BY
+
+**Query**:
 ```sql
-ALTER TABLE students 
-DROP COLUMN email;
+SELECT * FROM sales
+WHERE amount > 10000
+ORDER BY amount;
 ```
 
-#### RENAME TABLE
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP02 | G1    | P07 | 2021-09-17 00:00:00 | 10010  | 257       | 358   |
+| SP01 | G2    | P17 | 2021-08-30 00:00:00 | 10017  | 163       | 835   |
+| SP21 | G3    | P22 | 2021-11-18 00:00:00 | 10017  | 111       | 418   |
+| SP18 | G5    | P18 | 2021-10-27 00:00:00 | 10017  | 77        | 1113  |
+| SP23 | G5    | P03 | 2021-05-06 00:00:00 | 10024  | 32        | 627   |
+| SP24 | G2    | P16 | 2021-11-02 00:00:00 | 10024  | 10        | 358   |
+| SP11 | G1    | P15 | 2021-06-02 00:00:00 | 10031  | 5         | 912   |
+| SP06 | G3    | P20 | 2022-01-21 00:00:00 | 10031  | 41        | 669   |
+| SP15 | G2    | P10 | 2021-10-05 00:00:00 | 10038  | 14        | 457   |
+| SP23 | G1    | P20 | 2021-10-21 00:00:00 | 10038  | 265       | 558   |
+| SP18 | G1    | P12 | 2022-03-23 00:00:00 | 10038  | 17        | 457   |
+| SP15 | G3    | P21 | 2021-07-30 00:00:00 | 10045  | 145       | 670   |
+| SP14 | G1    | P06 | 2022-01-12 00:00:00 | 10045  | 7         | 773   |
+| SP15 | G5    | P14 | 2021-10-13 00:00:00 | 10052  | 214       | 1117  |
+| SP11 | G2    | P03 | 2021-07-20 00:00:00 | 10059  | 284       | 592   |
 
-Changes the name of a table.
+...
 
-**Syntax**:
+**Explanation**:
+- Filters results to show only amounts greater than 10,000
+- Orders results by amount in ascending order (lowest to highest)
+- Results start at 10,000+ and increase gradually
+
+**Ascending Order (Default)**:
 ```sql
-ALTER TABLE table_name 
-RENAME TO new_table_name;
+ORDER BY amount;
 ```
 
-**Example**:
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP02 | G1    | P07 | 2021-09-17 00:00:00 | 10010  | 257       | 358   |
+| SP01 | G2    | P17 | 2021-08-30 00:00:00 | 10017  | 163       | 835   |
+| SP21 | G3    | P22 | 2021-11-18 00:00:00 | 10017  | 111       | 418   |
+| SP18 | G5    | P18 | 2021-10-27 00:00:00 | 10017  | 77        | 1113  |
+| SP23 | G5    | P03 | 2021-05-06 00:00:00 | 10024  | 32        | 627   |
+| SP24 | G2    | P16 | 2021-11-02 00:00:00 | 10024  | 10        | 358   |
+| SP11 | G1    | P15 | 2021-06-02 00:00:00 | 10031  | 5         | 912   |
+| SP06 | G3    | P20 | 2022-01-21 00:00:00 | 10031  | 41        | 669   |
+| SP15 | G2    | P10 | 2021-10-05 00:00:00 | 10038  | 14        | 457   |
+| SP23 | G1    | P20 | 2021-10-21 00:00:00 | 10038  | 265       | 558   |
+| SP18 | G1    | P12 | 2022-03-23 00:00:00 | 10038  | 17        | 457   |
+| SP15 | G3    | P21 | 2021-07-30 00:00:00 | 10045  | 145       | 670   |
+| SP14 | G1    | P06 | 2022-01-12 00:00:00 | 10045  | 7         | 773   |
+| SP15 | G5    | P14 | 2021-10-13 00:00:00 | 10052  | 214       | 1117  |
+| SP11 | G2    | P03 | 2021-07-20 00:00:00 | 10059  | 284       | 592   |
+
+...
+
+**Descending Order (Highest to Lowest)**:
 ```sql
-ALTER TABLE students 
-RENAME TO class_students;
+ORDER BY amount DESC;
 ```
 
-#### MODIFY COLUMN
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP23 | G4    | P03 | 2021-02-12 00:00:00 | 27146  | 329       | 1939  |
+| SP18 | G5    | P10 | 2021-04-22 00:00:00 | 25207  | 22        | 1483  |
+| SP03 | G5    | P22 | 2021-06-02 00:00:00 | 24633  | 39        | 986   |
+| SP18 | G1    | P11 | 2021-10-21 00:00:00 | 24451  | 472       | 1112  |
+| SP18 | G2    | P16 | 2021-03-30 00:00:00 | 24367  | 272       | 3481  |
+| SP24 | G4    | P01 | 2022-02-16 00:00:00 | 23912  | 211       | 1993  |
+| SP17 | G4    | P08 | 2021-03-10 00:00:00 | 23268  | 80        | 1058  |
+| SP09 | G4    | P20 | 2022-03-15 00:00:00 | 23184  | 123       | 1221  |
+| SP14 | G1    | P01 | 2022-02-25 00:00:00 | 22897  | 43        | 1347  |
+| SP03 | G3    | P03 | 2021-10-25 00:00:00 | 22715  | 16        | 1420  |
+| SP25 | G2    | P02 | 2021-05-25 00:00:00 | 22652  | 46        | 2060  |
+| SP16 | G2    | P13 | 2022-03-01 00:00:00 | 22603  | 32        | 3229  |
+| SP13 | G1    | P14 | 2021-11-26 00:00:00 | 22512  | 74        | 2047  |
+| SP16 | G4    | P08 | 2021-06-24 00:00:00 | 22484  | 38        | 978   |
 
-Changes the data type or constraints of a column.
+...
 
-**Syntax**:
+### Multiple Sort Criteria
+
+**Query**:
 ```sql
-ALTER TABLE table_name 
-MODIFY column_name new_datatype new_constraint;
+SELECT * FROM sales
+WHERE geo_id = 'g1'
+ORDER BY pid, amount DESC;
 ```
 
-**Example**:
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP14 | G1    | P01 | 2022-02-25 00:00:00 | 22897  | 43        | 1347  |
+| SP21 | G1    | P01 | 2022-01-07 00:00:00 | 18130  | 24        | 1008  |
+| SP11 | G1    | P01 | 2021-01-27 00:00:00 | 17402  | 43        | 697   |
+| SP08 | G1    | P01 | 2021-09-13 00:00:00 | 16681  | 274       | 596   |
+| SP08 | G1    | P01 | 2022-01-10 00:00:00 | 16121  | 55        | 896   |
+| SP23 | G1    | P01 | 2021-05-03 00:00:00 | 13958  | 185       | 451   |
+| SP17 | G1    | P01 | 2022-01-17 00:00:00 | 13923  | 478       | 871   |
+| SP11 | G1    | P01 | 2021-11-29 00:00:00 | 13419  | 210       | 1119  |
+| SP04 | G1    | P01 | 2021-02-04 00:00:00 | 12418  | 113       | 1129  |
+
+...
+
+**Explanation**:
+- Filters to show only geo_id 'g1' records
+- First sorts by product ID (pid)
+- Within each product ID, sorts by amount in descending order
+- You can specify multiple ORDER BY columns separated by commas
+
+**Result Structure**:
+- All p01 items grouped together, sorted by amount (highest first)
+- Then p02 items grouped together, sorted by amount
+- Then p03, p04, etc.
+
+### WHERE Clause with AND Operator
+
+**Scenario**: Find all sales with amount > 10,000 in the year 2022
+
+**Query Method 1 - Using Date Comparison**:
 ```sql
-ALTER TABLE students 
-MODIFY full_name VARCHAR(100);
+SELECT * FROM sales
+WHERE amount > 10000
+AND sale_date >= '2022-01-01';
+-- use quote in dates `2022-01-01' : correct, 2022-01-01' : incorrect
 ```
 
-#### CHANGE COLUMN
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP15 | G3    | P11 | 2022-01-05 00:00:00 | 14553  | 152       | 910   |
+| SP16 | G3    | P22 | 2022-01-28 00:00:00 | 10255  | 53        | 733   |
+| SP04 | G4    | P05 | 2022-01-28 00:00:00 | 16800  | 92        | 800   |
+| SP05 | G1    | P02 | 2022-01-21 00:00:00 | 16121  | 487       | 621   |
+| SP21 | G2    | P22 | 2022-01-11 00:00:00 | 12481  | 177       | 1041  |
+| SP24 | G6    | P17 | 2022-01-03 00:00:00 | 12145  | 55        | 1013  |
+| SP24 | G1    | P17 | 2022-01-07 00:00:00 | 14665  | 299       | 1467  |
+| SP12 | G5    | P04 | 2022-01-03 00:00:00 | 13048  | 154       | 653   |
+| SP08 | G6    | P13 | 2022-01-18 00:00:00 | 10192  | 228       | 1274  |
+| SP21 | G4    | P14 | 2022-01-07 00:00:00 | 11949  | 175       | 1328  |
+| SP22 | G5    | P08 | 2022-01-11 00:00:00 | 13139  | 371       | 939   |
+| SP20 | G2    | P14 | 2022-01-06 00:00:00 | 14777  | 110       | 2463  |
+| SP06 | G2    | P20 | 2022-01-21 00:00:00 | 12341  | 127       | 1029  |
 
-Renames a column and changes its data type or constraints.
+...
 
-**Syntax**:
+**Explanation**:
+- Filters to amount greater than 10,000
+- AND date is within 2022 or later
+- Both conditions must be true for rows to display
+
+**MySQL Date Format**: YYYY-MM-DD
+
+**Date Example**: `2022-01-01` represents January 1st, 2022
+
+### Using YEAR Function with WHERE
+
+**Query Method 2 - Using YEAR Function**:
 ```sql
-ALTER TABLE table_name 
-CHANGE COLUMN old_column_name new_column_name new_datatype new_constraint;
+SELECT sale_date, amount 
+FROM sales
+WHERE amount > 10000
+AND YEAR(sale_date) = 2022
+ORDER BY amount DESC;
 ```
 
-**Example**:
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP24 | G4    | P01 | 2022-02-16 00:00:00 | 23912  | 211       | 1993  |
+| SP09 | G4    | P20 | 2022-03-15 00:00:00 | 23184  | 123       | 1221  |
+| SP14 | G1    | P01 | 2022-02-25 00:00:00 | 22897  | 43        | 1347  |
+| SP16 | G2    | P13 | 2022-03-01 00:00:00 | 22603  | 32        | 3229  |
+| SP13 | G4    | P10 | 2022-02-25 00:00:00 | 22155  | 185       | 1055  |
+| SP09 | G6    | P04 | 2022-01-13 00:00:00 | 21490  | 334       | 1132  |
+| SP15 | G5    | P21 | 2022-01-20 00:00:00 | 21140  | 19        | 1510  |
+| SP03 | G1    | P16 | 2022-01-17 00:00:00 | 20741  | 101       | 1596  |
+| SP08 | G4    | P04 | 2022-01-21 00:00:00 | 20720  | 78        | 1091  |
+
+...
+
+**Explanation**:
+- `YEAR()` is a built-in SQL function that extracts the year from a date
+- Works similar to YEAR function in Excel
+- Returns a number, so no quotes needed around 2022
+- More flexible than date comparison method
+
+**Advantage**: Cleaner and more maintainable than parsing dates manually
+
+### WHERE Clause with BETWEEN
+
+**Scenario**: Find all sales with boxes between 0 and 50
+
+**Query Method 1 - Using AND**:
 ```sql
-ALTER TABLE students 
-CHANGE COLUMN full_name student_name VARCHAR(100);
+SELECT * FROM sales
+WHERE boxes > 0
+AND boxes <= 50;
 ```
 
-### CREATE INDEX
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP01 | G4    | P15 | 2021-01-01 00:00:00 | 259    | 32        | 22    |
+| SP14 | G5    | P16 | 2021-01-01 00:00:00 | 1036   | 370       | 37    |
+| SP12 | G6    | P09 | 2021-01-04 00:00:00 | 147    | 9         | 11    |
+| SP04 | G1    | P20 | 2021-01-06 00:00:00 | 644    | 116       | 34    |
+| SP10 | G2    | P01 | 2021-01-08 00:00:00 | 420    | 196       | 14    |
+| SP05 | G5    | P04 | 2021-01-08 00:00:00 | 364    | 14        | 21    |
+| SP08 | G6    | P04 | 2021-01-08 00:00:00 | 357    | 185       | 17    |
+| SP11 | G6    | P01 | 2021-01-12 00:00:00 | 189    | 123       | 8     |
+| SP01 | G3    | P19 | 2021-01-12 00:00:00 | 490    | 188       | 35    |
+| SP08 | G4    | P16 | 2021-01-12 00:00:00 | 721    | 45        | 24    |
 
-Creates an index on one or more columns to improve query performance.
+...
 
-**Syntax**:
+**Query Method 2 - Using BETWEEN(it includes limits)**:
 ```sql
-CREATE INDEX index_name ON table_name (column_name);
+SELECT * FROM sales
+WHERE boxes BETWEEN 0 AND 50;
 ```
 
-**Example**:
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP01 | G4    | P15 | 2021-01-01 00:00:00 | 259    | 32        | 22    |
+| SP14 | G5    | P16 | 2021-01-01 00:00:00 | 1036   | 370       | 37    |
+| SP12 | G6    | P09 | 2021-01-04 00:00:00 | 147    | 9         | 11    |
+| SP04 | G1    | P20 | 2021-01-06 00:00:00 | 644    | 116       | 34    |
+| SP10 | G2    | P01 | 2021-01-08 00:00:00 | 420    | 196       | 14    |
+| SP05 | G5    | P04 | 2021-01-08 00:00:00 | 364    | 14        | 21    |
+| SP08 | G6    | P04 | 2021-01-08 00:00:00 | 357    | 185       | 17    |
+| SP11 | G6    | P01 | 2021-01-12 00:00:00 | 189    | 123       | 8     |
+| SP01 | G3    | P19 | 2021-01-12 00:00:00 | 490    | 188       | 35    |
+| SP08 | G4    | P16 | 2021-01-12 00:00:00 | 721    | 45        | 24    |
+| SP08 | G6    | P07 | 2021-01-13 00:00:00 | 728    | 234       | 32    |
+| SP24 | G4    | P07 | 2021-01-14 00:00:00 | 1239   | 97        | 50    |
+
+...
+
+**Explanation**:
+- BETWEEN is inclusive on both ends
+- **Range includes 0 and 50**
+- Both methods produce the same results
+- BETWEEN is more concise and readable
+
+**Note**: Both methods are valid. Use whichever is more comfortable for you.
+
+### Weekday Function Example
+
+**Scenario**: Find all sales that occurred on Fridays
+
+**Query**:
 ```sql
-CREATE INDEX idx_student_name ON students (full_name);
+SELECT 
+  sale_date,
+  amount,
+  boxes,
+  WEEKDAY(sale_date) AS day_of_week
+FROM sales
+WHERE WEEKDAY(sale_date) = 4;
 ```
 
-### DROP INDEX
+| SaleDate            | Amount | Boxes | day_of_week |
+| ------------------- | ------ | ----- | ----------- |
+| 2021-01-01 00:00:00 | 8414   | 495   | 4           |
+| 2021-01-01 00:00:00 | 532    | 54    | 4           |
+| 2021-01-01 00:00:00 | 5376   | 269   | 4           |
+| 2021-01-01 00:00:00 | 259    | 22    | 4           |
+| 2021-01-01 00:00:00 | 5530   | 179   | 4           |
+| 2021-01-01 00:00:00 | 2184   | 122   | 4           |
+| 2021-01-01 00:00:00 | 1057   | 71    | 4           |
+| 2021-01-01 00:00:00 | 1036   | 37    | 4           |
+| 2021-01-01 00:00:00 | 4039   | 176   | 4           |
+| 2021-01-01 00:00:00 | 12894  | 478   | 4           |
+| 2021-01-01 00:00:00 | 4669   | 180   | 4           |
+| 2021-01-01 00:00:00 | 6377   | 246   | 4           |
+| 2021-01-01 00:00:00 | 4599   | 256   | 4           |
+| 2021-01-01 00:00:00 | 2751   | 251   | 4           |
+| 2021-01-01 00:00:00 | 15596  | 975   | 4           |
+| 2021-01-01 00:00:00 | 8561   | 330   | 4           |
+| 2021-01-01 00:00:00 | 14273  | 752   | 4           |
+| 2021-01-01 00:00:00 | 2506   | 148   | 4           |
 
-Removes an index from a table.
+**Explanation**:
+- `WEEKDAY()` is a built-in function that returns day of week as a number
+- Weekday numbering: 0=Monday, 1=Tuesday, 2=Wednesday, 3=Thursday, 4=Friday, 5=Saturday, 6=Sunday
+- Friday = 4, so the condition is `WEEKDAY(sale_date) = 4`
+- Can also create alias `AS day_of_week` for clarity
 
-**Syntax**:
+**Important Note**: When using a calculated column in WHERE clause, you cannot reference the alias. You must repeat the calculation:
 ```sql
-DROP INDEX index_name;
-```
+-- CORRECT:
+WHERE WEEKDAY(sale_date) = 4
 
-**Example**:
-```sql
-DROP INDEX idx_student_name;
-```
-
-### CREATE and DROP CONSTRAINT
-
-Creates or removes constraints to ensure data integrity.
-
-**Common Constraints**:
-- PRIMARY KEY
-- FOREIGN KEY
-- UNIQUE
-- NOT NULL
-- CHECK
-- DEFAULT
-
-**Example - Add Constraint**:
-```sql
-ALTER TABLE orders 
-ADD CONSTRAINT fk_customer 
-FOREIGN KEY (customer_id) 
-REFERENCES customers(id);
-```
-
-**Example - Drop Constraint**:
-```sql
-ALTER TABLE orders 
-DROP CONSTRAINT fk_customer;
+-- INCORRECT (will give error):
+WHERE day_of_week = 4
 ```
 
 ---
 
-## Constraints in SQL
+## Part 3: Logical Operators - AND, OR, NOT
 
-SQL constraints are rules applied to columns to ensure data integrity and quality.
+### The OR Operator
 
-### NOT NULL
+**Scenario**: Find all people in either "Delish" or "Juices" team
 
-Ensures that a column cannot contain NULL values.
-
-**Syntax**:
+**Query Method 1 - Using Multiple OR Conditions**:
 ```sql
-CREATE TABLE table_name (
-    column_name datatype NOT NULL
-);
+SELECT * FROM people
+WHERE team = 'Delish'
+OR team = 'Juices';
 ```
 
-**Example**:
+**Explanation**:
+- Shows results where team equals 'Delish' OR team equals 'Juices'
+- Either condition being true includes the row
+- Person cannot be in both teams, so OR is appropriate
+
+**Limitation**: If you need many possible values, OR conditions become repetitive and difficult to maintain
+
+### The IN Operator
+
+**Query Method 2 - Using IN (Cleaner Approach)**:
 ```sql
-CREATE TABLE students (
-    full_name VARCHAR(50) NOT NULL,
-    roll_no INT NOT NULL
-);
+SELECT * FROM people
+WHERE team IN ('Delish', 'Juices');
 ```
 
-### UNIQUE
+**Explanation**:
+- `IN` is shorthand for multiple OR conditions
+- Specify multiple values in parentheses, separated by commas
+- All text values must be in single quotes
+- More flexible when you have many possible values
+- More readable and maintainable
 
-Ensures all values in a column are unique; no duplicates allowed.
+**Advantage over OR**: When you need 5, 7, or 10+ possible values, IN is much cleaner than chaining multiple OR conditions.
 
-**Syntax**:
+### The LIKE Operator - Pattern Matching
+
+**Scenario**: Find all people whose name begins with 'B'
+
+**Query**:
 ```sql
-CREATE TABLE table_name (
-    column_name datatype UNIQUE
-);
+SELECT * FROM people
+WHERE salesperson LIKE 'B%';
 ```
 
-**Example**:
+**Explanation**:
+- `LIKE` operator performs pattern matching
+- `B%` means: starts with 'B', followed by anything (%)
+- `%` is a wildcard meaning "any character, zero or more times"
+- Names starting with B: Boris, Bonnie, etc.
+
+**Pattern Matching Examples**:
+
+**Find names starting with B**:
 ```sql
-CREATE TABLE students (
-    email VARCHAR(100) UNIQUE,
-    phone VARCHAR(15) UNIQUE
-);
+LIKE 'B%'
 ```
 
-### PRIMARY KEY
-
-Uniquely identifies each row in a table. A column with PRIMARY KEY is both NOT NULL and UNIQUE. Each table can have only one PRIMARY KEY.
-
-**Syntax**:
+**Find names containing B anywhere**:
 ```sql
-CREATE TABLE table_name (
-    column_name datatype PRIMARY KEY
-);
+LIKE '%B%'
 ```
 
-**Example**:
+**Find names ending with B**:
 ```sql
-CREATE TABLE students (
-    roll_no INT PRIMARY KEY,
-    full_name VARCHAR(50) NOT NULL
-);
+LIKE '%B'
 ```
 
-### FOREIGN KEY
-
-Establishes a relationship between two tables by referencing the PRIMARY KEY of another table. Prevents actions that would destroy links between tables.
-
-**Syntax**:
+**Find names with B as second character**:
 ```sql
-CREATE TABLE table_name (
-    column_name datatype,
-    FOREIGN KEY (column_name) REFERENCES other_table(primary_key)
-);
+LIKE '_B%'
+```
+(Where `_` means exactly one character)
+
+### The NOT Operator
+
+**Scenario**: Find sales where the team is NOT equal to a specific value
+
+**Query**:
+```sql
+SELECT * FROM sales
+WHERE team != 'Marketing'
+-- OR --
+WHERE team <> 'Marketing'
+-- OR --
+WHERE NOT (team = 'Marketing')
 ```
 
-**Example**:
-```sql
-CREATE TABLE courses (
-    course_id INT PRIMARY KEY,
-    student_id INT,
-    course_name VARCHAR(100),
-    FOREIGN KEY (student_id) REFERENCES students(roll_no)
-);
-```
-
-**Characteristics of FOREIGN KEY**:
-- Can have duplicate values
-- Can contain NULL values
-- Multiple FOREIGN KEYs allowed in a table
-- Prevents referential integrity violations
-
-### DEFAULT
-
-Sets a default value for a column if no value is provided during insertion.
-
-**Syntax**:
-```sql
-CREATE TABLE table_name (
-    column_name datatype DEFAULT default_value
-);
-```
-
-**Example**:
-```sql
-CREATE TABLE students (
-    city VARCHAR(50) DEFAULT 'Unknown',
-    country VARCHAR(50) DEFAULT 'India'
-);
-```
-
-### CHECK
-
-Limits the values allowed in a column based on a condition.
-
-**Syntax**:
-```sql
-CREATE TABLE table_name (
-    column_name datatype CHECK (condition)
-);
-```
-
-**Example**:
-```sql
-CREATE TABLE students (
-    age INT CHECK (age >= 5 AND age <= 25),
-    marks INT CHECK (marks >= 0 AND marks <= 100)
-);
-```
+**Explanation**:
+- `!=` and `<>` both mean "not equal to"
+- `NOT` operator reverses a condition
+- All three queries produce identical results
 
 ---
 
-## Data Query Language (DQL)
+## Part 4: Conditional Logic with CASE
 
-DQL is focused on retrieving data from databases using the SELECT statement.
+### Understanding CASE Statements
 
-### SELECT Statement
+**Purpose**: Create categorizations or conditional logic within SELECT statements
 
-Retrieves specific columns from a table.
+**Scenario**: Categorize sales amounts into different tiers:
+- Under $1,000: "Under 1K"
+- $1,000 to $5,000: "Under 5K"
+- $5,000 to $10,000: "Under 10K"
+- Over $10,000: "10K or More"
 
-**Basic Syntax**:
+### CASE Statement Structure
+
+**Query**:
 ```sql
-SELECT column1, column2, ... FROM table_name;
+SELECT 
+  sale_date,
+  amount,
+  CASE
+    WHEN amount < 1000 THEN 'Under 1K'
+    WHEN amount < 5000 THEN 'Under 5K'
+    WHEN amount < 10000 THEN 'Under 10K'
+    ELSE '10K or More'
+  END AS amount_category
+FROM sales;
 ```
 
-**Select All Columns**:
+**Explanation**:
+- `CASE` begins the conditional logic
+- `WHEN condition THEN result` checks each condition sequentially
+- Conditions are evaluated in order from top to bottom
+- First matching condition returns its result
+- `ELSE` provides default value if no conditions match
+- `END` terminates the CASE statement
+- Assign alias `AS amount_category` to name the result column
+
+### CASE with Multiple Conditions
+
+You can use multiple WHEN statements and combine conditions as needed.
+
+**Query Structure Best Practices**:
+
+For clarity in longer queries, break CASE statements into multiple lines:
 ```sql
-SELECT * FROM table_name;
+SELECT 
+  sale_date,
+  amount,
+  CASE
+    WHEN amount < 1000 THEN 'Under 1K'
+    WHEN amount < 5000 THEN 'Under 5K'
+    WHEN amount < 10000 THEN 'Under 10K'
+    ELSE '10K or More'
+  END AS amount_category
+FROM sales;
 ```
 
-**Examples**:
-```sql
--- Select specific columns
-SELECT full_name, city FROM students;
-
--- Select all columns
-SELECT * FROM students;
-
--- Select with column order
-SELECT city, full_name, marks FROM students;
-```
-
-### WHERE Clause
-
-Filters records based on specified conditions.
-
-**Syntax**:
-```sql
-SELECT column1, column2, ... FROM table_name 
-WHERE condition;
-```
-
-**Example**:
-```sql
-SELECT * FROM students WHERE city = 'Mumbai';
-SELECT * FROM students WHERE marks > 80;
-```
-
-### Operators in WHERE Clause
-
-#### Comparison Operators
-
-| Operator | Meaning | Example |
-|----------|---------|---------|
-| = | Equal to | marks = 90 |
-| != or <> | Not equal to | city != 'Delhi' |
-| > | Greater than | marks > 80 |
-| < | Less than | age < 25 |
-| >= | Greater than or equal | marks >= 80 |
-| <= | Less than or equal | age <= 20 |
-
-#### Logical Operators
-
-**AND**:
-- Returns records where ALL conditions are true
-- Syntax: `condition1 AND condition2 AND condition3`
-- Example: `SELECT * FROM students WHERE city = 'Mumbai' AND marks > 80;`
-
-**OR**:
-- Returns records where ANY condition is true
-- Syntax: `condition1 OR condition2 OR condition3`
-- Example: `SELECT * FROM students WHERE city = 'Mumbai' OR city = 'Delhi';`
-
-**NOT**:
-- Negates a condition
-- Syntax: `NOT condition`
-- Example: `SELECT * FROM students WHERE NOT city = 'Delhi';`
-
-#### Advanced Operators
-
-**IN**:
-- Matches any value in a list
-- Syntax: `SELECT * FROM table WHERE column IN (value1, value2, value3)`
-- Example: `SELECT * FROM students WHERE city IN ('Mumbai', 'Delhi', 'Bangalore');`
-
-**BETWEEN**:
-- Selects values within a given range
-- Syntax: `SELECT * FROM table WHERE column BETWEEN value1 AND value2`
-- Example: `SELECT * FROM students WHERE marks BETWEEN 70 AND 90;`
-
-**LIKE**:
-- Searches for a specified pattern in a column
-- Wildcards:
-  - `%` represents zero, one, or multiple characters
-  - `_` represents one single character
-
-**LIKE Examples**:
-```sql
--- Names starting with 'A'
-SELECT * FROM students WHERE full_name LIKE 'A%';
-
--- Names ending with 'a'
-SELECT * FROM students WHERE full_name LIKE '%a';
-
--- Names containing 'ar'
-SELECT * FROM students WHERE full_name LIKE '%ar%';
-
--- Names with 'r' as second character
-SELECT * FROM students WHERE full_name LIKE '_r%';
-
--- Names starting with 'a' and at least 2 characters
-SELECT * FROM students WHERE full_name LIKE 'a_%';
-
--- Names starting with 'a' and ending with 'o'
-SELECT * FROM students WHERE full_name LIKE 'a%o';
-```
-
-**IS NULL**:
-- Checks for NULL values
-- Syntax: `SELECT * FROM table WHERE column IS NULL`
-- Example: `SELECT * FROM students WHERE email IS NULL;`
-
-#### Bitwise Operators
-
-| Operator | Name | Example |
-|----------|------|---------|
-| & | Bitwise AND | marks & 5 |
-| \| | Bitwise OR | marks \| 5 |
-
-#### Arithmetic Operators
-
-| Operator | Operation | Example |
-|----------|-----------|---------|
-| + | Addition | marks + 10 |
-| - | Subtraction | marks - 5 |
-| * | Multiplication | marks * 2 |
-| / | Division | marks / 2 |
-| % | Modulus | marks % 10 |
-
-### DISTINCT Keyword
-
-Removes duplicate rows from query results.
-
-**Syntax**:
-```sql
-SELECT DISTINCT column1, column2 FROM table_name;
-```
-
-**Example**:
-```sql
--- Get unique cities
-SELECT DISTINCT city FROM students;
-
--- Get unique combinations of city and marks range
-SELECT DISTINCT city, marks FROM students;
-```
-
-### LIMIT Clause
-
-Sets an upper limit on the number of rows returned.
-
-**Syntax**:
-```sql
-SELECT column1, column2 FROM table_name 
-LIMIT number;
-```
-
-**Example**:
-```sql
--- Get only first 5 students
-SELECT * FROM students LIMIT 5;
-
--- Get first 10 high scorers
-SELECT * FROM students ORDER BY marks DESC LIMIT 10;
-```
-
-### ORDER BY Clause
-
-Sorts the result set in ascending or descending order.
-
-**Syntax**:
-```sql
-SELECT column1, column2 FROM table_name 
-ORDER BY column_name ASC|DESC;
-```
-
-**Examples**:
-
-#### Ascending Order
-```sql
--- Default ascending order
-SELECT * FROM students ORDER BY marks;
-SELECT * FROM students ORDER BY marks ASC;
-```
-
-#### Descending Order
-```sql
--- Highest marks first
-SELECT * FROM students ORDER BY marks DESC;
-```
-
-#### Multiple Column Sorting
-```sql
--- Sort by city first, then by marks
-SELECT * FROM students ORDER BY city ASC, marks DESC;
-```
-
-#### Sorting by Expression
-```sql
--- Sort by calculated values
-SELECT full_name, marks, marks * 1.1 AS adjusted_marks 
-FROM students 
-ORDER BY adjusted_marks DESC;
-```
-
-#### Sorting by Column Position
-```sql
--- Sort by second column (descending), then first column (ascending)
-SELECT full_name, marks FROM students ORDER BY 2 DESC, 1 ASC;
-```
-
-#### Handling NULL Values
-```sql
--- Place NULL values at the end
-SELECT * FROM students ORDER BY email NULLS LAST;
-
--- Place NULL values at the beginning
-SELECT * FROM students ORDER BY email NULLS FIRST;
-```
-
-### AS Keyword
-
-Renames columns or expressions in query results (creates aliases).
-
-**Syntax**:
-```sql
-SELECT column_name AS "Alias Name" FROM table_name;
-```
-
-**Examples**:
-```sql
--- Rename single column
-SELECT full_name AS "Student Name", marks AS "Score" FROM students;
-
--- Rename with expressions
-SELECT full_name, marks * 1.1 AS "Adjusted Marks" FROM students;
-
--- Use in calculations
-SELECT full_name, marks / 10 AS "Grade Points" FROM students;
-```
-
-### GROUP BY Clause
-
-Groups rows that have the same values into summary rows, typically used with aggregate functions.
-
-**Syntax**:
-```sql
-SELECT column1, aggregate_function(column2) 
-FROM table_name 
-GROUP BY column1;
-```
-
-**Key Concepts**:
-- Collects data from multiple records
-- Groups results by one or more columns
-- Usually paired with aggregate functions (COUNT, SUM, AVG, MAX, MIN)
-- Returns one row per group
-
-**Examples**:
-
-```sql
--- Count students per city
-SELECT city, COUNT(*) as student_count 
-FROM students 
-GROUP BY city;
-
--- Average marks per city
-SELECT city, AVG(marks) as average_marks 
-FROM students 
-GROUP BY city;
-
--- Count students per gender
-SELECT gender, COUNT(*) 
-FROM students 
-GROUP BY gender;
-```
-
-#### Grouping by Multiple Columns
-
-```sql
--- Count students by city and gender
-SELECT city, gender, COUNT(*) 
-FROM students 
-GROUP BY city, gender;
-
--- Average marks by city and gender
-SELECT city, gender, AVG(marks) 
-FROM students 
-GROUP BY city, gender;
-```
-
-#### GROUP BY with ORDER BY
-
-```sql
--- Get cities with most students
-SELECT city, COUNT(*) as count 
-FROM students 
-GROUP BY city 
-ORDER BY count DESC;
-```
-
-### HAVING Clause
-
-Filters grouped data based on aggregate function results. Used with GROUP BY.
-
-**Syntax**:
-```sql
-SELECT column1, aggregate_function(column2) 
-FROM table_name 
-GROUP BY column1 
-HAVING condition;
-```
-
-**Key Differences from WHERE**:
-- WHERE filters rows before grouping
-- HAVING filters groups after grouping
-- HAVING works with aggregate functions
-
-**Examples**:
-
-```sql
--- Get cities with more than 5 students
-SELECT city, COUNT(*) as count 
-FROM students 
-GROUP BY city 
-HAVING COUNT(*) > 5;
-
--- Get cities where average marks exceed 80
-SELECT city, AVG(marks) as avg_marks 
-FROM students 
-GROUP BY city 
-HAVING AVG(marks) > 80;
-
--- Get cities where max marks is greater than 90
-SELECT city, MAX(marks) 
-FROM students 
-GROUP BY city 
-HAVING MAX(marks) > 90;
-```
-
-### Aggregate Functions
-
-Perform calculations on groups of rows or entire result sets, returning a single value.
-
-#### COUNT()
-
-Counts the number of rows in a group or result set.
-
-**Syntax**:
-```sql
-SELECT COUNT(column) FROM table_name;
-SELECT COUNT(*) FROM table_name;
-SELECT COUNT(DISTINCT column) FROM table_name;
-```
-
-**Examples**:
-```sql
--- Total students
-SELECT COUNT(*) FROM students;
-
--- Students in Mumbai
-SELECT COUNT(*) FROM students WHERE city = 'Mumbai';
-
--- Unique cities
-SELECT COUNT(DISTINCT city) FROM students;
-
--- Students with recorded emails
-SELECT COUNT(email) FROM students;
-```
-
-#### SUM()
-
-Calculates the total sum of numeric values.
-
-**Syntax**:
-```sql
-SELECT SUM(column) FROM table_name;
-```
-
-**Examples**:
-```sql
--- Total marks of all students
-SELECT SUM(marks) FROM students;
-
--- Total marks per city
-SELECT city, SUM(marks) FROM students GROUP BY city;
-```
-
-#### AVG()
-
-Computes the average of numeric values.
-
-**Syntax**:
-```sql
-SELECT AVG(column) FROM table_name;
-```
-
-**Examples**:
-```sql
--- Average marks
-SELECT AVG(marks) FROM students;
-
--- Average marks per city
-SELECT city, AVG(marks) FROM students GROUP BY city;
-
--- Average marks excluding values below 50
-SELECT AVG(marks) FROM students WHERE marks > 50;
-```
-
-#### MAX()
-
-Finds the maximum value in a set.
-
-**Syntax**:
-```sql
-SELECT MAX(column) FROM table_name;
-```
-
-**Examples**:
-```sql
--- Highest marks
-SELECT MAX(marks) FROM students;
-
--- Highest marks per city
-SELECT city, MAX(marks) FROM students GROUP BY city;
-
--- Name of student with highest marks
-SELECT full_name, marks FROM students 
-WHERE marks = (SELECT MAX(marks) FROM students);
-```
-
-#### MIN()
-
-Retrieves the minimum value in a set.
-
-**Syntax**:
-```sql
-SELECT MIN(column) FROM table_name;
-```
-
-**Examples**:
-```sql
--- Lowest marks
-SELECT MIN(marks) FROM students;
-
--- Lowest marks per city
-SELECT city, MIN(marks) FROM students GROUP BY city;
-```
-
-### General SELECT Query Order
-
-The proper order of clauses in a SELECT statement:
-
-```sql
-SELECT column(s)
-FROM table_name
-WHERE condition
-GROUP BY column(s)
-HAVING condition
-ORDER BY column(s) ASC|DESC
-LIMIT number;
-```
-
-**Execution Order** (differs from written order):
-1. FROM - Select the table
-2. WHERE - Filter rows
-3. GROUP BY - Group filtered rows
-4. HAVING - Filter groups
-5. SELECT - Select columns
-6. ORDER BY - Sort results
-7. LIMIT - Limit results
+### Use Cases for CASE
+
+- Create numeric categorizations
+- Create text-based categorizations
+- Use in WHERE clause to filter on categorizations
+- Map values for reporting and analysis
+- Create custom display values
 
 ---
 
-## Data Manipulation Language (DML)
+## Part 5: JOINs - Combining Multiple Tables
 
-DML encompasses commands that manipulate data within a database.
+### Understanding JOINs
 
-### INSERT Statement
+**Definition**: JOINs combine data from multiple tables based on related columns.
 
-Adds new records to a table.
+**Concept**: Similar to VLOOKUP in Excel, but SQL uses more optimized methods.
+
+**Critical Prerequisite**: Understand how tables are linked through foreign keys before attempting JOINs.
+
+### Database Relationships in Awesome Chocolates
+
+**Table Relationships**:
+- Sales table contains: `sp_id` (links to People table)
+- Sales table contains: `pid` (links to Products table)
+- Sales table contains: `geo_id` (links to Geography table)
+
+**Principle**: IDs that appear in multiple tables represent the same entity and can be used to JOIN tables.
+
+### Basic JOIN Example
+
+**Scenario**: Show sales data with the person's name instead of just ID
+
+**Without JOIN - Problem**:
+```sql
+SELECT * FROM sales;
+-- Shows sp01, sp02, etc. but we don't know who these people are
+```
+
+**With JOIN - Solution**:
+```sql
+SELECT 
+  s.sale_date,
+  s.amount,
+  p.salesperson
+FROM sales s
+JOIN people p ON p.sp_id = s.sp_id;
+```
+
+**Explanation**:
+- `FROM sales s` starts with sales table, aliased as 's'
+- `JOIN people p` adds the people table, aliased as 'p'
+- `ON p.sp_id = s.sp_id` specifies the join condition - matching IDs
+- `s.` and `p.` prefixes specify which table a column comes from
+- When IDs match, data from both tables appears on the same row
+
+### Table Aliases
+
+**Purpose**: Shorten long table names and make queries more readable
 
 **Syntax**:
 ```sql
-INSERT INTO table_name (column1, column2, ...) 
-VALUES (value1, value2, ...);
+FROM sales s
+-- OR --
+FROM sales AS s
 ```
 
-**Insert Single Row**:
+**Consistency Practice**: Use consistent aliases within your query. Example:
+- `s` for sales
+- `p` for people
+- `pr` for products
+- `g` for geography
+
+### Column Qualification
+
+**Why Qualify Columns with Table Prefix?**
+
+When columns have the same name in multiple tables, prefix with table alias:
 ```sql
-INSERT INTO students (roll_no, full_name, city, marks) 
-VALUES (101, 'Raj Kumar', 'Mumbai', 85);
+s.sp_id    -- sales table's sp_id
+p.sp_id    -- people table's sp_id
 ```
 
-**Insert Multiple Rows**:
+**Best Practice**: Even when not required, qualify columns for clarity.
+
+### LEFT JOIN vs JOIN
+
+**JOIN (INNER JOIN)**:
+- Returns only rows where IDs match in BOTH tables
+- If sales table has sp_id that doesn't exist in people table, that row is excluded
+
+**LEFT JOIN**:
+- Returns ALL rows from the left table (first table after FROM)
+- Includes matching rows from the right table
+- If no match found, right table columns show as blank/NULL
+- Used to preserve all data from the primary table
+
+**Visual Representation**:
+```
+Sales table (LEFT) ----------- People table (RIGHT)
+[Keep ALL from sales]
+[If match in people → Include people data]
+[If no match in people → Show blank for people columns]
+```
+
+**When to Use LEFT JOIN**: Most common in business situations because you want to preserve all sales data even if the person's record doesn't exist in the people table.
+
+### JOIN with WHERE Clause
+
+**Scenario**: Show sales under $500 for people in the "Delish" team
+
+**Query**:
 ```sql
-INSERT INTO students (roll_no, full_name, city, marks) 
-VALUES 
-(102, 'Priya Sharma', 'Delhi', 92),
-(103, 'Amit Patel', 'Bangalore', 78),
-(104, 'Neha Singh', 'Pune', 88);
+SELECT 
+  s.sale_date,
+  s.amount,
+  p.salesperson,
+  p.team
+FROM sales s
+JOIN people p ON p.sp_id = s.sp_id
+WHERE s.amount < 500
+AND p.team = 'Delish';
 ```
 
-**Insert Without Specifying Columns** (all columns required in order):
+**Explanation**:
+- JOIN combines the tables
+- WHERE clause filters results on joined data
+- Can filter on any column from either table
+
+### Multiple JOINs
+
+**Scenario**: Show sales with person name, product name, and team
+
+**Query**:
 ```sql
-INSERT INTO students 
-VALUES (105, 'Vikram Verma', '2006-03-15', 'M', 'Chennai', 81);
+SELECT 
+  s.sale_date,
+  s.amount,
+  p.salesperson,
+  pr.product,
+  p.team
+FROM sales s
+JOIN people p ON p.sp_id = s.sp_id
+JOIN products pr ON pr.pid = s.pid;
 ```
 
-**Insert Default Values**:
+**Explanation**:
+- Chain multiple JOINs by adding additional JOIN clauses
+- Each JOIN specifies its own ON condition
+- Data from all three tables appears in result
+- Order of JOINs: START with FROM clause, then add each JOIN sequentially
+
+### JOIN with Null Handling
+
+**Problem**: Some people records might not have a team assigned (blank or NULL)
+
+**Query**:
 ```sql
-INSERT INTO table_name VALUES (DEFAULT, DEFAULT, ...);
+SELECT 
+  s.sale_date,
+  s.amount,
+  p.salesperson,
+  p.team
+FROM sales s
+LEFT JOIN people p ON p.sp_id = s.sp_id
+WHERE s.amount < 500
+AND p.team IS NULL;
 ```
 
-### UPDATE Statement
+**Explanation**:
+- `IS NULL` checks for NULL values (true null, not blank spaces)
+- `IS NOT NULL` checks for non-null values
 
-Modifies existing records in a table.
+**Database Nuance**: Null vs Blank
+- **NULL**: Truly no value assigned (appears as "NULL" in results)
+- **Blank**: Empty string or spaces (appears as empty in results)
 
-**Syntax**:
+Different filtering required for each:
+- NULL: `WHERE column IS NULL`
+- Blank: `WHERE column = ''`
+
+### Three-Table JOIN Example
+
+**Complete Query with Multiple Filters**:
 ```sql
-UPDATE table_name 
-SET column1 = value1, column2 = value2, ... 
-WHERE condition;
+SELECT 
+  s.sale_date,
+  s.amount,
+  p.salesperson,
+  pr.product,
+  g.geo
+FROM sales s
+JOIN people p ON p.sp_id = s.sp_id
+JOIN products pr ON pr.pid = s.pid
+JOIN geography g ON g.geo_id = s.geo_id
+WHERE s.amount < 500
+AND p.team IS NOT NULL
+AND g.geo IN ('New Zealand', 'India')
+ORDER BY s.sale_date;
 ```
 
-**Important**: Always use WHERE clause to specify which records to update. Without WHERE, ALL records will be updated.
-
-**Examples**:
-
-```sql
--- Update single student's marks
-UPDATE students SET marks = 90 WHERE roll_no = 101;
-
--- Update multiple columns
-UPDATE students 
-SET marks = 95, city = 'Delhi' 
-WHERE roll_no = 102;
-
--- Update based on condition
-UPDATE students SET marks = marks + 5 WHERE city = 'Mumbai';
-
--- Update all records (use with caution)
-UPDATE students SET status = 'Active';
-```
-
-### DELETE Statement
-
-Removes records from a table.
-
-**Syntax**:
-```sql
-DELETE FROM table_name 
-WHERE condition;
-```
-
-**Important**: Always use WHERE clause. Without WHERE, ALL records will be deleted.
-
-**Examples**:
-
-```sql
--- Delete specific student
-DELETE FROM students WHERE roll_no = 101;
-
--- Delete students with low marks
-DELETE FROM students WHERE marks < 40;
-
--- Delete students from specific city
-DELETE FROM students WHERE city = 'Unknown';
-
--- Delete all records (use with extreme caution)
-DELETE FROM students;
-```
-
-**DELETE vs TRUNCATE vs DROP**:
-- **DELETE**: Removes rows; can specify conditions; slower; can be rolled back in transactions
-- **TRUNCATE**: Removes all rows; no conditions; faster; resets identity; cannot select specific rows
-- **DROP**: Removes entire table structure and data; fastest; cannot be rolled back easily
+**Explanation**:
+- Combines data from 4 tables
+- Multiple WHERE conditions filter results
+- ORDER BY sorts by date chronologically
+- Results show only sales meeting all criteria
 
 ---
 
-## Data Control Language (DCL)
+## Part 6: GROUP BY and Aggregation Functions
 
-DCL focuses on managing access rights, permissions, and security-related aspects.
+### Understanding GROUP BY
 
-### GRANT Command
+**Purpose**: Summarize data at a higher level by grouping rows and applying aggregation functions.
 
-Provides specific privileges or permissions to users or roles.
+**Concept**: Similar to Pivot Table in Excel - takes detailed data and creates summary reports.
 
-**Syntax**:
-```sql
-GRANT privilege_type 
-ON object_name 
-TO user_or_role;
-```
+**When to Use**: You have data at a detailed level but want to see it at a higher level.
 
-**Parameters**:
-- **privilege_type**: SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, etc.
-- **object_name**: Table name, view name, or database name
-- **user_or_role**: Username or role name
+### Aggregation Functions
 
-**Examples**:
+Common SQL aggregation functions:
 
-```sql
--- Grant SELECT privilege on Employees table to Analyst user
-GRANT SELECT ON Employees TO Analyst;
-
--- Grant multiple privileges
-GRANT SELECT, INSERT, UPDATE ON Students TO Manager;
-
--- Grant all privileges
-GRANT ALL ON Database_Name TO Admin;
-
--- Grant with GRANT option (user can grant to others)
-GRANT SELECT ON Employees TO Analyst WITH GRANT OPTION;
-```
-
-### REVOKE Command
-
-Removes or revokes previously granted privileges.
-
-**Syntax**:
-```sql
-REVOKE privilege_type 
-ON object_name 
-FROM user_or_role;
-```
-
-**Examples**:
-
-```sql
--- Revoke SELECT privilege
-REVOKE SELECT ON Employees FROM Analyst;
-
--- Revoke multiple privileges
-REVOKE SELECT, INSERT ON Students FROM Manager;
-
--- Revoke all privileges
-REVOKE ALL ON Database_Name FROM User;
-
--- Revoke GRANT option
-REVOKE GRANT OPTION FOR SELECT ON Employees FROM Analyst;
-```
-
-### DCL and Database Security
-
-DCL plays a crucial role in database security:
-- Controls who can access data
-- Prevents unauthorized data modifications
-- Restricts sensitive information access
-- Ensures compliance with security policies
-- Maintains data integrity through access control
-
-**Best Practices**:
-- Grant minimum necessary privileges (Principle of Least Privilege)
-- Regularly audit user permissions
-- Revoke unnecessary privileges
-- Use roles for easier permission management
-- Separate read-only and write access when possible
-
----
-
-## Transaction Control Language (TCL)
-
-TCL manages transactions to ensure data consistency and integrity.
-
-### What is a Transaction?
-
-A transaction is a sequence of one or more SQL statements that are executed as a single unit of work. Either all statements are completed successfully or none of them are applied.
-
-### COMMIT Command
-
-Permanently saves changes made during a transaction.
-
-**Syntax**:
-```sql
-COMMIT;
-```
-
-**Characteristics**:
-- Makes all changes permanent
-- Cannot be undone after execution
-- Marks successful completion of transaction
-- Releases database locks
-
-**Example**:
-```sql
-UPDATE Employees
-SET Salary = Salary * 1.10
-WHERE Department = 'Sales';
-
-COMMIT;
-```
-
-### ROLLBACK Command
-
-Undoes changes made during a transaction, reverting to the previous state.
-
-**Syntax**:
-```sql
-ROLLBACK;
-```
-
-**Characteristics**:
-- Reverts all changes since last COMMIT or SAVEPOINT
-- Returns database to consistent state
-- Used when errors occur
-- Releases database locks
-
-**Example**:
-```sql
-BEGIN;
-UPDATE Inventory
-SET Quantity = Quantity - 10
-WHERE ProductID = 101;
-
--- An error occurs here
-ROLLBACK;
--- Changes are undone
-```
-
-### SAVEPOINT Command
-
-Creates a named point within a transaction to allow partial rollbacks.
-
-**Syntax**:
-```sql
-SAVEPOINT savepoint_name;
-```
-
-**Characteristics**:
-- Creates markers within transactions
-- Allows selective rollback to specific points
-- Multiple SAVEPOINTs can exist in one transaction
-- Useful for complex multi-step transactions
-
-**Example**:
-```sql
-BEGIN;
-
-UPDATE Accounts
-SET Balance = Balance - 100
-WHERE AccountID = 123;
-
-SAVEPOINT before_withdrawal;
-
-UPDATE Accounts
-SET Balance = Balance + 100
-WHERE AccountID = 456;
-
--- An error occurs here
-ROLLBACK TO before_withdrawal;
--- First update is still applied
--- Second update is rolled back
-
-COMMIT;
-```
-
-### Transaction Example Workflow
-
-```sql
--- Start transaction
-BEGIN;
-
--- Statement 1: Debit from account A
-UPDATE Accounts SET Balance = Balance - 500 WHERE AccountID = 1;
-
--- Create savepoint
-SAVEPOINT sp1;
-
--- Statement 2: Credit to account B
-UPDATE Accounts SET Balance = Balance + 500 WHERE AccountID = 2;
-
--- If error occurs, rollback to savepoint
-ROLLBACK TO sp1;
-
--- Or if all is well, commit transaction
-COMMIT;
-```
-
-### TCL and Transaction Management
-
-TCL commands are essential for:
-- **Data Consistency**: Ensures related changes succeed or fail together
-- **Data Integrity**: Prevents partial updates
-- **Error Handling**: Allows rollback on errors
-- **Atomicity**: Guarantees all-or-nothing execution
-- **Reliability**: Maintains database in valid state
-
----
-
-## Joins
-
-A join is an operation that combines rows from two or more tables based on related columns.
-
-### Importance of Joins
-
-In normalized databases:
-- Related data is stored in separate tables
-- Joins retrieve connected data from multiple tables
-- Essential for querying related information
-- Maintain data integrity through relationships
-
-### Primary Key and Foreign Key
-
-**Primary Key (PK)**:
-- Uniquely identifies each row in a table
-- Must be unique and NOT NULL
-- Only one per table
-- Example: `roll_no INT PRIMARY KEY`
-
-**Foreign Key (FK)**:
-- Column referencing another table's primary key
-- Establishes relationship between tables
-- Can have duplicate and NULL values
-- Multiple foreign keys allowed in a table
-- Example: `student_id INT FOREIGN KEY REFERENCES students(roll_no)`
-
-### Types of Joins
-
-#### 1. INNER JOIN
-
-Returns only rows where the join condition is met in all participating tables.
-
-**Syntax**:
-```sql
-SELECT columns
-FROM table1
-INNER JOIN table2
-ON table1.column = table2.column;
-```
-
-**Characteristics**:
-- Returns matching rows only
-- Excludes non-matching rows from both tables
-- Most commonly used join type
-- Can use = or other comparison operators
-
-**Example**:
-
-Students Table:
-| StudentID | StudentName |
-|-----------|-------------|
-| 1 | Alice |
-| 2 | Bob |
-| 3 | Carol |
-
-Courses Table:
-| CourseID | StudentID | CourseName |
-|----------|-----------|-----------|
-| 101 | 1 | Math |
-| 102 | 3 | Science |
-| 103 | 2 | English |
-
-Query:
-```sql
-SELECT Students.StudentName, Courses.CourseName
-FROM Students
-INNER JOIN Courses
-ON Students.StudentID = Courses.StudentID;
-```
-
-Result:
-| StudentName | CourseName |
-|-------------|-----------|
-| Alice | Math |
-| Bob | English |
-| Carol | Science |
-
-#### 2. LEFT JOIN (Left Outer Join)
-
-Returns all rows from the left table and matching rows from the right table. Non-matching right table rows show NULL.
-
-**Syntax**:
-```sql
-SELECT columns
-FROM table1
-LEFT JOIN table2
-ON table1.column = table2.column;
-```
-
-**Characteristics**:
-- Returns all rows from left table
-- Returns matching rows from right table
-- Non-matching right rows appear as NULL
-- Useful for finding unmatched left table records
-
-**Example**:
-
-```sql
-SELECT Students.StudentName, Courses.CourseName
-FROM Students
-LEFT JOIN Courses
-ON Students.StudentID = Courses.StudentID;
-```
-
-Result (with additional unmatched students):
-| StudentName | CourseName |
-|-------------|-----------|
-| Alice | Math |
-| Bob | English |
-| Carol | Science |
-| David | NULL |
-
-#### 3. RIGHT JOIN (Right Outer Join)
-
-Returns all rows from the right table and matching rows from the left table. Non-matching left table rows show NULL.
-
-**Syntax**:
-```sql
-SELECT columns
-FROM table1
-RIGHT JOIN table2
-ON table1.column = table2.column;
-```
-
-**Characteristics**:
-- Returns all rows from right table
-- Returns matching rows from left table
-- Non-matching left rows appear as NULL
-- Inverse of LEFT JOIN
-
-**Example**:
-
-```sql
-SELECT Students.StudentName, Courses.CourseName
-FROM Students
-RIGHT JOIN Courses
-ON Students.StudentID = Courses.StudentID;
-```
-
-#### 4. FULL OUTER JOIN (Full Join)
-
-Returns all rows from both tables. Non-matching rows show NULL values.
-
-**Syntax** (MySQL uses UNION of LEFT and RIGHT JOINs):
-```sql
-SELECT columns
-FROM table1
-LEFT JOIN table2
-ON table1.column = table2.column
-UNION
-SELECT columns
-FROM table1
-RIGHT JOIN table2
-ON table1.column = table2.column;
-```
-
-**Characteristics**:
-- Returns all rows from both tables
-- Includes both matched and unmatched rows
-- Non-matching columns show NULL
-- Most comprehensive join type
-
-**Example**:
-
-```sql
-SELECT Students.StudentName, Courses.CourseName
-FROM Students
-FULL JOIN Courses
-ON Students.StudentID = Courses.StudentID;
-```
-
-#### 5. CROSS JOIN
-
-Produces Cartesian product - combines every row from one table with every row from another table.
-
-**Syntax**:
-```sql
-SELECT columns
-FROM table1
-CROSS JOIN table2;
-```
-
-**Characteristics**:
-- No join condition needed
-- Generates all combinations
-- Result set = (rows in table1) × (rows in table2)
-- Can create very large result sets
-
-**Example**:
-
-Students Table (2 rows):
-| StudentID | StudentName |
-|-----------|-------------|
-| 1 | Alice |
-| 2 | Bob |
-
-Subjects Table (3 rows):
-| SubjectID | SubjectName |
-|-----------|-------------|
-| 101 | Math |
-| 102 | Science |
-| 103 | English |
-
-Query:
-```sql
-SELECT Students.StudentName, Subjects.SubjectName
-FROM Students
-CROSS JOIN Subjects;
-```
-
-Result (2 × 3 = 6 rows):
-| StudentName | SubjectName |
-|-------------|-------------|
-| Alice | Math |
-| Alice | Science |
-| Alice | English |
-| Bob | Math |
-| Bob | Science |
-| Bob | English |
-
-#### 6. SELF JOIN
-
-Joins a table with itself. Used to find relationships within the same table.
-
-**Syntax**:
-```sql
-SELECT columns
-FROM table AS alias1
-JOIN table AS alias2
-ON alias1.column = alias2.column;
-```
-
-**Characteristics**:
-- Table joined with itself
-- Requires table aliases for differentiation
-- Useful for hierarchical data
-- Common with employee-manager relationships
-
-**Example**:
-
-Employees Table:
-| EmployeeID | EmployeeName | ManagerID |
-|-----------|-------------|-----------|
-| 1 | Alice | 3 |
-| 2 | Bob | 3 |
-| 3 | Carol | NULL |
-| 4 | David | 1 |
-
-Query (find employees and their managers):
-```sql
-SELECT e1.EmployeeName AS Employee, 
-       e2.EmployeeName AS Manager
-FROM Employees AS e1
-JOIN Employees AS e2
-ON e1.ManagerID = e2.EmployeeID;
-```
-
-Result:
-| Employee | Manager |
+| Function | Purpose |
 |----------|---------|
-| Alice | Carol |
-| Bob | Carol |
-| David | Alice |
+| `SUM()` | Add values together |
+| `AVG()` | Calculate average |
+| `COUNT()` | Count number of rows |
+| `MIN()` | Find minimum value |
+| `MAX()` | Find maximum value |
 
-### Join Comparison Table
+### Basic GROUP BY Example
 
-| Join Type | Returns | Use Case |
-|-----------|---------|----------|
-| INNER | Matching rows only | Common data between tables |
-| LEFT | All left + matching right | Include all from left table |
-| RIGHT | All right + matching left | Include all from right table |
-| FULL | All rows from both | Complete data from both tables |
-| CROSS | All combinations | Generate all possibilities |
-| SELF | Internal relationships | Hierarchical or related data |
+**Scenario**: Total sales amount by geography
+
+**Query**:
+```sql
+SELECT 
+  geo_id,
+  SUM(amount) AS total_amount
+FROM sales
+GROUP BY geo_id;
+```
+
+**Explanation**:
+- `SUM(amount)` adds up all amounts within each group
+- `GROUP BY geo_id` creates one row for each unique geo_id value
+- Results show: g1, g2, g3, g4, etc. with their total amounts
+
+### Multiple Aggregation Functions
+
+**Query**:
+```sql
+SELECT 
+  geo_id,
+  SUM(amount) AS total_amount,
+  AVG(amount) AS average_amount,
+  SUM(boxes) AS total_boxes
+FROM sales
+GROUP BY geo_id;
+```
+
+**Explanation**:
+- Multiple aggregation functions on same GROUP BY
+- Each function operates within the group
+- Results show summary statistics for each geography
+
+### GROUP BY with JOINs
+
+**Scenario**: Total sales amount by country (using geography table)
+
+**Query**:
+```sql
+SELECT 
+  g.geo,
+  SUM(s.amount) AS total_amount
+FROM sales s
+JOIN geography g ON g.geo_id = s.geo_id
+GROUP BY g.geo;
+```
+
+**Explanation**:
+- JOIN merges tables first
+- Then GROUP BY operates on joined data
+- GROUP BY uses the column being displayed (geo name from geography table)
+- Results are more readable with actual country names instead of IDs
+
+### Multi-Level Grouping
+
+**Scenario**: Total sales by product category AND team
+
+**Query**:
+```sql
+SELECT 
+  pr.category,
+  p.team,
+  SUM(s.boxes) AS total_boxes,
+  SUM(s.amount) AS total_amount
+FROM sales s
+JOIN people p ON p.sp_id = s.sp_id
+JOIN products pr ON pr.pid = s.pid
+GROUP BY pr.category, p.team
+ORDER BY pr.category, p.team;
+```
+
+**Explanation**:
+- `GROUP BY pr.category, p.team` groups by two levels
+- Creates combinations like: Bars-Team1, Bars-Team2, Chocolate-Team1, etc.
+- Any column displayed must either be:
+  - In the GROUP BY clause, OR
+  - Wrapped in an aggregation function (SUM, AVG, COUNT, etc.)
+
+**Critical Rule**: You cannot display columns not in GROUP BY unless they're aggregated. This will cause an error.
+
+**Correct Structure**: Display = GROUP BY + Aggregated Columns
+
+### Filtering GROUP BY Results with WHERE
+
+**Query**:
+```sql
+SELECT 
+  pr.category,
+  p.team,
+  SUM(s.boxes) AS total_boxes,
+  SUM(s.amount) AS total_amount
+FROM sales s
+JOIN people p ON p.sp_id = s.sp_id
+JOIN products pr ON pr.pid = s.pid
+WHERE p.team IS NOT NULL
+GROUP BY pr.category, p.team
+ORDER BY total_amount DESC;
+```
+
+**Explanation**:
+- `WHERE` filters BEFORE grouping
+- Removes blank team records before aggregation
+- Results only include non-null teams
+
+**Note**: WHERE filters individual rows BEFORE aggregation. For filtering AFTER aggregation, use HAVING (not covered in detail here).
+
+### Sorting GROUP BY Results
+
+**Query**:
+```sql
+SELECT 
+  g.geo,
+  SUM(s.amount) AS total_amount
+FROM sales s
+JOIN geography g ON g.geo_id = s.geo_id
+GROUP BY g.geo
+ORDER BY total_amount DESC;
+```
+
+**Explanation**:
+- `ORDER BY total_amount DESC` sorts results by aggregated column
+- DESC = descending (highest to lowest)
+- Highest total amount countries appear first
+
+### LIMIT for Top N Results
+
+**Scenario**: Show only top 10 products by sales
+
+**Query**:
+```sql
+SELECT 
+  pr.product,
+  SUM(s.amount) AS total_amount
+FROM sales s
+JOIN products pr ON pr.pid = s.pid
+GROUP BY pr.product
+ORDER BY total_amount DESC
+LIMIT 10;
+```
+
+**Explanation**:
+- `LIMIT 10` restricts output to first 10 rows
+- Works on sorted data, so first 10 are the TOP 10
+- Applies AFTER ordering
+
+**Query Execution Order**:
+1. FROM/JOIN (get data and combine tables)
+2. WHERE (filter rows)
+3. GROUP BY (aggregate)
+4. ORDER BY (sort)
+5. LIMIT (restrict output)
 
 ---
 
-## Set Operations
+## Advanced Tips and Best Practices
 
-Set operations combine or manipulate result sets of multiple SELECT queries using set theory principles.
+### Query Writing Best Practices
 
-### UNION
-
-Combines result sets of two or more SELECT queries into a single result set, removing duplicates.
-
-**Syntax**:
+**1. Write FROM clause first**:
 ```sql
-SELECT columns FROM table1
-UNION
-SELECT columns FROM table2;
+SELECT 
+FROM table_name
+```
+Then fill in SELECT columns using auto-suggest.
+
+**2. Format for readability**:
+- Put SELECT, FROM, WHERE, GROUP BY, ORDER BY on separate lines
+- Use proper indentation
+- Use table aliases consistently
+
+**3. Use meaningful aliases**:
+```sql
+FROM sales s        -- Clear alias
+JOIN people p ON ... -- Consistent naming
 ```
 
-**Rules**:
-- SELECT queries must have same number of columns
-- Column data types must be compatible
-- Columns must be in same order
-- Duplicate rows are automatically removed
-
-**Example**:
-
-Customers Table:
-| CustomerID | CustomerName |
-|-----------|-------------|
-| 1 | Alice |
-| 2 | Bob |
-
-Suppliers Table:
-| SupplierID | SupplierName |
-|-----------|-------------|
-| 101 | SupplierA |
-| 102 | SupplierB |
-
-Query:
+**4. Always qualify columns**:
 ```sql
-SELECT CustomerName FROM Customers
-UNION
-SELECT SupplierName FROM Suppliers;
+s.amount         -- Clear which table
+p.salesperson    -- No ambiguity
 ```
 
-Result:
-| CustomerName |
-|-------------|
-| Alice |
-| Bob |
-| SupplierA |
-| SupplierB |
-
-### UNION ALL
-
-Combines result sets without removing duplicates. Simply concatenates all rows.
-
-**Syntax**:
+**5. Include semicolons**:
 ```sql
-SELECT columns FROM table1
-UNION ALL
-SELECT columns FROM table2;
+SELECT * FROM sales;
+SELECT * FROM people;
+```
+Semicolon marks end of statement, allows multiple queries in one file.
+
+### Common Mistakes to Avoid
+
+**Mistake 1**: Forgetting GROUP BY
+```sql
+-- WRONG:
+SELECT category, amount FROM sales;
+-- Error or incomplete results
+
+-- CORRECT:
+SELECT category, SUM(amount) FROM sales GROUP BY category;
 ```
 
-**Characteristics**:
-- Retains all rows including duplicates
-- Faster than UNION (no duplicate checking)
-- Used when duplicates are acceptable or desired
-
-**Example**:
+**Mistake 2**: Using unaggregated column in GROUP BY
 ```sql
-SELECT CustomerName FROM Customers
-UNION ALL
-SELECT SupplierName FROM Suppliers;
+-- WRONG:
+SELECT category, product, SUM(amount)
+FROM sales
+GROUP BY category;
+-- Error: product not in GROUP BY
+
+-- CORRECT:
+SELECT category, product, SUM(amount)
+FROM sales
+GROUP BY category, product;
 ```
 
-If there were duplicate names, they would all appear in the result.
-
-### INTERSECT
-
-Returns common rows that exist in result sets of two SELECT queries.
-
-**Syntax**:
+**Mistake 3**: Referencing alias in WHERE clause
 ```sql
-SELECT columns FROM table1
-INTERSECT
-SELECT columns FROM table2;
+-- WRONG:
+SELECT amount AS amt
+WHERE amt > 1000;
+-- Error: alias not recognized in WHERE
+
+-- CORRECT:
+SELECT amount AS amt
+WHERE amount > 1000;
 ```
 
-**Characteristics**:
-- Returns only rows present in ALL result sets
-- Automatically removes duplicates
-- Useful for finding common data
-
-**Example**:
+**Mistake 4**: Missing ON condition in JOIN
 ```sql
-SELECT CustomerName FROM Customers
-INTERSECT
-SELECT SupplierName FROM Suppliers;
+-- WRONG:
+SELECT * FROM sales JOIN people;
+-- Result: Cartesian product (too many rows!)
+
+-- CORRECT:
+SELECT * FROM sales
+JOIN people ON people.sp_id = sales.sp_id;
 ```
 
-Returns names that appear in both Customers and Suppliers.
+### Understanding NULL in SQL
 
-### EXCEPT (or MINUS)
+**NULL vs Blank**:
+- **NULL**: No value assigned in database
+- **Blank**: Empty string or spaces
 
-Returns rows from first query that are NOT in second query.
-
-**Syntax**:
+**Checking for NULL**:
 ```sql
-SELECT columns FROM table1
-EXCEPT
-SELECT columns FROM table2;
+WHERE column IS NULL        -- Check for true NULL
+WHERE column IS NOT NULL    -- Check for non-NULL
+WHERE column != NULL        -- WRONG! Always false
 ```
 
-**Note**: Called MINUS in some databases (Oracle, MySQL alternatives).
+**Important**: Use IS NULL, not = NULL. Never use != NULL.
 
-**Characteristics**:
-- Returns rows in first set but not in second
-- Automatically removes duplicates
-- Order of queries matters
+### Date Functions
 
-**Example**:
+**Extract components**:
 ```sql
-SELECT CustomerName FROM Customers
-EXCEPT
-SELECT SupplierName FROM Suppliers;
+YEAR(sale_date)      -- Returns year as number
+MONTH(sale_date)     -- Returns month as number
+DAY(sale_date)       -- Returns day as number
+WEEKDAY(sale_date)   -- Returns day of week (0-6)
 ```
 
-Returns customer names that are not in suppliers.
+**Date format**: YYYY-MM-DD (Year-Month-Day)
 
-### Set Operations vs Joins
+### Saving Your Work
 
-| Aspect | Set Operations | Joins |
-|--------|----------------|-------|
-| Purpose | Combine result sets based on set theory | Combine rows from tables by condition |
-| Data Source | Result sets of SELECT queries | Columns from related tables |
-| Combining Rows | Combines entire rows from different result sets | Combines rows by matching condition |
-| Output Columns | SELECT queries must have same column count | Can combine any columns |
-| Data Types | Must be compatible | Can differ |
-| Duplicate Handling | UNION removes; UNION ALL keeps | Depends on join type |
-| Performance | Generally faster for simple operations | More efficient for large datasets |
-| Use Cases | Combining data from different sources | Retrieving related data |
+**To save queries**:
+1. Go to File menu
+2. Select "Save Script"
+3. Choose location and filename
+4. File saves as .sql format
+
+**Purpose**: Reuse queries later, share with colleagues, maintain query library.
 
 ---
 
-## Subqueries
+## Learning Resources and Next Steps
 
-Subqueries (also called inner queries or nested queries) use one query's result as input for another query.
+### Recommended Learning Path
 
-### Importance of Subqueries
+1. **Master the basics** covered in this guide
+2. **Practice with provided homework problems** (shown in video)
+3. **Study JOINs deeper** - read additional resources for complex scenarios
+4. **Learn HAVING clause** - for filtering aggregated data
+5. **Explore advanced functions** - window functions, subqueries, etc.
 
-- Break complex problems into manageable steps
-- Filter data based on aggregate results
-- Compare values dynamically
-- Create temporary result sets
-- Improve readability of complex queries
+### Where to Use SQL
 
-### Basic Subquery Syntax
+After mastering SQL queries, use your data with:
+- **Power BI**: Data visualization and analysis
+- **Excel**: Data analysis and reporting
+- **Python**: Data science and machine learning
+- **Tableau**: Advanced visualization
 
+### Practice Importance
+
+**Key Principle**: Learning SQL requires consistent practice. Without practice, you will forget most concepts.
+
+**Practice Strategy**:
+- Download provided homework problems
+- Solve easy problems first
+- Progress to hard problems
+- Hard problems require investigation beyond basic concepts
+- Consistent practice builds mastery
+
+---
+
+## Quick Reference
+
+### Comparison Operators
+```
+>     Greater than
+<     Less than
+=     Equal to
+>=    Greater than or equal to
+<=    Less than or equal to
+!=    Not equal to
+<>    Not equal to (alternative)
+```
+
+### Logical Operators
+```
+AND   Both conditions must be true
+OR    At least one condition must be true
+NOT   Reverses condition
+IN    Value is in list
+BETWEEN    Value is between two numbers
+LIKE   Pattern matching
+```
+
+### Aggregation Functions
+```
+SUM(column)     Total of values
+AVG(column)     Average of values
+COUNT(column)   Number of rows
+MIN(column)     Minimum value
+MAX(column)     Maximum value
+```
+
+### Key Clauses
+```
+SELECT      Specify columns to return
+FROM        Specify primary table
+WHERE       Filter rows before grouping
+JOIN        Combine multiple tables
+ON          Specify join condition
+GROUP BY    Group rows for aggregation
+ORDER BY    Sort results
+LIMIT       Restrict number of rows
+```
+
+### Query Structure (Proper Order)
 ```sql
 SELECT columns
 FROM table
-WHERE column OPERATOR (
-    SELECT column 
-    FROM table 
-    WHERE condition
-);
-```
-
-**Components**:
-- **Outer Query**: Main query using subquery result
-- **Inner Query**: Subquery providing filtered/calculated data
-- **Operator**: Comparison operator (=, >, <, IN, NOT IN, etc.)
-
-### Subquery Types and Examples
-
-#### Single Value Subquery
-
-Returns a single value used in comparison.
-
-**Example - Find students with marks above class average**:
-
-Step 1: Calculate class average
-```sql
-SELECT AVG(marks) FROM students;  -- Returns 82
-```
-
-Step 2: Find students above average
-```sql
-SELECT * FROM students 
-WHERE marks > (SELECT AVG(marks) FROM students);
-```
-
-#### List-Based Subquery with IN
-
-Returns multiple values for membership checking.
-
-**Example - Find students with even roll numbers**:
-
-```sql
-SELECT * FROM students 
-WHERE roll_no IN (
-    SELECT roll_no FROM students 
-    WHERE roll_no % 2 = 0
-);
-```
-
-**Example - Find courses taken by Alice**:
-```sql
-SELECT * FROM courses 
-WHERE student_id IN (
-    SELECT student_id FROM students 
-    WHERE full_name = 'Alice'
-);
-```
-
-#### Subquery with FROM Clause
-
-Uses subquery result as temporary table.
-
-**Example - Find max marks from students in Delhi**:
-
-```sql
-SELECT MAX(marks) 
-FROM (
-    SELECT * FROM students 
-    WHERE city = 'Delhi'
-) AS delhi_students;
-```
-
-More simply:
-```sql
-SELECT MAX(marks) FROM students WHERE city = 'Delhi';
-```
-
-**Example - Find average marks per city**:
-```sql
-SELECT city, AVG(marks) as avg_marks
-FROM students
-GROUP BY city;
-```
-
-#### Subquery with HAVING Clause
-
-Filters groups using subquery results.
-
-**Example - Find cities with average marks above overall average**:
-```sql
-SELECT city, AVG(marks)
-FROM students
-GROUP BY city
-HAVING AVG(marks) > (SELECT AVG(marks) FROM students);
-```
-
-### Subquery Operators
-
-| Operator | Meaning | Use Case |
-|----------|---------|----------|
-| = | Equal | Single value comparison |
-| > | Greater than | Numeric comparison |
-| < | Less than | Numeric comparison |
-| >= | Greater or equal | Numeric comparison |
-| <= | Less or equal | Numeric comparison |
-| <> or != | Not equal | Inequality check |
-| IN | Value in list | Multiple value match |
-| NOT IN | Value not in list | Exclusion |
-| BETWEEN | Within range | Range check |
-| EXISTS | Subquery returns results | Existence check |
-| ALL | Compare to all values | All-comparison |
-| ANY | Compare to any value | Any-comparison |
-
-### Subqueries vs Joins
-
-| Aspect | Subqueries | Joins |
-|--------|-----------|-------|
-| Purpose | Filter/calculate using another query | Combine rows from multiple tables |
-| Data Source | Query result set | Table columns |
-| Combining Rows | Not for combining; for filtering | For combining related data |
-| Result Structure | Can return scalar or sets | Multi-column result sets |
-| Performance | Can be slower with large datasets | Generally more efficient |
-| Complexity | Easier for simple logic | Better for complex multi-table queries |
-| Readability | Clear step-by-step logic | More compact |
-| Use Cases | Filtering by aggregate results | Retrieving related data |
-
-### Correlated Subqueries
-
-A subquery that references columns from outer query.
-
-**Example - Find students with marks above their city's average**:
-```sql
-SELECT full_name, city, marks
-FROM students s1
-WHERE marks > (
-    SELECT AVG(marks) 
-    FROM students s2 
-    WHERE s2.city = s1.city
-);
+WHERE conditions
+GROUP BY columns
+ORDER BY columns
+LIMIT number;
 ```
 
 ---
 
-## Views
-
-A view is a virtual table based on the result set of a SQL statement.
-
-### Characteristics of Views
-
-- Virtual table created from query result
-- Not physically stored (except materialized views)
-- Automatically updated when underlying data changes
-- Database recreates view every time queried
-- Shows current data always
-
-### Advantages of Views
-
-- **Data Abstraction**: Hide complex queries
-- **Security**: Restrict column/row access
-- **Simplicity**: Simplify complex queries
-- **Consistency**: Ensure consistent query logic
-- **Reusability**: Use same view in multiple queries
-- **Encapsulation**: Hide database complexity
-
-### Disadvantages of Views
-
-- **Performance**: Recreated every query
-- **Limitations**: Cannot use ORDER BY (some systems)
-- **Maintenance**: Update logic when tables change
-- **Restrictions**: Cannot insert/update through complex views
-- **Storage**: Extra metadata storage
-
-### Creating Views
-
-**Basic Syntax**:
-```sql
-CREATE VIEW view_name AS
-SELECT columns FROM table WHERE condition;
-```
-
-**Example**:
-```sql
-CREATE VIEW high_scorers AS
-SELECT full_name, marks, city
-FROM students
-WHERE marks > 80
-ORDER BY marks DESC;
-```
-
-### Using Views
-
-**Query a View**:
-```sql
-SELECT * FROM high_scorers;
-```
-
-**View with Aggregate Data**:
-```sql
-CREATE VIEW city_statistics AS
-SELECT city, COUNT(*) as student_count, AVG(marks) as avg_marks
-FROM students
-GROUP BY city;
-```
-
-### Dropping Views
-
-**Syntax**:
-```sql
-DROP VIEW view_name;
-```
-
-**Example**:
-```sql
-DROP VIEW high_scorers;
-```
-
-### View Best Practices
-
-- Use descriptive view names
-- Document view purpose
-- Avoid unnecessary complexity
-- Update views when table structure changes
-- Use for frequently-used queries
-- Consider performance impact
-- Avoid creating views on views when possible
-
----
-
-## Installing and Setting Up MySQL and MySQL Workbench
-
-### System Requirements
-
-- Operating System: Windows, macOS, Linux
-- RAM: Minimum 2GB (4GB recommended)
-- Disk Space: 500MB minimum
-- Administrator privileges
-
-### Installation on macOS
-
-#### Step 1: Download MySQL Community Server
-
-1. Visit https://www.mysql.com/downloads/
-2. Click on "Downloads" section
-3. Scroll down to "MySQL Community Server"
-4. Select macOS version
-5. Click "Download" (no login required)
-6. Select "No thanks, just start my download"
-
-#### Step 2: Install MySQL Server
-
-1. Find downloaded DMG file
-2. Double-click to mount the image
-3. Double-click the installer package
-4. Follow installation wizard:
-   - Click "Continue"
-   - Review license, click "Agree"
-   - Click "Continue"
-   - Click "Install"
-5. Enter system password when prompted
-6. Installation completes with "Install Succeeded"
-7. Set MySQL password (remember this for later)
-8. Optional: Click "Move to Bin" to delete installer
-
-#### Step 3: Download MySQL Workbench
-
-1. Go back to mysql.com/downloads/
-2. Select "MySQL Workbench" from community section
-3. Click "Download"
-4. Click "No thanks, just start my download"
-
-#### Step 4: Install MySQL Workbench
-
-1. Double-click downloaded DMG file
-2. Drag MySQL Workbench icon to Applications folder
-3. Wait for copying to complete
-4. Close the installer window
-5. Find MySQL Workbench in Applications
-
-### Installation on Windows
-
-#### Step 1: Download MySQL Installer
-
-1. Visit https://www.mysql.com/downloads/
-2. Click "Downloads"
-3. Find MySQL Community Downloads
-4. Select Windows installer
-5. Click "Download"
-
-#### Step 2: Run Installation Wizard
-
-1. Double-click downloaded EXE file
-2. Choose "Full" setup option
-3. Review and select packages for download
-4. Click "Next"
-5. Click "Execute" to download packages
-6. Follow installation prompts
-
-#### Step 3: Configure MySQL Server
-
-1. Select setup type (Developer Default recommended)
-2. Click "Next"
-3. Set port number (default 3306)
-4. Configure MySQL server
-5. Enter MySQL password (save this!)
-6. Complete setup wizard
-7. Note the port number and password
-
-#### Step 4: Install MySQL Workbench
-
-1. In installer, select MySQL Workbench
-2. Click "Install" 
-3. Wait for installation
-4. Workbench starts automatically
-
-### Connecting to MySQL in Workbench
-
-#### Creating a Connection (macOS)
-
-1. Open MySQL Workbench
-2. On startup, find connection options
-3. Click "+" icon to add new connection
-4. In dialog:
-   - Connection Name: "Local Instance"
-   - Connection Method: "Standard"
-   - Hostname: "localhost" or "127.0.0.1"
-   - Port: 3306 (default)
-   - Username: "root"
-5. Click "Store in Vault"
-6. Enter MySQL password (set during installation)
-7. Click "Test Connection"
-8. Success message appears: "Successfully made the MySQL connection"
-9. Click "OK"
-10. Click "OK" again to save
-
-#### Creating a Connection (Windows)
-
-1. Open MySQL Workbench
-2. Click "+" icon to create new connection
-3. Fill connection details:
-   - Connection Name: "Local Instance"
-   - Hostname: localhost
-   - Port: 3306
-   - Username: root
-   - Password: [your MySQL password]
-4. Click "Test Connection"
-5. Verify success message
-6. Click "OK"
-
-### First Steps in MySQL Workbench
-
-#### Workbench Interface
-
-**Main Areas**:
-- **Left Panel**: Database navigation, admin tools
-- **Center Panel**: SQL query editor
-- **Right Panel**: Object details, help
-- **Bottom Panel**: Query results and messages
-
-#### Opening a Connection
-
-1. Double-click connection name in left panel
-2. MySQL Workbench connects to server
-3. Query tab opens
-4. Ready to write SQL
-
-#### Writing Your First Query
-
-```sql
--- This is a comment
-SELECT 'Hello SQL!' as message;
-```
-
-**To Execute**:
-- Click lightning bolt icon or
-- Press Ctrl+Enter (Windows) / Command+Enter (macOS)
-
-#### Organizing Your Queries
-
-1. Click document icon to create new SQL script
-2. Write multiple queries
-3. Save with Ctrl+S
-4. Give meaningful filename
-5. Use multiple tabs for different files
-
-### Best Practices for Setup
-
-- **Password Security**: Use strong passwords
-- **Port Configuration**: Note your port number
-- **Backups**: Enable automatic backups if available
-- **Updates**: Keep MySQL and Workbench updated
-- **Connection Testing**: Test connections regularly
-- **Script Backup**: Save important SQL scripts
-- **Version Tracking**: Know which MySQL version you're using
-
----
-
-## Common SQL Patterns and Examples
-
-### Practice Problem Example: Student Table Modifications
-
-**Initial Setup**:
-```sql
-CREATE TABLE students (
-    roll_no INT PRIMARY KEY,
-    full_name VARCHAR(50),
-    class VARCHAR(10),
-    dob DATE,
-    gender CHAR(1),
-    city VARCHAR(50),
-    marks INT,
-    grade CHAR(1)
-);
-
-INSERT INTO students VALUES
-(101, 'Raj Kumar', '10A', '2005-05-15', 'M', 'Mumbai', 85, 'A'),
-(102, 'Priya Sharma', '10A', '2005-08-22', 'F', 'Delhi', 92, 'A'),
-(103, 'Amit Patel', '10B', '2006-01-10', 'M', 'Bangalore', 78, 'B'),
-(104, 'Neha Singh', '10B', '2005-12-03', 'F', 'Pune', 88, 'A'),
-(105, 'Vikram Verma', '10A', '2006-03-15', 'M', 'Chennai', 72, 'C');
-```
-
-**Task 1: Rename column name to full_name**:
-```sql
-ALTER TABLE students 
-CHANGE COLUMN full_name full_name VARCHAR(50);
-```
-
-Or rename from "name" to "full_name":
-```sql
-ALTER TABLE students 
-CHANGE COLUMN name full_name VARCHAR(50);
-```
-
-**Task 2: Delete students with marks less than 80**:
-```sql
-DELETE FROM students WHERE marks < 80;
-```
-
-**Task 3: Drop grade column**:
-```sql
-ALTER TABLE students DROP COLUMN grade;
-```
-
-### Real-World Query Examples
-
-**E-Commerce Database Query**:
-```sql
-SELECT c.customer_name, COUNT(o.order_id) as total_orders, SUM(o.total) as total_spent
-FROM customers c
-LEFT JOIN orders o ON c.customer_id = o.customer_id
-GROUP BY c.customer_id
-HAVING total_spent > 1000
-ORDER BY total_spent DESC;
-```
-
-**HR Database Query**:
-```sql
-SELECT d.department_name, e.employee_name, e.salary,
-       AVG(e.salary) OVER (PARTITION BY d.department_id) as dept_avg_salary
-FROM employees e
-JOIN departments d ON e.dept_id = d.department_id
-WHERE e.salary > (SELECT AVG(salary) FROM employees)
-ORDER BY d.department_name, e.salary DESC;
-```
-
-**Analysis Query**:
-```sql
-SELECT 
-    YEAR(order_date) as year,
-    MONTH(order_date) as month,
-    COUNT(DISTINCT customer_id) as unique_customers,
-    COUNT(order_id) as total_orders,
-    SUM(order_amount) as revenue,
-    AVG(order_amount) as avg_order_value
-FROM orders
-WHERE order_date >= DATE_SUB(NOW(), INTERVAL 1 YEAR)
-GROUP BY YEAR(order_date), MONTH(order_date)
-ORDER BY year DESC, month DESC;
-```
-
----
-
-## SQL Quick Reference
-
-### Database Commands
-```sql
-CREATE DATABASE db_name;
-DROP DATABASE db_name;
-USE db_name;
-SHOW DATABASES;
-SHOW TABLES;
-```
-
-### Table Commands
-```sql
-CREATE TABLE table_name (column datatype constraint);
-DROP TABLE table_name;
-TRUNCATE TABLE table_name;
-ALTER TABLE table_name ADD COLUMN column_name datatype;
-ALTER TABLE table_name DROP COLUMN column_name;
-ALTER TABLE table_name MODIFY column_name new_datatype;
-ALTER TABLE table_name CHANGE old_name new_name datatype;
-```
-
-### Data Commands
-```sql
-INSERT INTO table_name (col1, col2) VALUES (val1, val2);
-SELECT * FROM table_name;
-SELECT col1, col2 FROM table_name WHERE condition;
-UPDATE table_name SET col1 = val1 WHERE condition;
-DELETE FROM table_name WHERE condition;
-```
-
-### Filtering and Sorting
-```sql
-SELECT * FROM table WHERE column = value;
-SELECT * FROM table WHERE column BETWEEN val1 AND val2;
-SELECT * FROM table WHERE column IN (val1, val2, val3);
-SELECT * FROM table WHERE column LIKE 'pattern%';
-SELECT * FROM table ORDER BY column ASC/DESC;
-SELECT DISTINCT column FROM table;
-SELECT * FROM table LIMIT number;
-```
-
-### Aggregation
-```sql
-SELECT COUNT(*) FROM table;
-SELECT SUM(column) FROM table;
-SELECT AVG(column) FROM table;
-SELECT MAX(column) FROM table;
-SELECT MIN(column) FROM table;
-SELECT column, COUNT(*) FROM table GROUP BY column;
-SELECT column, COUNT(*) FROM table GROUP BY column HAVING COUNT(*) > x;
-```
-
-### Joins
-```sql
-SELECT * FROM t1 INNER JOIN t2 ON t1.id = t2.id;
-SELECT * FROM t1 LEFT JOIN t2 ON t1.id = t2.id;
-SELECT * FROM t1 RIGHT JOIN t2 ON t1.id = t2.id;
-SELECT * FROM t1 CROSS JOIN t2;
-SELECT * FROM t1 JOIN t1 AS t2 ON t1.id = t2.parent_id;
-```
-
-### Set Operations
-```sql
-SELECT col FROM t1 UNION SELECT col FROM t2;
-SELECT col FROM t1 UNION ALL SELECT col FROM t2;
-SELECT col FROM t1 INTERSECT SELECT col FROM t2;
-SELECT col FROM t1 EXCEPT SELECT col FROM t2;
-```
-
-### Subqueries and Views
-```sql
-SELECT * FROM table WHERE col IN (SELECT col FROM table2);
-SELECT * FROM table WHERE col > (SELECT AVG(col) FROM table);
-CREATE VIEW view_name AS SELECT * FROM table WHERE condition;
-DROP VIEW view_name;
-```
-
----
-
-## Key Concepts Summary
-
-### Normalization
-- Organize data to reduce redundancy
-- Follow normal forms (1NF, 2NF, 3NF)
-- Improves data integrity
-
-### Relationships
-- **One-to-One**: Single record relates to one other record
-- **One-to-Many**: Single record relates to multiple records
-- **Many-to-Many**: Multiple records relate to multiple records
-
-### Indexes
-- Speed up data retrieval
-- Slow down INSERT, UPDATE, DELETE
-- Use on frequently searched columns
-
-### Transactions
-- Group related operations
-- Ensure atomicity (all or nothing)
-- Maintain consistency
-- ACID properties (Atomicity, Consistency, Isolation, Durability)
-
-### Database Security
-- Use strong passwords
-- Limit user privileges
-- Regular backups
-- Encrypt sensitive data
-- Audit access logs
-
----
-
-## Tips for SQL Mastery
-
-1. **Practice Regularly**: Write queries daily
-2. **Start Simple**: Begin with SELECT statements
-3. **Understand Data**: Know your schema
-4. **Use Aliases**: Improve readability
-5. **Comment Code**: Document complex queries
-6. **Test Thoroughly**: Verify results
-7. **Optimize Performance**: Use appropriate indexes
-8. **Follow Naming Conventions**: Consistent naming
-9. **Backup Data**: Always have backups
-10. **Learn Best Practices**: Follow SQL standards
-
----
-
-## Important Websites and Resources
-
-- MySQL Official: https://www.mysql.com
-- MySQL Documentation: https://dev.mysql.com/doc/
-- Data Types Reference: https://dev.mysql.com/doc/refman/8.0/en/data-types.html
-- SQL Tutorial Sites: W3Schools, SQLZoo, LeetCode
+## Conclusion
+
+SQL is a powerful tool for data analysis. The 50 queries and concepts covered in this guide provide a strong foundation for working with databases. Success with SQL requires:
+
+1. Understanding table structures and relationships
+2. Mastering basic clauses (SELECT, WHERE, FROM)
+3. Using JOINs to combine related data
+4. Aggregating data with GROUP BY
+5. Consistent practice and exploration
 
 ---
 End-of-File
