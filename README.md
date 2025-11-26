@@ -300,8 +300,7 @@ SELECT
 FROM sales;
 ```
 
-| SaleDate            | Amount | Boxes | Amount/Boxes
- |
+| SaleDate            | Amount | Boxes | Amount/Boxes |
 | ------------------- | ------ | ----- | ------------- |
 | 2021-01-01 00:00:00 | 8414   | 495   | 16.9980       |
 | 2021-01-01 00:00:00 | 532    | 54    | 9.8519        |
@@ -750,6 +749,28 @@ WHERE team = 'Delish'
 OR team = 'Juices';
 ```
 
+| Salesperson      | SPID | Team   | Location   |
+| ---------------- | ---- | ------ | ---------- |
+| Wilone O'Kielt   | SP04 | Delish | Hyderabad  |
+| Gigi Bohling     | SP05 | Delish | Hyderabad  |
+| Curtice Advani   | SP06 | Delish | Hyderabad  |
+| Kaine Padly      | SP07 | Delish | Hyderabad  |
+| Andria Kimpton   | SP09 | Jucies | Hyderabad  |
+| Brien Boise      | SP10 | Jucies | Wellington |
+| Jan Morforth     | SP13 | Delish | Wellington |
+| Dotty Strutley   | SP14 | Delish | Wellington |
+| Marney O'Breen   | SP16 | Jucies | Wellington |
+| Madelene Upcott  | SP18 | Jucies | Wellington |
+| Beverie Moffet   | SP19 | Jucies | Seattle    |
+| Oby Sorrel       | SP20 | Jucies | Seattle    |
+| Roddy Speechley  | SP24 | Delish | Seattle    |
+| Camilla Castle   | SP25 | Delish | Seattle    |
+| Janene Hairsine  | SP26 | Delish | Paris      |
+| Niall Selesnick  | SP27 | Jucies | Paris      |
+| Gray Seamon      | SP31 | Delish | Paris      |
+| Benny Karolovsky | SP32 | Jucies | Paris      |
+| Dyna Doucette    | SP33 | Jucies | Paris      |
+
 **Explanation**:
 - Shows results where team equals 'Delish' OR team equals 'Juices'
 - Either condition being true includes the row
@@ -764,6 +785,28 @@ OR team = 'Juices';
 SELECT * FROM people
 WHERE team IN ('Delish', 'Juices');
 ```
+
+| Salesperson      | SPID | Team   | Location   |
+| ---------------- | ---- | ------ | ---------- |
+| Wilone O'Kielt   | SP04 | Delish | Hyderabad  |
+| Gigi Bohling     | SP05 | Delish | Hyderabad  |
+| Curtice Advani   | SP06 | Delish | Hyderabad  |
+| Kaine Padly      | SP07 | Delish | Hyderabad  |
+| Andria Kimpton   | SP09 | Jucies | Hyderabad  |
+| Brien Boise      | SP10 | Jucies | Wellington |
+| Jan Morforth     | SP13 | Delish | Wellington |
+| Dotty Strutley   | SP14 | Delish | Wellington |
+| Marney O'Breen   | SP16 | Jucies | Wellington |
+| Madelene Upcott  | SP18 | Jucies | Wellington |
+| Beverie Moffet   | SP19 | Jucies | Seattle    |
+| Oby Sorrel       | SP20 | Jucies | Seattle    |
+| Roddy Speechley  | SP24 | Delish | Seattle    |
+| Camilla Castle   | SP25 | Delish | Seattle    |
+| Janene Hairsine  | SP26 | Delish | Paris      |
+| Niall Selesnick  | SP27 | Jucies | Paris      |
+| Gray Seamon      | SP31 | Delish | Paris      |
+| Benny Karolovsky | SP32 | Jucies | Paris      |
+| Dyna Doucette    | SP33 | Jucies | Paris      |
 
 **Explanation**:
 - `IN` is shorthand for multiple OR conditions
@@ -784,6 +827,15 @@ SELECT * FROM people
 WHERE salesperson LIKE 'B%';
 ```
 
+| Salesperson      | SPID | Team    | Location   |
+| ---------------- | ---- | ------- | ---------- |
+| Barr Faughny     | SP01 | Yummies | Hyderabad  |
+| Brien Boise      | SP10 | Jucies  | Wellington |
+| Beverie Moffet   | SP19 | Jucies  | Seattle    |
+| Benny Karolovsky | SP32 | Jucies  | Paris      |
+
+...
+
 **Explanation**:
 - `LIKE` operator performs pattern matching
 - `B%` means: starts with 'B', followed by anything (%)
@@ -797,20 +849,59 @@ WHERE salesperson LIKE 'B%';
 LIKE 'B%'
 ```
 
+| Salesperson      | SPID | Team    | Location   |
+| ---------------- | ---- | ------- | ---------- |
+| Barr Faughny     | SP01 | Yummies | Hyderabad  |
+| Brien Boise      | SP10 | Jucies  | Wellington |
+| Beverie Moffet   | SP19 | Jucies  | Seattle    |
+| Benny Karolovsky | SP32 | Jucies  | Paris      |
+
 **Find names containing B anywhere**:
 ```sql
 LIKE '%B%'
 ```
 
+| Salesperson         | SPID | Team    | Location   |
+| ------------------- | ---- | ------- | ---------- |
+| Barr Faughny        | SP01 | Yummies | Hyderabad  |
+| Gigi Bohling        | SP05 | Delish  | Hyderabad  |
+| Ches Bonnell        | SP08 |         | Hyderabad  |
+| Brien Boise         | SP10 | Jucies  | Wellington |
+| Marney O'Breen      | SP16 | Jucies  | Wellington |
+| Rafaelita Blaksland | SP17 |         | Wellington |
+| Beverie Moffet      | SP19 | Jucies  | Seattle    |
+| Oby Sorrel          | SP20 | Jucies  | Seattle    |
+| Mallorie Waber      | SP21 |         | Seattle    |
+| Ebonee Roxburgh     | SP28 |         | Paris      |
+| Benny Karolovsky    | SP32 | Jucies  | Paris      |
+
+...
+
 **Find names ending with B**:
 ```sql
-LIKE '%B'
+LIKE '%l'
 ```
+
+| Salesperson  | SPID | Team    | Location  |
+| ------------ | ---- | ------- | --------- |
+| Ches Bonnell | SP08 |         | Hyderabad |
+| Oby Sorrel   | SP20 | Jucies  | Seattle   |
+| Van Tuxwell  | SP23 | Yummies | Seattle   |
+
+...
 
 **Find names with B as second character**:
 ```sql
 LIKE '_B%'
 ```
+
+| Salesperson     | SPID | Team   | Location |
+| --------------- | ---- | ------ | -------- |
+| Oby Sorrel      | SP20 | Jucies | Seattle  |
+| Ebonee Roxburgh | SP28 |        | Paris    |
+
+...
+
 (Where `_` means exactly one character)
 
 ### The NOT Operator
@@ -819,13 +910,31 @@ LIKE '_B%'
 
 **Query**:
 ```sql
-SELECT * FROM sales
-WHERE team != 'Marketing'
+select * from products
+where Category != 'Bars';
 -- OR --
-WHERE team <> 'Marketing'
+select * from products
+where Category <> 'Bars';
 -- OR --
-WHERE NOT (team = 'Marketing')
+select * from products
+where not (Category = 'Bars');
 ```
+
+| PID | Product              | Category | Size  | Cost_per_box |
+| --- | -------------------- | -------- | ----- | ------------ |
+| P02 | 50% Dark Bites       | Bites    | LARGE | 2.57         |
+| P06 | Eclairs              | Bites    | LARGE | 2.24         |
+| P07 | Drinking Coco        | Other    | LARGE | 1.62         |
+| P10 | Spicy Special Slims  | Bites    | LARGE | 5.79         |
+| P11 | After Nines          | Bites    | LARGE | 4.43         |
+| P14 | White Choc           | Other    | SMALL | 0.16         |
+| P16 | Organic Choco Syrup  | Other    | SMALL | 1.47         |
+| P18 | Manuka Honey Choco   | Other    | SMALL | 4.75         |
+| P19 | 70% Dark Bites       | Bites    | SMALL | 4.97         |
+| P21 | Choco Coated Almonds | Bites    | SMALL | 6.17         |
+| P22 | Peanut Butter Cubes  | Bites    | SMALL | 3.57         |
+
+...
 
 **Explanation**:
 - `!=` and `<>` both mean "not equal to"
@@ -850,17 +959,21 @@ WHERE NOT (team = 'Marketing')
 
 **Query**:
 ```sql
-SELECT 
-  sale_date,
-  amount,
-  CASE
-    WHEN amount < 1000 THEN 'Under 1K'
-    WHEN amount < 5000 THEN 'Under 5K'
-    WHEN amount < 10000 THEN 'Under 10K'
-    ELSE '10K or More'
-  END AS amount_category
-FROM sales;
+select SaleDate,Amount ,case when Amount < 1000 then 'Under 1K' when Amount < 5000 then 'Under 2K' when Amount < 10000 then 'Under 10K' else '10K or More' end as amount_category from sales ;
 ```
+
+| SaleDate            | Amount | amount_category |
+| ------------------- | ------ | --------------- |
+| 2021-01-01 00:00:00 | 8414   | Under 10K       |
+| 2021-01-01 00:00:00 | 532    | Under 1K        |
+| 2021-01-01 00:00:00 | 5376   | Under 10K       |
+| 2021-01-01 00:00:00 | 259    | Under 1K        |
+| 2021-01-01 00:00:00 | 5530   | Under 10K       |
+| 2021-01-01 00:00:00 | 2184   | Under 2K        |
+| 2021-01-01 00:00:00 | 1057   | Under 2K        |
+| 2021-01-01 00:00:00 | 1036   | Under 2K        |
+
+...
 
 **Explanation**:
 - `CASE` begins the conditional logic
@@ -881,8 +994,8 @@ For clarity in longer queries, break CASE statements into multiple lines:
 ```sql
 SELECT 
   sale_date,
-  amount,
-  CASE
+  amount 
+  ,CASE
     WHEN amount < 1000 THEN 'Under 1K'
     WHEN amount < 5000 THEN 'Under 5K'
     WHEN amount < 10000 THEN 'Under 10K'
@@ -890,6 +1003,17 @@ SELECT
   END AS amount_category
 FROM sales;
 ```
+
+| SaleDate            | Amount | amount_category |
+| ------------------- | ------ | --------------- |
+| 2021-01-01 00:00:00 | 8414   | Under 10K       |
+| 2021-01-01 00:00:00 | 532    | Under 1K        |
+| 2021-01-01 00:00:00 | 5376   | Under 10K       |
+| 2021-01-01 00:00:00 | 259    | Under 1K        |
+| 2021-01-01 00:00:00 | 5530   | Under 10K       |
+| 2021-01-01 00:00:00 | 2184   | Under 2K        |
+| 2021-01-01 00:00:00 | 1057   | Under 2K        |
+| 2021-01-01 00:00:00 | 1036   | Under 2K        |
 
 ### Use Cases for CASE
 
@@ -930,15 +1054,42 @@ SELECT * FROM sales;
 -- Shows sp01, sp02, etc. but we don't know who these people are
 ```
 
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP01 | G4    | P04 | 2021-01-01 00:00:00 | 8414   | 276       | 495   |
+| SP02 | G3    | P14 | 2021-01-01 00:00:00 | 532    | 317       | 54    |
+| SP12 | G2    | P08 | 2021-01-01 00:00:00 | 5376   | 178       | 269   |
+| SP01 | G4    | P15 | 2021-01-01 00:00:00 | 259    | 32        | 22    |
+| SP19 | G2    | P18 | 2021-01-01 00:00:00 | 5530   | 4         | 179   |
+| SP17 | G1    | P13 | 2021-01-01 00:00:00 | 2184   | 63        | 122   |
+| SP20 | G6    | P04 | 2021-01-01 00:00:00 | 1057   | 295       | 71    |
+| SP14 | G5    | P16 | 2021-01-01 00:00:00 | 1036   | 370       | 37    |
+| SP10 | G5    | P17 | 2021-01-01 00:00:00 | 4039   | 536       | 176   |
+
+...
+
 **With JOIN - Solution**:
 ```sql
-SELECT 
-  s.sale_date,
-  s.amount,
-  p.salesperson
-FROM sales s
-JOIN people p ON p.sp_id = s.sp_id;
+select 
+  s.SaleDate,
+  s.Amount,
+  p.Salesperson
+from sales s
+join people p on p.SPID = s.SPID;
 ```
+
+| SaleDate            | Amount | Salesperson         |
+| ------------------- | ------ | ------------------- |
+| 2021-01-01 00:00:00 | 8414   | Barr Faughny        |
+| 2021-01-01 00:00:00 | 532    | Dennison Crosswaite |
+| 2021-01-01 00:00:00 | 5376   | Karlen McCaffrey    |
+| 2021-01-01 00:00:00 | 259    | Barr Faughny        |
+| 2021-01-01 00:00:00 | 5530   | Beverie Moffet      |
+| 2021-01-01 00:00:00 | 2184   | Rafaelita Blaksland |
+| 2021-01-01 00:00:00 | 1057   | Oby Sorrel          |
+| 2021-01-01 00:00:00 | 1036   | Dotty Strutley      |
+
+...
 
 **Explanation**:
 - `FROM sales s` starts with sales table, aliased as 's'
