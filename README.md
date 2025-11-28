@@ -86,7 +86,7 @@ Comprehensive SQL Learning Guide for Data Analytics | Mastery in 50+ SQL Queries
     - [Aggregation Functions](#aggregation-functions-1)
     - [Key Clauses](#key-clauses)
     - [Query Structure (Proper Order)](#query-structure-proper-order)
-- [Advanced SQL \& Database Design](#advanced-sql--database-design)
+- [Advanced SQL \& Database Design for Backend Engineering](#advanced-sql--database-design-for-backend-engineering)
   - [Part 7: DDL — Building and Managing Tables](#part-7-ddl--building-and-managing-tables)
     - [Creating Tables](#creating-tables)
     - [Altering Tables](#altering-tables)
@@ -1723,7 +1723,7 @@ LIMIT number;
 
 ---
 
-# Advanced SQL & Database Design
+# Advanced SQL & Database Design for Backend Engineering
 
 ---
 
