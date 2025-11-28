@@ -13,6 +13,7 @@ Comprehensive SQL Learning Guide for Data Analytics | Mastery in 50+ SQL Queries
 ## Table of Contents
 - [kintsugi-stack-sql](#kintsugi-stack-sql)
   - [Table of Contents](#table-of-contents)
+- [Master SQL for Data Analysis](#master-sql-for-data-analysis)
   - [Overview](#overview)
   - [Getting Started with SQL](#getting-started-with-sql)
     - [Setting Up Your Environment](#setting-up-your-environment)
@@ -85,7 +86,59 @@ Comprehensive SQL Learning Guide for Data Analytics | Mastery in 50+ SQL Queries
     - [Aggregation Functions](#aggregation-functions-1)
     - [Key Clauses](#key-clauses)
     - [Query Structure (Proper Order)](#query-structure-proper-order)
-  - [Conclusion](#conclusion)
+- [Advanced SQL \& Database Design](#advanced-sql--database-design)
+  - [Part 7: DDL — Building and Managing Tables](#part-7-ddl--building-and-managing-tables)
+    - [Creating Tables](#creating-tables)
+    - [Altering Tables](#altering-tables)
+    - [Removing Data and Tables](#removing-data-and-tables)
+  - [Part 8: Data Integrity and Constraints](#part-8-data-integrity-and-constraints)
+    - [Primary Key \& Foreign Key](#primary-key--foreign-key)
+    - [Unique \& Check Constraints](#unique--check-constraints)
+  - [Part 9: Transactions and Concurrency (ACID)](#part-9-transactions-and-concurrency-acid)
+    - [ACID Properties](#acid-properties)
+    - [Controlling Transactions](#controlling-transactions)
+    - [Isolation Levels](#isolation-levels)
+  - [Part 10: Advanced Analytics (Window Functions \& CTEs)](#part-10-advanced-analytics-window-functions--ctes)
+    - [Window Functions](#window-functions)
+      - [Ranking Functions](#ranking-functions)
+      - [Lag \& Lead (Time-Series)](#lag--lead-time-series)
+      - [Running Totals](#running-totals)
+    - [CTEs (Common Table Expressions)](#ctes-common-table-expressions)
+      - [Simple CTE](#simple-cte)
+      - [Recursive CTE (Hierarchies)](#recursive-cte-hierarchies)
+  - [Part 11: Subqueries and Set Operations](#part-11-subqueries-and-set-operations)
+    - [Correlated Subquery](#correlated-subquery)
+    - [Set Operators](#set-operators)
+  - [Part 12: Advanced Grouping](#part-12-advanced-grouping)
+      - [ROLLUP, CUBE, GROUPING SETS](#rollup-cube-grouping-sets)
+  - [Part 13: Performance Tuning (Indexes \& Explain Plans)](#part-13-performance-tuning-indexes--explain-plans)
+    - [Index Types](#index-types)
+      - [When indexes help:](#when-indexes-help)
+      - [When indexes hurt:](#when-indexes-hurt)
+    - [EXPLAIN](#explain)
+  - [Part 14: Programmable SQL (Procedures, Functions, Triggers)](#part-14-programmable-sql-procedures-functions-triggers)
+    - [Stored Procedure](#stored-procedure)
+    - [Function (UDF)](#function-udf)
+    - [Trigger](#trigger)
+  - [Part 15: Modern SQL \& Data Modeling](#part-15-modern-sql--data-modeling)
+    - [JSON Support](#json-support)
+    - [Star Schema (Data Warehousing)](#star-schema-data-warehousing)
+      - [Slowly Changing Dimensions (SCD)](#slowly-changing-dimensions-scd)
+    - [Partitioning](#partitioning)
+  - [Part 16: Administration \& Security](#part-16-administration--security)
+    - [Users \& Permissions](#users--permissions)
+    - [Backup Types](#backup-types)
+  - [Part 17: Best Practices \& Anti-Patterns](#part-17-best-practices--anti-patterns)
+    - [Best Practices](#best-practices)
+    - [SQL Anti-Patterns](#sql-anti-patterns)
+      - [1. Implied Joins](#1-implied-joins)
+      - [2. N+1 Query Issue](#2-n1-query-issue)
+      - [3. Storing lists in columns](#3-storing-lists-in-columns)
+      - [4. Using functions on indexed columns](#4-using-functions-on-indexed-columns)
+- [Prac](#prac)
+- [Conclusion](#conclusion)
+
+# Master SQL for Data Analysis
 
 ## Overview
 
@@ -114,6 +167,8 @@ This guide covers mastery of SQL through 50 practical queries. Topics include SE
 
 ### Understanding the Database Structure
 
+> Whenever you are getting started, take some minutes to know your db, it will help you build better sql queries !!!
+
 #### Available Tables in Awesome Chocolates Database
 
 The database contains four main tables:
@@ -139,6 +194,8 @@ SHOW TABLES;
 | products                     |
 | sales                        |
 
+...
+
 **View table structure and columns**:
 ```sql
 DESCRIBE sales;
@@ -153,6 +210,26 @@ DESCRIBE sales;
 | Amount    | int      | YES  |     | null    |       |
 
 ...
+
+Actual mysql console response :
+
+```
+mysql> desc sales;
++-----------+----------+------+-----+---------+-------+
+| Field     | Type     | Null | Key | Default | Extra |
++-----------+----------+------+-----+---------+-------+
+| SPID      | text     | YES  |     | NULL    |       |
+| GeoID     | text     | YES  |     | NULL    |       |
+| PID       | text     | YES  |     | NULL    |       |
+| SaleDate  | datetime | YES  |     | NULL    |       |
+| Amount    | int      | YES  |     | NULL    |       |
+| Customers | int      | YES  |     | NULL    |       |
+| Boxes     | int      | YES  |     | NULL    |       |
++-----------+----------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> 
+```
 
 **What this returns**:
 - Column names
@@ -206,7 +283,7 @@ SELECT * FROM sales;
 
 **Query**:
 ```sql
-SELECT sale_date, amount, customers FROM sales;
+SELECT saledate, amount, customers FROM sales;
 ```
 
 | SaleDate            | Amount | Customers |
@@ -238,7 +315,7 @@ Then come back and add columns between SELECT and FROM.
 
 **Query**:
 ```sql
-SELECT amount, customers, geo_id FROM sales;
+SELECT amount, customers, geoid FROM sales;
 ```
 
 | Amount | Customers | GeoID |
@@ -261,7 +338,7 @@ SELECT amount, customers, geo_id FROM sales;
 **Calculate Amount Per Box**:
 ```sql
 SELECT 
-  sale_date,
+  saledate,
   amount,
   boxes,
   amount / boxes
@@ -291,7 +368,7 @@ FROM sales;
 **Solution: Add Column Aliases Using AS**:
 ```sql
 SELECT 
-  sale_date,
+  saledate,
   amount,
   boxes,
   amount / boxes AS 'amount_per_box'
@@ -311,7 +388,7 @@ FROM sales;
 **Alternative Without AS Keyword**:
 ```sql
 SELECT 
-  sale_date,
+  saledate,
   amount,
   boxes,
   amount / boxes 'amount_per_box'
@@ -402,6 +479,8 @@ ORDER BY amount;
 
 **Ascending Order (Default)**:
 ```sql
+SELECT * FROM sales
+WHERE amount > 10000
 ORDER BY amount;
 ```
 
@@ -417,6 +496,8 @@ ORDER BY amount;
 
 **Descending Order (Highest to Lowest)**:
 ```sql
+SELECT * FROM sales
+WHERE amount > 10000
 ORDER BY amount DESC;
 ```
 
@@ -435,7 +516,7 @@ ORDER BY amount DESC;
 **Query**:
 ```sql
 SELECT * FROM sales
-WHERE geo_id = 'g1'
+WHERE geoid = 'g1'
 ORDER BY pid, amount DESC;
 ```
 
@@ -450,7 +531,7 @@ ORDER BY pid, amount DESC;
 ...
 
 **Explanation**:
-- Filters to show only geo_id 'g1' records
+- Filters to show only GeoID 'g1' records
 - First sorts by product ID (pid)
 - Within each product ID, sorts by amount in descending order
 - You can specify multiple ORDER BY columns separated by commas
@@ -468,8 +549,8 @@ ORDER BY pid, amount DESC;
 ```sql
 SELECT * FROM sales
 WHERE amount > 10000
-AND sale_date >= '2022-01-01';
--- use quote in dates `2022-01-01' : correct, 2022-01-01' : incorrect
+AND saledate >= '2022-01-01';
+-- use quote in dates `2022-01-01' : correct, 2022-01-01 : incorrect
 ```
 
 | SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
@@ -495,20 +576,20 @@ AND sale_date >= '2022-01-01';
 
 **Query Method 2 - Using YEAR Function**:
 ```sql
-SELECT sale_date, amount 
+SELECT saledate, amount 
 FROM sales
 WHERE amount > 10000
-AND YEAR(sale_date) = 2022
+AND YEAR(saledate) = 2022
 ORDER BY amount DESC;
 ```
 
-| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
-| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
-| SP24 | G4    | P01 | 2022-02-16 00:00:00 | 23912  | 211       | 1993  |
-| SP09 | G4    | P20 | 2022-03-15 00:00:00 | 23184  | 123       | 1221  |
-| SP14 | G1    | P01 | 2022-02-25 00:00:00 | 22897  | 43        | 1347  |
-| SP16 | G2    | P13 | 2022-03-01 00:00:00 | 22603  | 32        | 3229  |
-| SP13 | G4    | P10 | 2022-02-25 00:00:00 | 22155  | 185       | 1055  |
+| saledate            | amount |
+| ------------------- | ------ |
+| 2022-02-16 00:00:00 | 23912  |
+| 2022-03-15 00:00:00 | 23184  |
+| 2022-02-25 00:00:00 | 22897  |
+| 2022-03-01 00:00:00 | 22603  |
+| 2022-02-25 00:00:00 | 22155  |
 
 ...
 
@@ -572,12 +653,12 @@ WHERE boxes BETWEEN 0 AND 50;
 **Query**:
 ```sql
 SELECT 
-  sale_date,
+  saledate,
   amount,
   boxes,
-  WEEKDAY(sale_date) AS day_of_week
+  WEEKDAY(saledate) AS day_of_week
 FROM sales
-WHERE WEEKDAY(sale_date) = 4;
+WHERE WEEKDAY(saledate) = 4;
 ```
 
 | SaleDate            | Amount | Boxes | day_of_week |
@@ -591,13 +672,13 @@ WHERE WEEKDAY(sale_date) = 4;
 **Explanation**:
 - `WEEKDAY()` is a built-in function that returns day of week as a number
 - Weekday numbering: 0=Monday, 1=Tuesday, 2=Wednesday, 3=Thursday, 4=Friday, 5=Saturday, 6=Sunday
-- Friday = 4, so the condition is `WEEKDAY(sale_date) = 4`
+- Friday = 4, so the condition is `WEEKDAY(SaleDate) = 4`
 - Can also create alias `AS day_of_week` for clarity
 
 **Important Note**: When using a calculated column in WHERE clause, you cannot reference the alias. You must repeat the calculation:
 ```sql
 -- CORRECT:
-WHERE WEEKDAY(sale_date) = 4
+WHERE WEEKDAY(SaleDate) = 4
 
 -- INCORRECT (will give error):
 WHERE day_of_week = 4
@@ -691,7 +772,8 @@ WHERE salesperson LIKE 'B%';
 
 **Find names starting with B**:
 ```sql
-LIKE 'B%'
+SELECT * FROM people
+WHERE salesperson LIKE 'B%';
 ```
 
 | Salesperson      | SPID | Team    | Location   |
@@ -703,7 +785,8 @@ LIKE 'B%'
 
 **Find names containing B anywhere**:
 ```sql
-LIKE '%B%'
+SELECT * FROM people
+WHERE salesperson LIKE '%B%';
 ```
 
 | Salesperson         | SPID | Team    | Location   |
@@ -718,7 +801,8 @@ LIKE '%B%'
 
 **Find names ending with B**:
 ```sql
-LIKE '%l'
+SELECT * FROM people
+WHERE salesperson LIKE '%l';
 ```
 
 | Salesperson  | SPID | Team    | Location  |
@@ -781,7 +865,7 @@ where not (Category = 'Bars');
 
 ### Understanding CASE Statements
 
-**Purpose**: Create categorizations or conditional logic within SELECT statements
+**Purpose**: Create **categorizations** or conditional logic within SELECT statements
 
 **Scenario**: Categorize sales amounts into different tiers:
 - Under $1,000: "Under 1K"
@@ -824,7 +908,7 @@ You can use multiple WHEN statements and combine conditions as needed.
 For clarity in longer queries, break CASE statements into multiple lines:
 ```sql
 SELECT 
-  sale_date,
+  saledate,
   amount 
   ,CASE
     WHEN amount < 1000 THEN 'Under 1K'
@@ -868,9 +952,9 @@ FROM sales;
 ### Database Relationships in Awesome Chocolates
 
 **Table Relationships**:
-- Sales table contains: `sp_id` (links to People table)
+- Sales table contains: `SPID` (links to People table)
 - Sales table contains: `pid` (links to Products table)
-- Sales table contains: `geo_id` (links to Geography table)
+- Sales table contains: `GeoID` (links to Geography table)
 
 **Principle**: IDs that appear in multiple tables represent the same entity and can be used to JOIN tables.
 
@@ -914,10 +998,29 @@ join people p on p.SPID = s.SPID;
 
 ...
 
+```sql
+select
+  s.SaleDate,
+  s.Amount,
+  p.Salesperson,
+  s.SPID,
+  p.SPID
+from sales s
+  join people p on p.SPID = s.SPID
+;
+```
+| SaleDate            | Amount | Salesperson         | SPID |
+| ------------------- | ------ | ------------------- | ---- |
+| 2021-01-01 00:00:00 | 8414   | Barr Faughny        | SP01 |
+| 2021-01-01 00:00:00 | 532    | Dennison Crosswaite | SP02 |
+| 2021-01-01 00:00:00 | 5376   | Karlen McCaffrey    | SP12 |
+| 2021-01-01 00:00:00 | 259    | Barr Faughny        | SP01 |
+| 2021-01-01 00:00:00 | 5530   | Beverie Moffet      | SP19 |
+
 **Explanation**:
 - `FROM sales s` starts with sales table, aliased as 's'
 - `JOIN people p` adds the people table, aliased as 'p'
-- `ON p.sp_id = s.sp_id` specifies the join condition - matching IDs
+- `ON p.SPID = s.SPID` specifies the join condition - matching IDs
 - `s.` and `p.` prefixes specify which table a column comes from
 - When IDs match, data from both tables appears on the same row
 
@@ -936,7 +1039,7 @@ FROM sales AS s
 - `s` for sales
 - `p` for people
 - `pr` for products
-- `g` for geography
+- `g` for geo
 
 ### Column Qualification
 
@@ -944,8 +1047,8 @@ FROM sales AS s
 
 When columns have the same name in multiple tables, prefix with table alias:
 ```sql
-s.sp_id    -- sales table's sp_id
-p.sp_id    -- people table's sp_id
+s.SPID    -- sales table's SPID
+p.SPID    -- people table's SPID
 ```
 
 **Best Practice**: Even when not required, qualify columns for clarity.
@@ -954,7 +1057,7 @@ p.sp_id    -- people table's sp_id
 
 **JOIN (INNER JOIN)**:
 - Returns only rows where IDs match in BOTH tables
-- If sales table has sp_id that doesn't exist in people table, that row is excluded
+- If sales table has SPID that doesn't exist in people table, that row is excluded
 
 **LEFT JOIN**:
 - Returns ALL rows from the left table (first table after FROM)
@@ -972,6 +1075,47 @@ Sales table (LEFT) ----------- People table (RIGHT)
 
 **When to Use LEFT JOIN**: Most common in business situations because you want to preserve all sales data even if the person's record doesn't exist in the people table.
 
+```sql
+select 
+  s.SaleDate,
+  s.Amount,
+  pr.Product
+from sales s 
+  left join products pr on pr.PID = s.PID
+;
+```
+
+| SaleDate            | Amount | Product              |
+| ------------------- | ------ | -------------------- |
+| 2021-01-01 00:00:00 | 8414   | Raspberry Choco      |
+| 2021-01-01 00:00:00 | 532    | White Choc           |
+| 2021-01-01 00:00:00 | 5376   | 99% Dark & Pure      |
+| 2021-01-01 00:00:00 | 259    | Baker's Choco Chips  |
+| 2021-01-01 00:00:00 | 5530   | Manuka Honey Choco   |
+
+...
+
+```sql
+select 
+  s.SaleDate,
+  s.Amount,
+  pr.Product
+from sales s 
+  right join products pr on pr.PID = s.PID
+;
+```
+
+| SaleDate            | Amount | Product              |
+| ------------------- | ------ | -------------------- |
+| 2022-03-23 00:00:00 | 637    | Milk Bars            |
+| 2022-02-25 00:00:00 | 2730   | Milk Bars            |
+| 2022-02-24 00:00:00 | 9023   | Milk Bars            |
+| 2022-03-04 00:00:00 | 1155   | Milk Bars            |
+| 2022-03-30 00:00:00 | 1120   | Milk Bars            |
+
+...
+
+
 ### JOIN with WHERE Clause
 
 **Scenario**: Show sales under $500 for people in the "Delish" team
@@ -979,20 +1123,90 @@ Sales table (LEFT) ----------- People table (RIGHT)
 **Query**:
 ```sql
 SELECT 
-  s.sale_date,
+  s.SaleDate,
   s.amount,
   p.salesperson,
   p.team
 FROM sales s
-JOIN people p ON p.sp_id = s.sp_id
+JOIN people p ON p.SPID = s.SPID
 WHERE s.amount < 500
 AND p.team = 'Delish';
 ```
+
+| SaleDate            | Amount | Salesperson     | Team   |
+| ------------------- | ------ | --------------- | ------ |
+| 2021-01-08 00:00:00 | 364    | Gigi Bohling    | Delish |
+| 2021-01-14 00:00:00 | 35     | Jan Morforth    | Delish |
+| 2021-01-15 00:00:00 | 308    | Curtice Advani  | Delish |
+| 2021-02-04 00:00:00 | 182    | Camilla Castle  | Delish |
+| 2021-02-04 00:00:00 | 392    | Jan Morforth    | Delish |
+
+...
 
 **Explanation**:
 - JOIN combines the tables
 - WHERE clause filters results on joined data
 - Can filter on any column from either table
+
+for fun, see the empty stuff !!!
+```sql
+select
+  s.SaleDate,
+  s.Amount,
+  p.Salesperson,
+  p.Team
+from sales s 
+  join people p on p.SPID = s.SPID
+  where s.Amount< 500
+;
+```
+
+| SaleDate            | Amount | Salesperson         | Team    |
+| ------------------- | ------ | ------------------- | ------- |
+| 2021-01-01 00:00:00 | 259    | Barr Faughny        | Yummies |
+| 2021-01-04 00:00:00 | 147    | Karlen McCaffrey    | Yummies |
+| 2021-01-08 00:00:00 | 420    | Brien Boise         | Jucies  |
+| 2021-01-08 00:00:00 | 364    | Gigi Bohling        | Delish  |
+| 2021-01-08 00:00:00 | 357    | Ches Bonnell        |         |
+| 2021-01-12 00:00:00 | 189    | Husein Augar        | Yummies |
+| 2021-01-12 00:00:00 | 490    | Barr Faughny        | Yummies |
+| 2021-01-14 00:00:00 | 35     | Jan Morforth        | Delish  |
+| 2021-01-15 00:00:00 | 308    | Curtice Advani      | Delish  |
+| 2021-01-18 00:00:00 | 238    | Brien Boise         | Jucies  |
+| 2021-01-19 00:00:00 | 161    | Ches Bonnell        |         |
+| 2021-01-20 00:00:00 | 343    | Brien Boise         | Jucies  |
+| 2021-01-20 00:00:00 | 126    | Kelci Walkden       | Yummies |
+| 2021-01-21 00:00:00 | 280    | Ches Bonnell        |         |
+| 2021-01-21 00:00:00 | 427    | Marney O'Breen      | Jucies  |
+| 2021-01-22 00:00:00 | 168    | Oby Sorrel          | Jucies  |
+| 2021-01-25 00:00:00 | 42     | Ches Bonnell        |         |
+| 2021-01-25 00:00:00 | 343    | Mallorie Waber      |         |
+
+...
+
+
+```sql
+select
+  s.SaleDate,
+  s.Amount,
+  p.Salesperson,
+  p.Team
+from sales s 
+  join people p on p.SPID = s.SPID
+  where s.Amount< 500
+  and p.Team = ''
+; 
+```
+
+| SaleDate            | Amount | Salesperson         | Team |
+| ------------------- | ------ | ------------------- | ---- |
+| 2021-01-08 00:00:00 | 357    | Ches Bonnell        |      |
+| 2021-01-19 00:00:00 | 161    | Ches Bonnell        |      |
+| 2021-01-21 00:00:00 | 280    | Ches Bonnell        |      |
+| 2021-01-25 00:00:00 | 42     | Ches Bonnell        |      |
+| 2021-01-25 00:00:00 | 343    | Mallorie Waber      |      |
+
+...
 
 ### Multiple JOINs
 
@@ -1001,15 +1215,26 @@ AND p.team = 'Delish';
 **Query**:
 ```sql
 SELECT 
-  s.sale_date,
+  s.SaleDate,
   s.amount,
   p.salesperson,
   pr.product,
   p.team
 FROM sales s
-JOIN people p ON p.sp_id = s.sp_id
+JOIN people p ON p.SPID = s.SPID
 JOIN products pr ON pr.pid = s.pid;
 ```
+
+| SaleDate            | Amount | Salesperson         | Product              | Team    |
+| ------------------- | ------ | ------------------- | -------------------- | ------- |
+| 2021-01-01 00:00:00 | 8414   | Barr Faughny        | Raspberry Choco      | Yummies |
+| 2021-01-01 00:00:00 | 532    | Dennison Crosswaite | White Choc           | Yummies |
+| 2021-01-01 00:00:00 | 5376   | Karlen McCaffrey    | 99% Dark & Pure      | Yummies |
+| 2021-01-01 00:00:00 | 259    | Barr Faughny        | Baker's Choco Chips  | Yummies |
+| 2021-01-01 00:00:00 | 5530   | Beverie Moffet      | Manuka Honey Choco   | Jucies  |
+| 2021-01-01 00:00:00 | 2184   | Rafaelita Blaksland | 85% Dark Bars        |         |
+
+...
 
 **Explanation**:
 - Chain multiple JOINs by adding additional JOIN clauses
@@ -1019,20 +1244,30 @@ JOIN products pr ON pr.pid = s.pid;
 
 ### JOIN with Null Handling
 
-**Problem**: Some people records might not have a team assigned (blank or NULL)
+**Problem**: Some people records might not have a team assigned **(blank or NULL)**
 
 **Query**:
 ```sql
 SELECT 
-  s.sale_date,
+  s.SaleDate,
   s.amount,
   p.salesperson,
   p.team
 FROM sales s
-LEFT JOIN people p ON p.sp_id = s.sp_id
+LEFT JOIN people p ON p.SPID = s.SPID
 WHERE s.amount < 500
-AND p.team IS NULL;
+AND p.team IS NULL; -- p.team = ''
 ```
+
+| SaleDate            | Amount | Salesperson         | Team |
+| ------------------- | ------ | ------------------- | ---- |
+| 2021-01-08 00:00:00 | 357    | Ches Bonnell        |      |
+| 2021-01-19 00:00:00 | 161    | Ches Bonnell        |      |
+| 2021-01-21 00:00:00 | 280    | Ches Bonnell        |      |
+| 2021-01-25 00:00:00 | 42     | Ches Bonnell        |      |
+| 2021-01-25 00:00:00 | 343    | Mallorie Waber      |      |
+
+...
 
 **Explanation**:
 - `IS NULL` checks for NULL values (true null, not blank spaces)
@@ -1051,20 +1286,30 @@ Different filtering required for each:
 **Complete Query with Multiple Filters**:
 ```sql
 SELECT 
-  s.sale_date,
+  s.SaleDate,
   s.amount,
   p.salesperson,
   pr.product,
   g.geo
 FROM sales s
-JOIN people p ON p.sp_id = s.sp_id
+JOIN people p ON p.SPID = s.SPID
 JOIN products pr ON pr.pid = s.pid
-JOIN geography g ON g.geo_id = s.geo_id
+JOIN geo g ON g.GeoID = s.GeoID
 WHERE s.amount < 500
-AND p.team IS NOT NULL
+AND p.team = ''
 AND g.geo IN ('New Zealand', 'India')
-ORDER BY s.sale_date;
+ORDER BY s.SaleDate;
 ```
+
+| SaleDate            | Amount | Salesperson         | Product              | Geo         |
+| ------------------- | ------ | ------------------- | -------------------- | ----------- |
+| 2021-01-01 00:00:00 | 294    | Ches Bonnell        | Peanut Butter Cubes  | New Zealand |
+| 2021-01-01 00:00:00 | 294    | Ches Bonnell        | Peanut Butter Cubes  | India       |
+| 2021-01-01 00:00:00 | 294    | Rafaelita Blaksland | Peanut Butter Cubes  | New Zealand |
+| 2021-01-01 00:00:00 | 294    | Rafaelita Blaksland | Peanut Butter Cubes  | India       |
+| 2021-01-01 00:00:00 | 294    | Mallorie Waber      | Peanut Butter Cubes  | New Zealand |
+
+...
 
 **Explanation**:
 - Combines data from 4 tables
@@ -1077,6 +1322,8 @@ ORDER BY s.sale_date;
 ## Part 6: GROUP BY and Aggregation Functions
 
 ### Understanding GROUP BY
+
+> helps to make pivot reports !!!
 
 **Purpose**: Summarize data at a higher level by grouping rows and applying aggregation functions.
 
@@ -1098,20 +1345,31 @@ Common SQL aggregation functions:
 
 ### Basic GROUP BY Example
 
-**Scenario**: Total sales amount by geography
+**Scenario**: Total sales amount by geo
 
 **Query**:
 ```sql
 SELECT 
-  geo_id,
+  GeoID,
   SUM(amount) AS total_amount
 FROM sales
-GROUP BY geo_id;
+GROUP BY GeoID;
 ```
+
+| GeoID | sum(amount) |
+| ----- | ----------- |
+| G4    | 7435918     |
+| G3    | 7350091     |
+| G2    | 7012523     |
+| G1    | 7310254     |
+| G6    | 7189609     |
+| G5    | 7263151     |
+
+...
 
 **Explanation**:
 - `SUM(amount)` adds up all amounts within each group
-- `GROUP BY geo_id` creates one row for each unique geo_id value
+- `GROUP BY GeoID` creates one row for each unique GeoID value
 - Results show: g1, g2, g3, g4, etc. with their total amounts
 
 ### Multiple Aggregation Functions
@@ -1119,37 +1377,39 @@ GROUP BY geo_id;
 **Query**:
 ```sql
 SELECT 
-  geo_id,
+  GeoID,
   SUM(amount) AS total_amount,
   AVG(amount) AS average_amount,
   SUM(boxes) AS total_boxes
 FROM sales
-GROUP BY geo_id;
+GROUP BY GeoID;
 ```
 
 **Explanation**:
 - Multiple aggregation functions on same GROUP BY
 - Each function operates within the group
-- Results show summary statistics for each geography
+- Results show summary statistics for each geo
 
 ### GROUP BY with JOINs
 
-**Scenario**: Total sales amount by country (using geography table)
+**Scenario**: Total sales amount by country (using geo table)
 
 **Query**:
 ```sql
 SELECT 
   g.geo,
-  SUM(s.amount) AS total_amount
+  SUM(s.amount) AS total_amount,
+  AVG(s.amount) AS average_amount,
+  SUM(s.boxes) AS total_boxes
 FROM sales s
-JOIN geography g ON g.geo_id = s.geo_id
+JOIN geo g ON g.GeoID = s.GeoID
 GROUP BY g.geo;
 ```
 
 **Explanation**:
 - JOIN merges tables first
 - Then GROUP BY operates on joined data
-- GROUP BY uses the column being displayed (geo name from geography table)
+- GROUP BY uses the column being displayed (geo name from geo table)
 - Results are more readable with actual country names instead of IDs
 
 ### Multi-Level Grouping
@@ -1164,7 +1424,7 @@ SELECT
   SUM(s.boxes) AS total_boxes,
   SUM(s.amount) AS total_amount
 FROM sales s
-JOIN people p ON p.sp_id = s.sp_id
+JOIN people p ON p.SPID = s.SPID
 JOIN products pr ON pr.pid = s.pid
 GROUP BY pr.category, p.team
 ORDER BY pr.category, p.team;
@@ -1191,7 +1451,7 @@ SELECT
   SUM(s.boxes) AS total_boxes,
   SUM(s.amount) AS total_amount
 FROM sales s
-JOIN people p ON p.sp_id = s.sp_id
+JOIN people p ON p.SPID = s.SPID
 JOIN products pr ON pr.pid = s.pid
 WHERE p.team IS NOT NULL
 GROUP BY pr.category, p.team
@@ -1213,7 +1473,7 @@ SELECT
   g.geo,
   SUM(s.amount) AS total_amount
 FROM sales s
-JOIN geography g ON g.geo_id = s.geo_id
+JOIN geo g ON g.GeoID = s.GeoID
 GROUP BY g.geo
 ORDER BY total_amount DESC;
 ```
@@ -1334,7 +1594,7 @@ SELECT * FROM sales JOIN people;
 
 -- CORRECT:
 SELECT * FROM sales
-JOIN people ON people.sp_id = sales.sp_id;
+JOIN people ON people.SPID = sales.SPID;
 ```
 
 ### Understanding NULL in SQL
@@ -1356,10 +1616,10 @@ WHERE column != NULL        -- WRONG! Always false
 
 **Extract components**:
 ```sql
-YEAR(sale_date)      -- Returns year as number
-MONTH(sale_date)     -- Returns month as number
-DAY(sale_date)       -- Returns day as number
-WEEKDAY(sale_date)   -- Returns day of week (0-6)
+YEAR(SaleDate)      -- Returns year as number
+MONTH(SaleDate)     -- Returns month as number
+DAY(SaleDate)       -- Returns day as number
+WEEKDAY(SaleDate)   -- Returns day of week (0-6)
 ```
 
 **Date format**: YYYY-MM-DD (Year-Month-Day)
@@ -1463,9 +1723,515 @@ LIMIT number;
 
 ---
 
-## Conclusion
+# Advanced SQL & Database Design
 
-SQL is a powerful tool for data analysis. The 50 queries and concepts covered in this guide provide a strong foundation for working with databases. Success with SQL requires:
+---
+
+## Part 7: DDL — Building and Managing Tables
+
+**Data Definition Language (DDL)** defines the structure of your database.
+
+### Creating Tables
+
+```sql
+CREATE TABLE LoyaltyProgram (
+    LoyaltyID INT AUTO_INCREMENT,
+    SPID VARCHAR(10),
+    Points INT DEFAULT 0,
+    Status VARCHAR(20),
+    EnrollmentDate DATETIME,
+    PRIMARY KEY (LoyaltyID)
+);
+```
+
+### Altering Tables
+
+Used to modify existing table structures.
+
+```sql
+-- Add a new column
+ALTER TABLE LoyaltyProgram ADD COLUMN LastUpdated DATETIME;
+
+-- Modify an existing column type
+ALTER TABLE LoyaltyProgram MODIFY COLUMN Status VARCHAR(50);
+
+-- Rename a column
+ALTER TABLE LoyaltyProgram RENAME COLUMN Status TO TierLevel;
+```
+
+### Removing Data and Tables
+
+* **DROP**: Deletes table structure + data (irreversible).
+* **TRUNCATE**: Deletes data, keeps structure.
+* **DELETE**: Removes rows (transaction-safe).
+
+```sql
+DROP TABLE OldSalesData;
+TRUNCATE TABLE TempLog;
+```
+
+---
+
+## Part 8: Data Integrity and Constraints
+
+Constraints ensure **accuracy and reliability** of your data.
+
+### Primary Key & Foreign Key
+
+```sql
+CREATE TABLE OrderAudit (
+    AuditID INT PRIMARY KEY,
+    SPID VARCHAR(10),
+    ActionDate DATETIME,
+    FOREIGN KEY (SPID) REFERENCES People(SPID)
+);
+```
+
+### Unique & Check Constraints
+
+```sql
+ALTER TABLE LoyaltyProgram
+ADD CONSTRAINT UQ_SPID UNIQUE (SPID);
+
+ALTER TABLE LoyaltyProgram
+ADD CONSTRAINT CHK_Points CHECK (Points >= 0);
+```
+
+---
+
+## Part 9: Transactions and Concurrency (ACID)
+
+A **transaction** is a single logical unit of work.
+
+### ACID Properties
+
+* **A**tomicity — All or nothing
+* **C**onsistency — Always valid state
+* **I**solation — No interference
+* **D**urability — Permanent after commit
+
+### Controlling Transactions
+
+```sql
+START TRANSACTION;
+
+UPDATE Accounts SET Balance = Balance - 100 WHERE ID = 1;
+UPDATE Accounts SET Balance = Balance + 100 WHERE ID = 2;
+
+COMMIT;   -- or ROLLBACK;
+```
+
+### Isolation Levels
+
+* **Read Uncommitted** — allows dirty reads
+* **Read Committed** — prevents dirty reads
+* **Repeatable Read** — consistent rows
+* **Serializable** — highest safety, lowest performance
+
+---
+
+## Part 10: Advanced Analytics (Window Functions & CTEs)
+
+### Window Functions
+
+#### Ranking Functions
+
+```sql
+SELECT 
+    Salesperson,
+    Amount,
+    ROW_NUMBER() OVER(ORDER BY Amount DESC) AS RowNum,
+    RANK() OVER(ORDER BY Amount DESC) AS RankVal,
+    DENSE_RANK() OVER(ORDER BY Amount DESC) AS DenseRankVal
+FROM Sales;
+```
+
+#### Lag & Lead (Time-Series)
+
+```sql
+SELECT 
+    SaleDate,
+    Amount,
+    LAG(Amount, 1) OVER(ORDER BY SaleDate) AS PreviousSale,
+    LEAD(Amount, 1) OVER(ORDER BY SaleDate) AS NextSale
+FROM Sales;
+```
+
+#### Running Totals
+
+```sql
+SELECT 
+    SaleDate,
+    Amount,
+    SUM(Amount) OVER(ORDER BY SaleDate) AS RunningTotal
+FROM Sales;
+```
+
+### CTEs (Common Table Expressions)
+
+#### Simple CTE
+
+```sql
+WITH HighValueSales AS (
+    SELECT * FROM Sales WHERE Amount > 5000
+)
+SELECT * FROM HighValueSales;
+```
+
+#### Recursive CTE (Hierarchies)
+
+```sql
+WITH RECURSIVE EmployeeTree AS (
+    SELECT ID, Name, ManagerID 
+    FROM Employees 
+    WHERE ManagerID IS NULL
+    UNION ALL
+    SELECT e.ID, e.Name, e.ManagerID
+    FROM Employees e
+    JOIN EmployeeTree et ON e.ManagerID = et.ID
+)
+SELECT * FROM EmployeeTree;
+```
+
+---
+
+## Part 11: Subqueries and Set Operations
+
+### Correlated Subquery
+
+```sql
+SELECT * FROM People p
+WHERE EXISTS (
+    SELECT 1 FROM Sales s
+    WHERE s.SPID = p.SPID AND s.Amount > 10000
+);
+```
+
+### Set Operators
+
+* `UNION` — distinct
+* `UNION ALL` — includes duplicates
+* `INTERSECT` — common rows
+* `EXCEPT / MINUS` — rows in A not in B
+
+---
+
+## Part 12: Advanced Grouping
+
+#### ROLLUP, CUBE, GROUPING SETS
+
+```sql
+SELECT 
+    GeoID,
+    PID,
+    SUM(Amount)
+FROM Sales
+GROUP BY GeoID, PID WITH ROLLUP;
+```
+
+* **ROLLUP** → hierarchical subtotals
+* **CUBE** → all combinations
+* **GROUPING SETS** → custom combinations
+
+---
+
+## Part 13: Performance Tuning (Indexes & Explain Plans)
+
+### Index Types
+
+* **Clustered Index** — sorts actual rows
+* **Non-Clustered Index** — separate structure pointing to data
+
+#### When indexes help:
+
+* WHERE
+* JOIN
+* ORDER BY
+
+#### When indexes hurt:
+
+* Frequent INSERT/UPDATE/DELETE
+* Large storage cost
+
+### EXPLAIN
+
+```sql
+EXPLAIN SELECT * FROM Sales WHERE Amount > 5000;
+```
+
+Look for:
+
+* **Table Scan (bad)**
+* **Index Seek / Range Scan (good)**
+
+---
+
+## Part 14: Programmable SQL (Procedures, Functions, Triggers)
+
+### Stored Procedure
+
+```sql
+DELIMITER //
+CREATE PROCEDURE GetSalesByRegion(IN regionName VARCHAR(50))
+BEGIN
+    SELECT * FROM Sales s
+    JOIN Geo g ON s.GeoID = g.GeoID
+    WHERE g.Geo = regionName;
+END //
+DELIMITER ;
+```
+
+### Function (UDF)
+
+```sql
+CREATE FUNCTION CalculateTax(amount DECIMAL(10,2)) 
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+RETURN amount * 0.15;
+```
+
+### Trigger
+
+```sql
+CREATE TRIGGER BeforeSalesInsert
+BEFORE INSERT ON Sales
+FOR EACH ROW
+BEGIN
+    IF NEW.Amount < 0 THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Amount cannot be negative';
+    END IF;
+END;
+```
+
+---
+
+## Part 15: Modern SQL & Data Modeling
+
+### JSON Support
+
+```sql
+CREATE TABLE ProductsJSON (
+    ID INT,
+    Attributes JSON
+);
+
+SELECT 
+    ID,
+    JSON_EXTRACT(Attributes, '$.color') AS Color
+FROM ProductsJSON;
+```
+
+### Star Schema (Data Warehousing)
+
+* **Fact Tables:** Sales, Metrics
+* **Dimension Tables:** People, Products, Geo
+
+#### Slowly Changing Dimensions (SCD)
+
+* **Type 1:** overwrite
+* **Type 2:** add rows with `StartDate`, `EndDate`
+
+### Partitioning
+
+Useful for large time-series datasets.
+
+---
+
+## Part 16: Administration & Security
+
+### Users & Permissions
+
+```sql
+CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'password123';
+
+GRANT SELECT, INSERT ON AwesomeChocolates.* 
+TO 'app_user'@'localhost';
+
+REVOKE DELETE ON AwesomeChocolates.* 
+FROM 'app_user'@'localhost';
+```
+
+### Backup Types
+
+* **Logical** — mysqldump
+* **Physical** — underlying files
+
+---
+
+## Part 17: Best Practices & Anti-Patterns
+
+### Best Practices
+
+* Use **explicit column names**
+* Avoid `SELECT *`
+* Use meaningful aliases
+* Comment complex logic
+
+### SQL Anti-Patterns
+
+#### 1. Implied Joins
+
+❌ Bad
+
+```sql
+SELECT * FROM A, B WHERE A.id = B.id;
+```
+
+✔️ Good
+
+```sql
+SELECT * FROM A JOIN B ON A.id = B.id;
+```
+
+#### 2. N+1 Query Issue
+
+Use JOIN instead of performing queries inside loops.
+
+#### 3. Storing lists in columns
+
+Break out into normalized tables.
+
+#### 4. Using functions on indexed columns
+
+Avoid:
+
+```sql
+WHERE YEAR(SaleDate) = 2022;
+```
+
+Use:
+
+```sql
+WHERE SaleDate BETWEEN '2022-01-01' AND '2022-12-31';
+```
+
+---
+
+> **“The goal is to turn data into information, and information into insight.” — Carly Fiorina**
+
+---
+
+# Prac
+```
+INTERMEDIATE PROBLEMS
+👉 You need to combine various concepts covered in the video to solve these
+
+1. Print details of shipments (sales) where amounts are > 2,000 and boxes are <100?
+2. How many shipments (sales) each of the sales persons had in the month of January 2022?
+3. Which product sells more boxes? Milk Bars or Eclairs?
+4. Which product sold more boxes in the first 7 days of February 2022? Milk Bars or Eclairs?
+5. Which shipments had under 100 customers & under 100 boxes? Did any of them occur on Wednesday?
+
+HARD PROBLEMS
+👉 These require concepts not covered in the video
+
+1. What are the names of salespersons who had at least one shipment (sale) in the first 7 days of January 2022?
+2. Which salespersons did not make any shipments in the first 7 days of January 2022?
+3. How many times we shipped more than 1,000 boxes in each month?
+4. Did we ship at least one box of ‘After Nines’ to ‘New Zealand’ on all the months?
+5. India or Australia? Who buys more chocolate boxes on a monthly basis?
+```
+```
+INTERMEDIATE PROBLEMS:
+
+— 1. Print details of shipments (sales) where amounts are > 2,000 and boxes are <100?
+
+select * from sales where amount > 2000 and boxes < 100;
+
+— 2. How many shipments (sales) each of the sales persons had in the month of January 2022?
+
+select p.Salesperson, count(*) as ‘Shipment Count’
+from sales s
+join people p on s.spid = p.spid
+where SaleDate between ‘2022-1-1’ and ‘2022-1-31’
+group by p.Salesperson;
+
+— 3. Which product sells more boxes? Milk Bars or Eclairs?
+
+select pr.product, sum(boxes) as ‘Total Boxes’
+from sales s
+join products pr on s.pid = pr.pid
+where pr.Product in (‘Milk Bars’, ‘Eclairs’)
+group by pr.product;
+
+— 4. Which product sold more boxes in the first 7 days of February 2022? Milk Bars or Eclairs?
+
+select pr.product, sum(boxes) as ‘Total Boxes’
+from sales s
+join products pr on s.pid = pr.pid
+where pr.Product in (‘Milk Bars’, ‘Eclairs’)
+and s.saledate between ‘2022-2-1’ and ‘2022-2-7’
+group by pr.product;
+
+— 5. Which shipments had under 100 customers & under 100 boxes? Did any of them occur on Wednesday?
+
+select * from sales
+where customers < 100 and boxes < 100;
+
+select *,
+case when weekday(saledate)=2 then ‘Wednesday Shipment’
+else ”
+end as ‘W Shipment’
+from sales
+where customers < 100 and boxes < 100;
+
+ 
+
+HARD PROBLEMS:
+
+— What are the names of salespersons who had at least one shipment (sale) in the first 7 days of January 2022?
+
+select distinct p.Salesperson
+from sales s
+join people p on p.spid = s.SPID
+where s.SaleDate between ‘2022-01-01’ and ‘2022-01-07’;
+
+— Which salespersons did not make any shipments in the first 7 days of January 2022?
+
+select p.salesperson
+from people p
+where p.spid not in
+(select distinct s.spid from sales s where s.SaleDate between ‘2022-01-01’ and ‘2022-01-07’);
+
+— How many times we shipped more than 1,000 boxes in each month?
+
+select year(saledate) ‘Year’, month(saledate) ‘Month’, count(*) ‘Times we shipped 1k boxes’
+from sales
+where boxes>1000
+group by year(saledate), month(saledate)
+order by year(saledate), month(saledate);
+
+— Did we ship at least one box of ‘After Nines’ to ‘New Zealand’ on all the months?
+
+set @product_name = ‘After Nines’;
+set @country_name = ‘New Zealand’;
+
+select year(saledate) ‘Year’, month(saledate) ‘Month’,
+if(sum(boxes)>1, ‘Yes’,’No’) ‘Status’
+from sales s
+join products pr on pr.PID = s.PID
+join geo g on g.GeoID=s.GeoID
+where pr.Product = @product_name and g.Geo = @country_name
+group by year(saledate), month(saledate)
+order by year(saledate), month(saledate);
+
+— India or Australia? Who buys more chocolate boxes on a monthly basis?
+
+select year(saledate) ‘Year’, month(saledate) ‘Month’,
+sum(CASE WHEN g.geo=’India’ = 1 THEN boxes ELSE 0 END) ‘India Boxes’,
+sum(CASE WHEN g.geo=’Australia’ = 1 THEN boxes ELSE 0 END) ‘Australia Boxes’
+from sales s
+join geo g on g.GeoID=s.GeoID
+group by year(saledate), month(saledate)
+order by year(saledate), month(saledate);
+```
+
+---
+
+# Conclusion
+
+SQL is a powerful tool for data analysis. The 50+ queries and concepts covered in this guide provide a strong foundation for working with databases. Success with SQL requires:
 
 1. Understanding table structures and relationships
 2. Mastering basic clauses (SELECT, WHERE, FROM)
