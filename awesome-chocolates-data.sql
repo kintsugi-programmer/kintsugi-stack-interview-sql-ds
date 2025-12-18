@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `awesome chocolates` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `awesome chocolates`;
+CREATE DATABASE  IF NOT EXISTS `awesome-chocolates` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `awesome-chocolates`;
 -- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: localhost    Database: awesome chocolates
+-- Host: localhost    Database: awesome-chocolates
 -- ------------------------------------------------------
 -- Server version	8.0.28
 
