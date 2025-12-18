@@ -86,7 +86,7 @@ Comprehensive SQL Learning Guide for Data Analytics | Mastery in 50+ SQL Queries
     - [Aggregation Functions](#aggregation-functions-1)
     - [Key Clauses](#key-clauses)
     - [Query Structure (Proper Order)](#query-structure-proper-order)
-- [Prac](#prac)
+- [Practice](#practice)
 - [Conclusion](#conclusion)
 
 # Master SQL for Data Analysis
@@ -102,8 +102,6 @@ This guide covers mastery of SQL through 50 practical queries. Topics include SE
 **Tool Used**: MySQL Workbench / BeeKeeper Studio
 
 **Database**: Awesome Chocolates (must be downloaded and loaded)
-
-**Instructions**: Refer to video description for database setup instructions
 
 ### Creating Your First Query
 
@@ -347,6 +345,23 @@ FROM sales;
 ```
 
 | SaleDate            | Amount | Boxes | amount_per_box |
+| ------------------- | ------ | ----- | -------------- |
+| 2021-01-01 00:00:00 | 8414   | 495   | 16.9980        |
+| 2021-01-01 00:00:00 | 532    | 54    | 9.8519         |
+| 2021-01-01 00:00:00 | 5376   | 269   | 19.9851        |
+| 2021-01-01 00:00:00 | 259    | 22    | 11.7727        |
+| 2021-01-01 00:00:00 | 5530   | 179   | 30.8939        |
+
+```sql
+select
+  SaleDate,
+  Amount,
+  Boxes,
+  Amount/Boxes 'amount per box'
+from sales;
+```
+
+| SaleDate            | Amount | Boxes | amount per box |
 | ------------------- | ------ | ----- | -------------- |
 | 2021-01-01 00:00:00 | 8414   | 495   | 16.9980        |
 | 2021-01-01 00:00:00 | 532    | 54    | 9.8519         |
@@ -750,7 +765,7 @@ WHERE salesperson LIKE '%B%';
 
 ...
 
-**Find names ending with B**:
+**Find names ending with l**:
 ```sql
 SELECT * FROM people
 WHERE salesperson LIKE '%l';
@@ -899,6 +914,9 @@ FROM sales;
 **Concept**: Similar to VLOOKUP in Excel, but SQL uses more optimized methods.
 
 **Critical Prerequisite**: Understand how tables are linked through foreign keys before attempting JOINs.
+
+![https://towardsdatascience.com/you-should-use-this-to-visualize-sql-joins-instead-of-venn-diagrams-ede15f9583fc/](image-1.png)
+- https://towardsdatascience.com/you-should-use-this-to-visualize-sql-joins-instead-of-venn-diagrams-ede15f9583fc/
 
 ### Database Relationships in Awesome Chocolates
 
@@ -1674,7 +1692,10 @@ LIMIT number;
 
 ---
 
-# Prac
+# Practice
+
+- https://chandoo.org/wp/learn-sql-for-data-analysis/
+
 ```
 INTERMEDIATE PROBLEMS
 👉 You need to combine various concepts covered in the video to solve these
