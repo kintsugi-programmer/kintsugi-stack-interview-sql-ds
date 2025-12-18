@@ -1674,7 +1674,6 @@ LIMIT number;
 
 ---
 
-
 # Prac
 ```
 INTERMEDIATE PROBLEMS
