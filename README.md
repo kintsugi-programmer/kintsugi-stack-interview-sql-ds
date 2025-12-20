@@ -87,6 +87,7 @@ Comprehensive SQL Learning Guide for Data Analytics | Mastery in 50+ SQL Queries
     - [Key Clauses](#key-clauses)
     - [Query Structure (Proper Order)](#query-structure-proper-order)
 - [Practice](#practice)
+- [All Queries](#all-queries)
 - [Conclusion](#conclusion)
 
 # Master SQL for Data Analysis
@@ -1354,6 +1355,15 @@ FROM sales
 GROUP BY GeoID;
 ```
 
+| GeoID | total_amount | average_amount | total_boxes |
+| ----- | ------------ | -------------- | ----------- |
+| G4    | 7435918      | 5755.3545      | 493139      |
+| G3    | 7350091      | 5684.5251      | 491482      |
+| G2    | 7012523      | 5646.1538      | 473759      |
+| G1    | 7310254      | 5797.1879      | 490374      |
+| G6    | 7189609      | 5674.5138      | 470021      |
+| G5    | 7263151      | 5755.2702      | 482536      |
+
 **Explanation**:
 - Multiple aggregation functions on same GROUP BY
 - Each function operates within the group
@@ -1374,6 +1384,15 @@ FROM sales s
 JOIN geo g ON g.GeoID = s.GeoID
 GROUP BY g.geo;
 ```
+
+| Geo         | total_amount | average_amount | total_boxes |
+| ----------- | ------------ | -------------- | ----------- |
+| New Zealand | 7435918      | 5755.3545      | 493139      |
+| Canada      | 7350091      | 5684.5251      | 491482      |
+| USA         | 7012523      | 5646.1538      | 473759      |
+| India       | 7310254      | 5797.1879      | 490374      |
+| UK          | 7189609      | 5674.5138      | 470021      |
+| Australia   | 7263151      | 5755.2702      | 482536      |
 
 **Explanation**:
 - JOIN merges tables first
@@ -1398,6 +1417,21 @@ JOIN products pr ON pr.pid = s.pid
 GROUP BY pr.category, p.team
 ORDER BY pr.category, p.team;
 ```
+
+| Category | Team    | total_boxes | total_amount |
+| -------- | ------- | ----------- | ------------ |
+| Bars     |         | 231919      | 3568404      |
+| Bars     | Delish  | 456609      | 6862975      |
+| Bars     | Jucies  | 340348      | 5113521      |
+| Bars     | Yummies | 406265      | 6201601      |
+| Bites    |         | 129892      | 2151016      |
+| Bites    | Delish  | 273424      | 4525724      |
+| Bites    | Jucies  | 201838      | 3284309      |
+| Bites    | Yummies | 243030      | 4017342      |
+| Other    |         | 93928       | 1188208      |
+| Other    | Delish  | 194383      | 2464455      |
+| Other    | Jucies  | 145619      | 1872563      |
+| Other    | Yummies | 184056      | 2311428      |
 
 **Explanation**:
 - `GROUP BY pr.category, p.team` groups by two levels
@@ -1426,6 +1460,20 @@ WHERE p.team IS NOT NULL
 GROUP BY pr.category, p.team
 ORDER BY total_amount DESC;
 ```
+| category | team    | total_boxes | total_amount |
+| -------- | ------- | ----------- | ------------ |
+| Bars     | Delish  | 456609      | 6862975      |
+| Bars     | Yummies | 406265      | 6201601      |
+| Bars     | Jucies  | 340348      | 5113521      |
+| Bites    | Delish  | 273424      | 4525724      |
+| Bites    | Yummies | 243030      | 4017342      |
+| Bars     |         | 231919      | 3568404      |
+| Bites    | Jucies  | 201838      | 3284309      |
+| Other    | Delish  | 194383      | 2464455      |
+| Other    | Yummies | 184056      | 2311428      |
+| Bites    |         | 129892      | 2151016      |
+| Other    | Jucies  | 145619      | 1872563      |
+| Other    |         | 93928       | 1188208      |
 
 **Explanation**:
 - `WHERE` filters BEFORE grouping
@@ -1446,6 +1494,14 @@ JOIN geo g ON g.GeoID = s.GeoID
 GROUP BY g.geo
 ORDER BY total_amount DESC;
 ```
+| geo         | total_amount |
+| ----------- | ------------ |
+| New Zealand | 7435918      |
+| Canada      | 7350091      |
+| India       | 7310254      |
+| Australia   | 7263151      |
+| UK          | 7189609      |
+| USA         | 7012523      |
 
 **Explanation**:
 - `ORDER BY total_amount DESC` sorts results by aggregated column
@@ -1467,6 +1523,18 @@ GROUP BY pr.product
 ORDER BY total_amount DESC
 LIMIT 10;
 ```
+| product              | total_amount |
+| -------------------- | ------------ |
+| After Nines          | 2112502      |
+| Raspberry Choco      | 2090242      |
+| Almond Choco         | 2055627      |
+| 99% Dark & Pure      | 2023070      |
+| Organic Choco Syrup  | 2016707      |
+| Fruit & Nut Bars     | 2013081      |
+| Caramel Stuffed Bars | 2010407      |
+| Spicy Special Slims  | 2004415      |
+| Peanut Butter Cubes  | 1992060      |
+| 50% Dark Bites       | 1991836      |
 
 **Explanation**:
 - `LIMIT 10` restricts output to first 10 rows
@@ -1698,8 +1766,6 @@ LIMIT number;
 
 ```
 INTERMEDIATE PROBLEMS
-👉 You need to combine various concepts covered in the video to solve these
-
 1. Print details of shipments (sales) where amounts are > 2,000 and boxes are <100?
 2. How many shipments (sales) each of the sales persons had in the month of January 2022?
 3. Which product sells more boxes? Milk Bars or Eclairs?
@@ -1707,39 +1773,93 @@ INTERMEDIATE PROBLEMS
 5. Which shipments had under 100 customers & under 100 boxes? Did any of them occur on Wednesday?
 
 HARD PROBLEMS
-👉 These require concepts not covered in the video
-
 1. What are the names of salespersons who had at least one shipment (sale) in the first 7 days of January 2022?
 2. Which salespersons did not make any shipments in the first 7 days of January 2022?
 3. How many times we shipped more than 1,000 boxes in each month?
 4. Did we ship at least one box of ‘After Nines’ to ‘New Zealand’ on all the months?
 5. India or Australia? Who buys more chocolate boxes on a monthly basis?
 ```
-```
+
+---
+Solutions: 
+
 INTERMEDIATE PROBLEMS:
 
 — 1. Print details of shipments (sales) where amounts are > 2,000 and boxes are <100?
+  
+```sql
+select * from sales s 
+where s.`Amount` >2000 and s.`Boxes` <100;
 
 select * from sales where amount > 2000 and boxes < 100;
+```
+
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP19 | G3    | P10 | 2021-01-01 00:00:00 | 2387   | 134       | 89    |
+| SP11 | G2    | P17 | 2021-01-04 00:00:00 | 2814   | 296       | 94    |
+| SP07 | G4    | P13 | 2021-01-13 00:00:00 | 2121   | 130       | 89    |
+| SP25 | G2    | P08 | 2021-01-14 00:00:00 | 2135   | 183       | 98    |
+| SP17 | G5    | P01 | 2021-01-21 00:00:00 | 2408   | 106       | 90    |
+
+...
 
 — 2. How many shipments (sales) each of the sales persons had in the month of January 2022?
 
+```sql
 select p.Salesperson, count(*) as ‘Shipment Count’
 from sales s
 join people p on s.spid = p.spid
 where SaleDate between ‘2022-1-1’ and ‘2022-1-31’
 group by p.Salesperson;
 
+select 
+  p.`Salesperson`,
+  count(*) as 'Shipment Count'
+from sales s
+join people p on s.`SPID`=p.`SPID`
+  where s.`SaleDate` between '2022-01-01'and '2022-01-31'
+  group by p.`Salesperson`
+;
+```
+
+| Salesperson         | Shipment Count |
+| ------------------- | -------------- |
+| Barr Faughny        | 31             |
+| Kelci Walkden       | 44             |
+| Rafaelita Blaksland | 34             |
+| Jan Morforth        | 28             |
+| Marney O'Breen      | 32             |
+
+...
+
 — 3. Which product sells more boxes? Milk Bars or Eclairs?
 
+```sql
 select pr.product, sum(boxes) as ‘Total Boxes’
 from sales s
 join products pr on s.pid = pr.pid
 where pr.Product in (‘Milk Bars’, ‘Eclairs’)
 group by pr.product;
 
+select 
+  p.`Product`,
+  sum(s.`Boxes`) as 'Total Boxes'
+from sales s
+join products p on s.`PID`=p.`PID`
+  where p.`Product` in ('Milk Bars', 'Eclairs')
+  group by p.`Product`
+;
+```
+
+| Product   | Total Boxes |
+| --------- | ----------- |
+| Milk Bars | 130995      |
+| Eclairs   | 144651      |
+
 — 4. Which product sold more boxes in the first 7 days of February 2022? Milk Bars or Eclairs?
 
+```sql
 select pr.product, sum(boxes) as ‘Total Boxes’
 from sales s
 join products pr on s.pid = pr.pid
@@ -1747,10 +1867,31 @@ where pr.Product in (‘Milk Bars’, ‘Eclairs’)
 and s.saledate between ‘2022-2-1’ and ‘2022-2-7’
 group by pr.product;
 
+select 
+  p.`Product`,
+  sum(s.`Boxes`) as 'Total Boxes'
+from sales s
+join products p on s.`PID`=p.`PID`
+  where p.`Product` in ('Milk Bars', 'Eclairs') and
+  s.`SaleDate` between '2022-02-01' and '2022-02-07'
+  group by p.`Product`
+;
+```
+
+| Product   | Total Boxes |
+| --------- | ----------- |
+| Milk Bars | 818         |
+| Eclairs   | 1019        |
+
 — 5. Which shipments had under 100 customers & under 100 boxes? Did any of them occur on Wednesday?
 
+```sql
 select * from sales
 where customers < 100 and boxes < 100;
+
+select *
+from sales
+where `Customers`<100 and `Boxes`<100;
 
 select *,
 case when weekday(saledate)=2 then ‘Wednesday Shipment’
@@ -1759,37 +1900,150 @@ end as ‘W Shipment’
 from sales
 where customers < 100 and boxes < 100;
 
+select *,
+  case 
+    when weekday(s.`SaleDate`)=2 then 'Wednesday Shipment'
+    else ''
+  end as 'W Shipment'
+from sales s
+where s.`Customers`<100 and s.`Boxes`<100;
+```
+
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- |
+| SP01 | G4    | P15 | 2021-01-01 00:00:00 | 259    | 32        | 22    |
+| SP12 | G6    | P09 | 2021-01-04 00:00:00 | 147    | 9         | 11    |
+| SP09 | G5    | P09 | 2021-01-06 00:00:00 | 539    | 10        | 77    |
+| SP20 | G6    | P19 | 2021-01-06 00:00:00 | 637    | 79        | 91    |
+| SP05 | G5    | P04 | 2021-01-08 00:00:00 | 364    | 14        | 21    |
+
+...
+
+| SPID | GeoID | PID | SaleDate            | Amount | Customers | Boxes | W Shipment         |
+| ---- | ----- | --- | ------------------- | ------ | --------- | ----- | ------------------ |
+| SP01 | G4    | P15 | 2021-01-01 00:00:00 | 259    | 32        | 22    |                    |
+| SP12 | G6    | P09 | 2021-01-04 00:00:00 | 147    | 9         | 11    |                    |
+| SP09 | G5    | P09 | 2021-01-06 00:00:00 | 539    | 10        | 77    | Wednesday Shipment |
+| SP20 | G6    | P19 | 2021-01-06 00:00:00 | 637    | 79        | 91    | Wednesday Shipment |
+| SP05 | G5    | P04 | 2021-01-08 00:00:00 | 364    | 14        | 21    |                    |
+
+...
  
 
 HARD PROBLEMS:
 
 — What are the names of salespersons who had at least one shipment (sale) in the first 7 days of January 2022?
 
+```sql
 select distinct p.Salesperson
 from sales s
 join people p on p.spid = s.SPID
 where s.SaleDate between ‘2022-01-01’ and ‘2022-01-07’;
 
+select
+  distinct p.`Salesperson`
+from sales s
+join people p on s.`SPID`=p.`SPID`
+where s.`SaleDate` between '2022-01-01' and '2022-1-07';
+```
+
+| Salesperson         |
+| ------------------- |
+| Kelci Walkden       |
+| Van Tuxwell         |
+| Beverie Moffet      |
+| Dotty Strutley      |
+| Gigi Bohling        |
+
+...
+
 — Which salespersons did not make any shipments in the first 7 days of January 2022?
+
+```sql
+select
+  p.`Salesperson`
+from people p
+where p.`SPID` not in (select distinct s.`SPID` from sales s where s.`SaleDate` between '2022-01-01' and '2022-1-07')
+  ;
 
 select p.salesperson
 from people p
 where p.spid not in
 (select distinct s.spid from sales s where s.SaleDate between ‘2022-01-01’ and ‘2022-01-07’);
+```
+
+| Salesperson      |
+| ---------------- |
+| Janene Hairsine  |
+| Niall Selesnick  |
+| Ebonee Roxburgh  |
+| Zach Polon       |
+| Orton Livick     |
+| Gray Seamon      |
+| Benny Karolovsky |
+| Dyna Doucette    |
 
 — How many times we shipped more than 1,000 boxes in each month?
 
+```sql
 select year(saledate) ‘Year’, month(saledate) ‘Month’, count(*) ‘Times we shipped 1k boxes’
 from sales
 where boxes>1000
 group by year(saledate), month(saledate)
 order by year(saledate), month(saledate);
 
+select
+  year(s.`SaleDate`) 'Year',
+  month(s.`SaleDate`) 'Month',
+  count(*) 'Times we shipped 1k boxes'
+from sales s
+where s.`Boxes`>1000
+group by year(s.`SaleDate`), month(s.`SaleDate`)
+order by year(s.`SaleDate`), month(s.`SaleDate`)
+;
+```
+
+| Year | Month | Times we shipped 1k boxes |
+| ---- | ----- | ------------------------- |
+| 2021 | 1     | 18                        |
+| 2021 | 2     | 23                        |
+| 2021 | 3     | 32                        |
+| 2021 | 4     | 27                        |
+| 2021 | 5     | 15                        |
+
+...
+
 — Did we ship at least one box of ‘After Nines’ to ‘New Zealand’ on all the months?
+
+```sql
+select 
+  year(s.`SaleDate`) 'Year',
+  month(s.`SaleDate`) 'Month',
+  if(sum(s.`Boxes`)>1,'Yes','No') 'Status'
+from sales s
+join products pr on pr.`PID` = s.`PID`
+join geo g on g.`GeoID` = s.`GeoID`
+where pr.`Product` = 'After Nines' and g.`Geo` = 'New Zealand' 
+group by year(s.`SaleDate`),month(s.`SaleDate`)
+order by year(s.`SaleDate`),month(s.`SaleDate`)
+;
+
+SET @prod_name    = 'After Nines' COLLATE utf8mb4_0900_ai_ci; -- COLLATE utf8mb4_0900_ai_ci is fix related to some datatype issue
+SET @country_name = 'New Zealand' COLLATE utf8mb4_0900_ai_ci;
+select 
+  year(s.`SaleDate`) 'Year',
+  month(s.`SaleDate`) 'Month',
+  if(sum(s.`Boxes`)>1,'Yes','No') 'Status'
+from sales s
+join products pr on pr.`PID` = s.`PID`
+join geo g on g.`GeoID` = s.`GeoID`
+where pr.`Product` = @prod_name and g.`Geo` = @country_name
+group by year(s.`SaleDate`),month(s.`SaleDate`)
+order by year(s.`SaleDate`),month(s.`SaleDate`)
+;
 
 set @product_name = ‘After Nines’;
 set @country_name = ‘New Zealand’;
-
 select year(saledate) ‘Year’, month(saledate) ‘Month’,
 if(sum(boxes)>1, ‘Yes’,’No’) ‘Status’
 from sales s
@@ -1798,9 +2052,21 @@ join geo g on g.GeoID=s.GeoID
 where pr.Product = @product_name and g.Geo = @country_name
 group by year(saledate), month(saledate)
 order by year(saledate), month(saledate);
+```
+
+| Year | Month | Status |
+| ---- | ----- | ------ |
+| 2021 | 1     | Yes    |
+| 2021 | 2     | Yes    |
+| 2021 | 3     | Yes    |
+| 2021 | 4     | Yes    |
+| 2021 | 5     | Yes    |
+
+...
 
 — India or Australia? Who buys more chocolate boxes on a monthly basis?
 
+```sql
 select year(saledate) ‘Year’, month(saledate) ‘Month’,
 sum(CASE WHEN g.geo=’India’ = 1 THEN boxes ELSE 0 END) ‘India Boxes’,
 sum(CASE WHEN g.geo=’Australia’ = 1 THEN boxes ELSE 0 END) ‘Australia Boxes’
@@ -1808,6 +2074,451 @@ from sales s
 join geo g on g.GeoID=s.GeoID
 group by year(saledate), month(saledate)
 order by year(saledate), month(saledate);
+
+select 
+  year(s.`SaleDate`) 'Year',
+  month(s.`SaleDate`) 'Month',
+  sum(
+    case when 
+      g.`Geo`='India' = 1
+      then boxes 
+      else 0
+    end
+    ) 'India Boxes',
+  sum(
+      case when 
+        g.`Geo`='Australia' = 1
+        then boxes 
+        else 0
+      end
+      ) 'Australia Boxes'
+from sales s
+join geo g on g.`GeoID` = s.`GeoID`
+group by year(s.`SaleDate`), month(s.`SaleDate`)
+order by year(s.`SaleDate`), month(s.`SaleDate`)
+;
+```
+
+| Year | Month | India Boxes | Australia Boxes |
+| ---- | ----- | ----------- | --------------- |
+| 2021 | 1     | 23937       | 25210           |
+| 2021 | 2     | 39717       | 27961           |
+| 2021 | 3     | 39787       | 28123           |
+| 2021 | 4     | 22514       | 35261           |
+| 2021 | 5     | 27531       | 32213           |
+
+...
+
+# All Queries
+
+```sql
+SHOW TABLES; -- 1
+
+DESCRIBE sales; -- 2
+
+SELECT * FROM sales; -- 3
+
+SELECT 
+  saledate, 
+  amount, 
+  customers 
+  FROM sales; -- 4
+
+SELECT 
+  amount, 
+  customers, 
+  geoid 
+  FROM sales; -- 5
+
+SELECT 
+  saledate,
+  amount,
+  boxes,
+  amount / boxes
+FROM sales; -- 6
+
+SELECT 
+  saledate,
+  amount,
+  boxes,
+  amount / boxes AS 'amount_per_box'
+FROM sales; -- 7
+
+SELECT 
+  saledate,
+  amount,
+  boxes,
+  amount / boxes 'amount_per_box'
+FROM sales; -- 8
+
+SELECT * FROM sales
+WHERE amount > 10000; -- 9
+
+SELECT * FROM sales
+WHERE amount > 10000
+ORDER BY amount; -- 10
+
+SELECT * FROM sales
+WHERE amount > 10000
+ORDER BY amount DESC; -- 11
+
+SELECT * FROM sales
+WHERE geoid = 'g1'
+ORDER BY pid, amount DESC; -- 12
+
+SELECT * FROM sales
+WHERE amount > 10000
+AND saledate >= '2022-01-01'; -- 13
+
+SELECT saledate, amount 
+FROM sales
+WHERE amount > 10000
+AND YEAR(saledate) = 2022
+ORDER BY amount DESC; -- 14
+
+SELECT * FROM sales
+WHERE boxes > 0
+AND boxes <= 50; -- 15
+
+SELECT * FROM sales
+WHERE boxes BETWEEN 0 AND 50; -- 16
+
+SELECT 
+  saledate,
+  amount,
+  boxes,
+  WEEKDAY(saledate) AS day_of_week
+FROM sales
+WHERE WEEKDAY(saledate) = 4; -- 17
+
+SELECT * FROM people
+WHERE team = 'Delish'
+OR team = 'Juices'; -- 18
+
+SELECT * FROM people
+WHERE team IN ('Delish', 'Juices'); -- 19
+
+SELECT * FROM people
+WHERE salesperson LIKE 'B%'; -- 20
+
+SELECT * FROM people
+WHERE salesperson LIKE '%B%'; -- 21
+
+SELECT * FROM people
+WHERE salesperson LIKE '%l'; -- 22
+
+SELECT * FROM people
+WHERE salesperson LIKE '_B%'; -- 23
+
+select * from products
+where Category != 'Bars'; -- 24
+-- OR --
+select * from products
+where Category <> 'Bars'; -- 25
+-- OR --
+select * from products
+where not (Category = 'Bars'); -- 26
+
+select SaleDate,Amount ,case
+  when Amount < 1000 then 'Under 1K'
+  when Amount < 5000 then 'Under 2K'
+  when Amount < 10000 then 'Under 10K' 
+  else '10K or More' 
+  end as amount_category from sales ; -- 27
+
+SELECT 
+  saledate,
+  amount 
+  ,CASE
+    WHEN amount < 1000 THEN 'Under 1K'
+    WHEN amount < 5000 THEN 'Under 5K'
+    WHEN amount < 10000 THEN 'Under 10K'
+    ELSE '10K or More'
+  END AS amount_category
+FROM sales; -- 28
+
+SELECT * FROM sales; -- 29
+
+select 
+  s.SaleDate,
+  s.Amount,
+  p.Salesperson
+from sales s
+join people p on p.SPID = s.SPID; -- 30
+
+select
+  s.SaleDate,
+  s.Amount,
+  p.Salesperson,
+  s.SPID,
+  p.SPID
+from sales s
+  join people p on p.SPID = s.SPID
+; -- 31
+
+select 
+  s.SaleDate,
+  s.Amount,
+  pr.Product
+from sales s 
+  left join products pr on pr.PID = s.PID
+; -- 32
+
+select 
+  s.SaleDate,
+  s.Amount,
+  pr.Product
+from sales s 
+  right join products pr on pr.PID = s.PID
+; -- 33
+
+select
+  s.SaleDate,
+  s.Amount,
+  p.Salesperson,
+  p.Team
+from sales s 
+  join people p on p.SPID = s.SPID
+  where s.Amount< 500
+  and p.Team = 'Delish'
+; -- 34
+
+select
+  s.SaleDate,
+  s.Amount,
+  p.Salesperson,
+  p.Team
+from sales s 
+  join people p on p.SPID = s.SPID
+  where s.Amount< 500
+; -- 35
+
+select
+  s.SaleDate,
+  s.Amount,
+  p.Salesperson,
+  p.Team
+from sales s 
+  join people p on p.SPID = s.SPID
+  where s.Amount< 500
+  and p.Team = ''
+; -- 36
+
+select
+  sales.SaleDate,
+  sales.Amount,
+  people.Salesperson,
+  products.Product,
+  people.Team
+from sales
+join people on people.SPID = sales.SPID
+join products on products.PID = sales.PID ; -- 37
+
+select 
+  s.SaleDate,
+  s.Amount,
+  p.Salesperson,
+  p.Team
+  from sales s
+  left join people p
+    on p.SPID = s.SPID
+where s.Amount < 500
+and p.team = ''
+; -- 38
+
+select 
+  s.SaleDate,
+  s.Amount,
+  p.Salesperson,
+  pr.Product,
+  g.Geo
+from sales s 
+  join people p
+  join products pr
+  join geo g
+where s.Amount < 500
+  and p.Team = ''
+  and g.Geo in ('New Zealand','India')
+order by s.SaleDate
+; -- 39
+
+select 
+  GeoID,
+  sum(amount)
+from sales
+group by GeoID; -- 40
+
+SELECT 
+  GeoID,
+  SUM(amount) AS total_amount,
+  AVG(amount) AS average_amount,
+  SUM(boxes) AS total_boxes
+FROM sales
+GROUP BY GeoID; -- 41
+
+SELECT 
+  g.Geo,
+  SUM(s.Amount) AS total_amount,
+  AVG(s.Amount) AS average_amount,
+  SUM(s.Boxes) AS total_boxes
+FROM sales s
+  JOIN geo g ON g.GeoID = s.GeoID
+GROUP BY g.geo; -- 42
+
+select
+  pr.Category,
+  p.Team,
+  sum(s.Boxes) as total_boxes,
+  sum(s.Amount) as total_amount
+from sales s
+join people p on p.SPID = s.SPID
+join products pr on pr.PID = s.PID
+group by pr.Category, p.Team
+order by pr.Category, p.Team; -- 43 
+
+
+SELECT 
+  pr.category,
+  p.team,
+  SUM(s.boxes) AS total_boxes,
+  SUM(s.amount) AS total_amount
+FROM sales s
+JOIN people p ON p.SPID = s.SPID
+JOIN products pr ON pr.pid = s.pid
+WHERE p.team IS NOT NULL
+GROUP BY pr.category, p.team
+ORDER BY total_amount DESC; -- 44
+
+SELECT 
+  g.geo,
+  SUM(s.amount) AS total_amount
+FROM sales s
+JOIN geo g ON g.GeoID = s.GeoID
+GROUP BY g.geo
+ORDER BY total_amount DESC; -- 45
+
+SELECT 
+  pr.product,
+  SUM(s.amount) AS total_amount
+FROM sales s
+JOIN products pr ON pr.pid = s.pid
+GROUP BY pr.product
+ORDER BY total_amount DESC
+LIMIT 10; -- 46
+
+select * from sales s 
+where s.`Amount` >2000 and s.`Boxes` <100; -- 47
+
+select 
+  p.`Salesperson`,
+  count(*) as 'Shipment Count'
+from sales s
+join people p on s.`SPID`=p.`SPID`
+  where s.`SaleDate` between '2022-01-01'and '2022-01-31'
+  group by p.`Salesperson`
+; -- 48
+
+select 
+  p.`Product`,
+  sum(s.`Boxes`) as 'Total Boxes'
+from sales s
+join products p on s.`PID`=p.`PID`
+  where p.`Product` in ('Milk Bars', 'Eclairs')
+  group by p.`Product`
+; -- 49
+
+select 
+  p.`Product`,
+  sum(s.`Boxes`) as 'Total Boxes'
+from sales s
+join products p on s.`PID`=p.`PID`
+  where p.`Product` in ('Milk Bars', 'Eclairs') and
+  s.`SaleDate` between '2022-02-01' and '2022-02-07'
+  group by p.`Product`
+; -- 50
+
+select *
+from sales
+where `Customers`<100 and `Boxes`<100; -- 51
+
+select *,
+  case 
+    when weekday(s.`SaleDate`)=2 then 'Wednesday Shipment'
+    else ''
+  end as 'W Shipment'
+from sales s
+where s.`Customers`<100 and s.`Boxes`<100; -- 52
+
+select
+  distinct p.`Salesperson`
+from sales s
+join people p on s.`SPID`=p.`SPID`
+where s.`SaleDate` between '2022-01-01' and '2022-1-07'; -- 53
+
+select
+  p.`Salesperson`
+from people p
+where p.`SPID` not in (select distinct s.`SPID` from sales s where s.`SaleDate` between '2022-01-01' and '2022-1-07')
+  ; -- 54
+
+select
+  year(s.`SaleDate`) 'Year',
+  month(s.`SaleDate`) 'Month',
+  count(*) 'Times we shipped 1k boxes'
+from sales s
+where s.`Boxes`>1000
+group by year(s.`SaleDate`), month(s.`SaleDate`)
+order by year(s.`SaleDate`), month(s.`SaleDate`)
+; -- 55
+
+select 
+  year(s.`SaleDate`) 'Year',
+  month(s.`SaleDate`) 'Month',
+  if(sum(s.`Boxes`)>1,'Yes','No') 'Status'
+from sales s
+join products pr on pr.`PID` = s.`PID`
+join geo g on g.`GeoID` = s.`GeoID`
+where pr.`Product` = 'After Nines' and g.`Geo` = 'New Zealand' 
+group by year(s.`SaleDate`),month(s.`SaleDate`)
+order by year(s.`SaleDate`),month(s.`SaleDate`)
+; -- 56
+
+SET @prod_name    = 'After Nines' COLLATE utf8mb4_0900_ai_ci; -- COLLATE utf8mb4_0900_ai_ci is fix related to some datatype issue
+SET @country_name = 'New Zealand' COLLATE utf8mb4_0900_ai_ci;
+select 
+  year(s.`SaleDate`) 'Year',
+  month(s.`SaleDate`) 'Month',
+  if(sum(s.`Boxes`)>1,'Yes','No') 'Status'
+from sales s
+join products pr on pr.`PID` = s.`PID`
+join geo g on g.`GeoID` = s.`GeoID`
+where pr.`Product` = @prod_name and g.`Geo` = @country_name
+group by year(s.`SaleDate`),month(s.`SaleDate`)
+order by year(s.`SaleDate`),month(s.`SaleDate`)
+; -- 57
+
+select 
+  year(s.`SaleDate`) 'Year',
+  month(s.`SaleDate`) 'Month',
+  sum(
+    case when 
+      g.`Geo`='India' = 1
+      then boxes 
+      else 0
+    end
+    ) 'India Boxes',
+  sum(
+      case when 
+        g.`Geo`='Australia' = 1
+        then boxes 
+        else 0
+      end
+      ) 'Australia Boxes'
+from sales s
+join geo g on g.`GeoID` = s.`GeoID`
+group by year(s.`SaleDate`), month(s.`SaleDate`)
+order by year(s.`SaleDate`), month(s.`SaleDate`)
+; -- 58
 ```
 
 ---
