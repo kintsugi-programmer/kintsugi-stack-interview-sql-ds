@@ -1,100 +1,46 @@
-# kintsugi-stack-sql
+# SQL DS Interview
 
-Comprehensive SQL Learning Guide for Data Analytics | Mastery in 50+ SQL Queries
+![alt text](images/image.webp)
 
-> The relational model is founded on logic.
+- [Sample Database: Awesome Chocolates](https://github.com/kintsugi-programmer/kintsugi-stack-interview-sql-ds/blob/main/awesome-chocolates-data.sql)
 
-- Author: [Kintsugi-Programmer](https://github.com/kintsugi-programmer)
+```mermaid
+erDiagram
+    GEO {
+        varchar GeoID PK
+        text Geo
+        text Region
+    }
 
-![alt text](image.png)
+    PEOPLE {
+        varchar SPID PK
+        text Salesperson
+        text Team
+        text Location
+    }
 
-> Disclaimer: The content presented here is a curated blend of my personal learning journey, experiences, open-source documentation, and invaluable knowledge gained from diverse sources. I do not claim sole ownership over all the material; this is a community-driven effort to learn, share, and grow together.
+    PRODUCTS {
+        varchar PID PK
+        text Product
+        text Category
+        text Size
+        double Cost_per_box
+    }
 
-## Table of Contents
-- [kintsugi-stack-sql](#kintsugi-stack-sql)
-  - [Table of Contents](#table-of-contents)
-- [Master SQL for Data Analysis](#master-sql-for-data-analysis)
-  - [Overview](#overview)
-  - [Getting Started with SQL](#getting-started-with-sql)
-    - [Setting Up Your Environment](#setting-up-your-environment)
-    - [Creating Your First Query](#creating-your-first-query)
-    - [Understanding the Database Structure](#understanding-the-database-structure)
-      - [Available Tables in Awesome Chocolates Database](#available-tables-in-awesome-chocolates-database)
-      - [Exploring Table Contents](#exploring-table-contents)
-      - [Important Concept](#important-concept)
-    - [Output Display](#output-display)
-  - [Part 1: SELECT Statements and Basic Queries](#part-1-select-statements-and-basic-queries)
-    - [SELECT All Columns](#select-all-columns)
-    - [SELECT Specific Columns](#select-specific-columns)
-    - [Reordering Columns](#reordering-columns)
-    - [Adding Calculations to Queries](#adding-calculations-to-queries)
-    - [Creating Aliases for Calculated Columns](#creating-aliases-for-calculated-columns)
-    - [Key Takeaway on Aliases](#key-takeaway-on-aliases)
-  - [Part 2: WHERE Clauses - Filtering Data](#part-2-where-clauses---filtering-data)
-    - [Understanding WHERE Clauses](#understanding-where-clauses)
-    - [Basic WHERE Clause with Greater Than](#basic-where-clause-with-greater-than)
-    - [Combining WHERE with ORDER BY](#combining-where-with-order-by)
-    - [Multiple Sort Criteria](#multiple-sort-criteria)
-    - [WHERE Clause with AND Operator](#where-clause-with-and-operator)
-    - [Using YEAR Function with WHERE](#using-year-function-with-where)
-    - [WHERE Clause with BETWEEN](#where-clause-with-between)
-    - [Weekday Function Example](#weekday-function-example)
-  - [Part 3: Logical Operators - AND, OR, NOT](#part-3-logical-operators---and-or-not)
-    - [The OR Operator](#the-or-operator)
-    - [The IN Operator](#the-in-operator)
-    - [The LIKE Operator - Pattern Matching](#the-like-operator---pattern-matching)
-    - [The NOT Operator](#the-not-operator)
-  - [Part 4: Conditional Logic with CASE](#part-4-conditional-logic-with-case)
-    - [Understanding CASE Statements](#understanding-case-statements)
-    - [CASE Statement Structure](#case-statement-structure)
-    - [CASE with Multiple Conditions](#case-with-multiple-conditions)
-    - [Use Cases for CASE](#use-cases-for-case)
-  - [Part 5: JOINs - Combining Multiple Tables](#part-5-joins---combining-multiple-tables)
-    - [Understanding JOINs](#understanding-joins)
-    - [Database Relationships in Awesome Chocolates](#database-relationships-in-awesome-chocolates)
-    - [Basic JOIN Example](#basic-join-example)
-    - [Table Aliases](#table-aliases)
-    - [Column Qualification](#column-qualification)
-    - [LEFT JOIN vs JOIN](#left-join-vs-join)
-    - [JOIN with WHERE Clause](#join-with-where-clause)
-    - [Multiple JOINs](#multiple-joins)
-    - [JOIN with Null Handling](#join-with-null-handling)
-    - [Three-Table JOIN Example](#three-table-join-example)
-  - [Part 6: GROUP BY and Aggregation Functions](#part-6-group-by-and-aggregation-functions)
-    - [Understanding GROUP BY](#understanding-group-by)
-    - [Aggregation Functions](#aggregation-functions)
-    - [Basic GROUP BY Example](#basic-group-by-example)
-    - [Multiple Aggregation Functions](#multiple-aggregation-functions)
-    - [GROUP BY with JOINs](#group-by-with-joins)
-    - [Multi-Level Grouping](#multi-level-grouping)
-    - [Filtering GROUP BY Results with WHERE](#filtering-group-by-results-with-where)
-    - [Sorting GROUP BY Results](#sorting-group-by-results)
-    - [LIMIT for Top N Results](#limit-for-top-n-results)
-  - [Advanced Tips and Best Practices](#advanced-tips-and-best-practices)
-    - [Query Writing Best Practices](#query-writing-best-practices)
-    - [Common Mistakes to Avoid](#common-mistakes-to-avoid)
-    - [Understanding NULL in SQL](#understanding-null-in-sql)
-    - [Date Functions](#date-functions)
-    - [Saving Your Work](#saving-your-work)
-  - [Learning Resources and Next Steps](#learning-resources-and-next-steps)
-    - [Recommended Learning Path](#recommended-learning-path)
-    - [Where to Use SQL](#where-to-use-sql)
-    - [Practice Importance](#practice-importance)
-  - [Quick Reference](#quick-reference)
-    - [Comparison Operators](#comparison-operators)
-    - [Logical Operators](#logical-operators)
-    - [Aggregation Functions](#aggregation-functions-1)
-    - [Key Clauses](#key-clauses)
-    - [Query Structure (Proper Order)](#query-structure-proper-order)
-- [Practice](#practice)
-- [All Queries](#all-queries)
-- [Conclusion](#conclusion)
+    SALES {
+        text SPID
+        text GeoID
+        text PID
+        datetime SaleDate
+        int Amount
+        int Customers
+        int Boxes
+    }
 
-# Master SQL for Data Analysis
-
-## Overview
-
-This guide covers mastery of SQL through 50 practical queries. Topics include SELECT operations, WHERE clauses, logical operators (AND, OR, NOT), JOINs, GROUP BY, ORDER BY, and advanced SQL techniques. The guide uses the "Awesome Chocolates" database with real-world examples and practical tips.
+    PEOPLE ||--o{ SALES : makes
+    GEO ||--o{ SALES : occurs_in
+    PRODUCTS ||--o{ SALES : includes
+```
 
 ## Getting Started with SQL
 
@@ -916,8 +862,7 @@ FROM sales;
 
 **Critical Prerequisite**: Understand how tables are linked through foreign keys before attempting JOINs.
 
-![https://towardsdatascience.com/you-should-use-this-to-visualize-sql-joins-instead-of-venn-diagrams-ede15f9583fc/](image-1.png)
-- https://towardsdatascience.com/you-should-use-this-to-visualize-sql-joins-instead-of-venn-diagrams-ede15f9583fc/
+![https://towardsdatascience.com/you-should-use-this-to-visualize-sql-joins-instead-of-venn-diagrams-ede15f9583fc/](images/image-1.webp)
 
 ### Database Relationships in Awesome Chocolates
 
@@ -2520,22 +2465,3 @@ group by year(s.`SaleDate`), month(s.`SaleDate`)
 order by year(s.`SaleDate`), month(s.`SaleDate`)
 ; -- 58
 ```
-
----
-
-# Conclusion
-
-SQL is a powerful tool for data analysis. The 50+ queries and concepts covered in this guide provide a strong foundation for working with databases. Success with SQL requires:
-
-1. Understanding table structures and relationships
-2. Mastering basic clauses (SELECT, WHERE, FROM)
-3. Using JOINs to combine related data
-4. Aggregating data with GROUP BY
-5. Consistent practice and exploration
-
----
-End-of-File
-
-The [KintsugiStack](https://github.com/kintsugi-programmer/KintsugiStack) repository, authored by Kintsugi-Programmer, is less a comprehensive resource and more an Artifact of Continuous Research and Deep Inquiry into Computer Science and Software Engineering. It serves as a transparent ledger of the author's relentless pursuit of mastery, from the foundational algorithms to modern full-stack implementation.
-
-> Made with 💚 [Kintsugi-Programmer](https://github.com/kintsugi-programmer)
