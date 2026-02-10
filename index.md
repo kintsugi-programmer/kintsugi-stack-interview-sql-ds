@@ -56,6 +56,24 @@ erDiagram
 2. View output results directly in the workbench grid
 3. Execute queries using **Ctrl + Enter** or the Run command
 
+```mermaid
+flowchart LR
+    subgraph Query Execution Workflow
+        A[Open Query Editor] --> B[Write SQL Query]
+        B --> C[Execute Query]
+        C --> D{Success?}
+        D -->|Yes| E[View Results in Grid]
+        D -->|No| F[Debug & Fix Errors]
+        F --> B
+    end
+    style A fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style B fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style C fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style D fill:#16213e,stroke:#f39c12,color:#fff
+    style E fill:#0d3b0d,stroke:#2ecc71,color:#fff
+    style F fill:#3b0d0d,stroke:#e74c3c,color:#fff
+```
+
 **Note**: Shortcuts differ depending on your system and SQL management tool:
 - **MySQL Workbench**: Ctrl + Enter
 - **SQL Server Management Studio (SSMS)**: Different shortcut
@@ -333,6 +351,23 @@ The alias makes your output more readable and professional. Many times you want 
 **Concept**: WHERE clause in SQL is like filtering in Excel. Set filter criteria to show only specific data.
 
 **Importance**: WHERE clauses are one of the most important aspects of SQL for data analysis.
+
+```mermaid
+flowchart LR
+    subgraph WHERE Clause Flow
+        A[All Rows] --> B{Evaluate Condition}
+        B -->|TRUE| C[Include Row]
+        B -->|FALSE| D[Exclude Row]
+        C --> E[Result Set]
+        D --> F[Discarded]
+    end
+    style A fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style B fill:#16213e,stroke:#f39c12,color:#fff
+    style C fill:#0d3b0d,stroke:#2ecc71,color:#fff
+    style D fill:#3b0d0d,stroke:#e74c3c,color:#fff
+    style E fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style F fill:#2d2d2d,stroke:#666,color:#999
+```
 
 ### Basic WHERE Clause with Greater Than
 
@@ -786,6 +821,27 @@ where not (Category = 'Bars');
 - $5,000 to $10,000: "Under 10K"
 - Over $10,000: "10K or More"
 
+```mermaid
+flowchart TD
+    subgraph CASE Statement Evaluation
+        A[Input Value] --> B{Amount < 1000?}
+        B -->|Yes| C["Under 1K"]
+        B -->|No| D{Amount < 5000?}
+        D -->|Yes| E["Under 5K"]
+        D -->|No| F{Amount < 10000?}
+        F -->|Yes| G["Under 10K"]
+        F -->|No| H["10K or More"]
+    end
+    style A fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style B fill:#16213e,stroke:#f39c12,color:#fff
+    style C fill:#0d3b0d,stroke:#2ecc71,color:#fff
+    style D fill:#16213e,stroke:#f39c12,color:#fff
+    style E fill:#0d3b0d,stroke:#2ecc71,color:#fff
+    style F fill:#16213e,stroke:#f39c12,color:#fff
+    style G fill:#0d3b0d,stroke:#2ecc71,color:#fff
+    style H fill:#0d3b0d,stroke:#2ecc71,color:#fff
+```
+
 ### CASE Statement Structure
 
 **Query**:
@@ -861,6 +917,31 @@ FROM sales;
 **Concept**: Similar to VLOOKUP in Excel, but SQL uses more optimized methods.
 
 **Critical Prerequisite**: Understand how tables are linked through foreign keys before attempting JOINs.
+
+```mermaid
+flowchart LR
+    subgraph "JOIN Types"
+        direction TB
+        subgraph INNER["INNER JOIN"]
+            I1[Table A] --- IM((Matching)) --- I2[Table B]
+        end
+        subgraph LEFT["LEFT JOIN"]
+            L1[All A] --- LM((Matching)) --- L2[Matched B]
+        end
+        subgraph RIGHT["RIGHT JOIN"]
+            R1[Matched A] --- RM((Matching)) --- R2[All B]
+        end
+    end
+    style I1 fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style I2 fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style IM fill:#16213e,stroke:#2ecc71,color:#fff
+    style L1 fill:#0d3b0d,stroke:#2ecc71,color:#fff
+    style L2 fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style LM fill:#16213e,stroke:#f39c12,color:#fff
+    style R1 fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style R2 fill:#0d3b0d,stroke:#2ecc71,color:#fff
+    style RM fill:#16213e,stroke:#f39c12,color:#fff
+```
 
 ![https://towardsdatascience.com/you-should-use-this-to-visualize-sql-joins-instead-of-venn-diagrams-ede15f9583fc/](images/image-1.webp)
 
@@ -1492,6 +1573,25 @@ LIMIT 10;
 3. GROUP BY (aggregate)
 4. ORDER BY (sort)
 5. LIMIT (restrict output)
+
+```mermaid
+flowchart LR
+    subgraph SQL Execution Order
+        A[FROM / JOIN] --> B[WHERE]
+        B --> C[GROUP BY]
+        C --> D[HAVING]
+        D --> E[SELECT]
+        E --> F[ORDER BY]
+        F --> G[LIMIT]
+    end
+    style A fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style B fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style C fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style D fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style E fill:#16213e,stroke:#f39c12,color:#fff
+    style F fill:#1a1a2e,stroke:#4a9eff,color:#fff
+    style G fill:#0d3b0d,stroke:#2ecc71,color:#fff
+```
 
 ---
 
