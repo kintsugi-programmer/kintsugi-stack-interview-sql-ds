@@ -1805,7 +1805,7 @@ LIMIT number;
 
 ---
 
-# Practice
+## Practice
 
 - https://chandoo.org/wp/learn-sql-for-data-analysis/
 
@@ -2154,7 +2154,7 @@ order by year(s.`SaleDate`), month(s.`SaleDate`)
 
 ...
 
-# All Queries
+## All Queries
 
 ```sql
 SHOW TABLES; -- 1
@@ -2564,4 +2564,193 @@ join geo g on g.`GeoID` = s.`GeoID`
 group by year(s.`SaleDate`), month(s.`SaleDate`)
 order by year(s.`SaleDate`), month(s.`SaleDate`)
 ; -- 58
+```
+
+## Complete SQL DS Roadmap
+
+```mermaid
+flowchart TD
+    A["SQL DS Interview"]
+    
+    subgraph GS["Getting Started with SQL"]
+        GS1["Setting Up Your Environment"]
+        GS2["Creating Your First Query"]
+        GS3["Understanding the Database Structure"]
+        GS4["Output Display"]
+        GS1 --> GS2 --> GS3 --> GS4
+    end
+    
+    subgraph P1["Part 1: SELECT Statements and Basic Queries"]
+        P1A["SELECT All Columns"]
+        P1B["SELECT Specific Columns"]
+        P1C["Reordering Columns"]
+        P1D["Adding Calculations to Queries"]
+        P1E["Creating Aliases for Calculated Columns"]
+        P1A --> P1B --> P1C --> P1D --> P1E
+    end
+    
+    subgraph P2["Part 2: WHERE Clauses - Filtering Data"]
+        P2A["Understanding WHERE Clauses"]
+        P2B["Basic WHERE Clause with Greater Than"]
+        P2C["Combining WHERE with ORDER BY"]
+        P2D["Multiple Sort Criteria"]
+        P2E["WHERE Clause with AND Operator"]
+        P2F["Using YEAR Function with WHERE"]
+        P2G["WHERE Clause with BETWEEN"]
+        P2H["Weekday Function Example"]
+        P2A --> P2B --> P2C --> P2D --> P2E --> P2F --> P2G --> P2H
+    end
+    
+    subgraph P3["Part 3: Logical Operators - AND, OR, NOT"]
+        P3A["The OR Operator"]
+        P3B["The IN Operator"]
+        P3C["The LIKE Operator - Pattern Matching"]
+        P3D["The NOT Operator"]
+        P3A --> P3B --> P3C --> P3D
+    end
+    
+    subgraph P4["Part 4: Conditional Logic with CASE"]
+        P4A["Understanding CASE Statements"]
+        P4B["CASE Statement Structure"]
+        P4C["CASE with Multiple Conditions"]
+        P4D["Use Cases for CASE"]
+        P4A --> P4B --> P4C --> P4D
+    end
+    
+    subgraph P5["Part 5: JOINs - Combining Multiple Tables"]
+        P5A["Understanding JOINs"]
+        P5B["Database Relationships"]
+        P5C["Basic JOIN Example"]
+        P5D["Table Aliases"]
+        P5E["Column Qualification"]
+        P5F["LEFT JOIN vs JOIN"]
+        P5G["JOIN with WHERE Clause"]
+        P5H["Multiple JOINs"]
+        P5I["JOIN with Null Handling"]
+        P5A --> P5B --> P5C --> P5D --> P5E --> P5F --> P5G --> P5H --> P5I
+    end
+    
+    subgraph P6["Part 6: GROUP BY and Aggregation Functions"]
+        P6A["Understanding GROUP BY"]
+        P6B["Aggregation Functions"]
+        P6C["Basic GROUP BY Example"]
+        P6D["Multiple Aggregation Functions"]
+        P6E["GROUP BY with JOINs"]
+        P6F["Multi-Level Grouping"]
+        P6G["Filtering GROUP BY Results with WHERE"]
+        P6H["Sorting GROUP BY Results"]
+        P6I["LIMIT for Top N Results"]
+        P6A --> P6B --> P6C --> P6D --> P6E --> P6F --> P6G --> P6H --> P6I
+    end
+    
+    subgraph ADV["Advanced Tips and Best Practices"]
+        ADV1["Query Writing Best Practices"]
+        ADV2["Common Mistakes to Avoid"]
+        ADV3["Understanding NULL in SQL"]
+        ADV4["Date Functions"]
+        ADV5["Saving Your Work"]
+        ADV1 --> ADV2 --> ADV3 --> ADV4 --> ADV5
+    end
+    
+    subgraph LR["Learning Resources and Next Steps"]
+        LR1["Recommended Learning Path"]
+        LR2["Where to Use SQL"]
+        LR3["Practice Importance"]
+        LR1 --> LR2 --> LR3
+    end
+    
+    subgraph QR["Quick Reference"]
+        QR1["Comparison Operators"]
+        QR2["Logical Operators"]
+        QR3["Aggregation Functions"]
+        QR4["Key Clauses"]
+        QR5["Query Structure"]
+        QR1 --> QR2 --> QR3 --> QR4 --> QR5
+    end
+    
+    PR["Practice"]
+    AQ["All Queries"]
+    
+    A --> GS
+    GS --> P1
+    P1 --> P2
+    P2 --> P3
+    P3 --> P4
+    P4 --> P5
+    P5 --> P6
+    P6 --> ADV
+    ADV --> LR
+    LR --> QR
+    QR --> PR
+    PR --> AQ
+    
+    style A fill:#6a4c93,stroke:#6a4c93,color:#ffffff
+    style GS fill:#7b1fa2,stroke:#7b1fa2,color:#ffffff
+    style P1 fill:#7b1fa2,stroke:#7b1fa2,color:#ffffff
+    style P2 fill:#7b1fa2,stroke:#7b1fa2,color:#ffffff
+    style P3 fill:#7b1fa2,stroke:#7b1fa2,color:#ffffff
+    style P4 fill:#7b1fa2,stroke:#7b1fa2,color:#ffffff
+    style P5 fill:#7b1fa2,stroke:#7b1fa2,color:#ffffff
+    style P6 fill:#7b1fa2,stroke:#7b1fa2,color:#ffffff
+    style ADV fill:#7b1fa2,stroke:#7b1fa2,color:#ffffff
+    style LR fill:#7b1fa2,stroke:#7b1fa2,color:#ffffff
+    style QR fill:#7b1fa2,stroke:#7b1fa2,color:#ffffff
+    style PR fill:#6a4c93,stroke:#6a4c93,color:#ffffff
+    style AQ fill:#6a4c93,stroke:#6a4c93,color:#ffffff
+    style GS1 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style GS2 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style GS3 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style GS4 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P1A fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P1B fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P1C fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P1D fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P1E fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P2A fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P2B fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P2C fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P2D fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P2E fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P2F fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P2G fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P2H fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P3A fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P3B fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P3C fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P3D fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P4A fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P4B fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P4C fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P4D fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P5A fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P5B fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P5C fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P5D fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P5E fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P5F fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P5G fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P5H fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P5I fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P6A fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P6B fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P6C fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P6D fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P6E fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P6F fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P6G fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P6H fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style P6I fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style ADV1 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style ADV2 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style ADV3 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style ADV4 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style ADV5 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style LR1 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style LR2 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style LR3 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style QR1 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style QR2 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style QR3 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style QR4 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
+    style QR5 fill:#9c27b0,stroke:#9c27b0,color:#ffffff
 ```
