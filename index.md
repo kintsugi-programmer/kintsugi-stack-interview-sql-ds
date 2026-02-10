@@ -1,3 +1,22 @@
+---
+title: SQL for Data Science Interviews
+description: A comprehensive guide to SQL fundamentals for data science interviews, covering SELECT, WHERE, JOINs, GROUP BY, CASE statements, and aggregation functions with practical examples using the Awesome Chocolates database.
+keywords:
+  - SQL interview questions
+  - SQL for data science
+  - SQL tutorial
+  - SELECT statement
+  - WHERE clause
+  - SQL JOINs
+  - GROUP BY
+  - SQL aggregation functions
+  - CASE statement SQL
+  - SQL logical operators
+  - data analyst SQL
+  - MySQL tutorial
+  - SQL practice problems
+---
+
 # SQL DS Interview
 
 ![alt text](images/image.webp)
