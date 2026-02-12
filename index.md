@@ -32,7 +32,7 @@ keywords:
   </iframe>
 </div>
 
-# Sample Database: Awesome Chocolates
+## Sample Database: Awesome Chocolates
 
 ![alt text](images/image-2.webp)
 
