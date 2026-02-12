@@ -1,5 +1,5 @@
 ---
-title: SQL for Data Science Interviews
+title: SQL for Data Science Interview
 description: A comprehensive guide to SQL fundamentals for data science interviews, covering SELECT, WHERE, JOINs, GROUP BY, CASE statements, and aggregation functions with practical examples using the Awesome Chocolates database.
 keywords:
   - SQL interview questions
@@ -20,6 +20,21 @@ keywords:
 # SQL DS Interview
 
 ![alt text](images/image.webp)
+
+<div style="position:relative;width:100%;padding-bottom:56.25%;height:0;">
+  <iframe
+    src="https://www.youtube.com/embed/DZsyfrR-pV0?si=Zr_RnL9SEL7UyC4f"
+    title="YouTube video player"
+    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen>
+  </iframe>
+</div>
+
+# Sample Database: Awesome Chocolates
+
+![alt text](images/image-2.webp)
 
 - [Sample Database: Awesome Chocolates](https://github.com/kintsugi-programmer/kintsugi-stack-interview-sql-ds/blob/main/awesome-chocolates-data.sql)
 
@@ -94,6 +109,7 @@ flowchart LR
 ```
 
 **Note**: Shortcuts differ depending on your system and SQL management tool:
+
 - **MySQL Workbench**: Ctrl + Enter
 - **SQL Server Management Studio (SSMS)**: Different shortcut
 - **Oracle**: Different shortcut
@@ -165,6 +181,7 @@ mysql>
 ```
 
 **What this returns**:
+
 - Column names
 - Data types
 - Additional information about each column
@@ -180,6 +197,7 @@ mysql>
 **Example**: Sales table contains ~7000 rows, but only 1000 display in the workbench
 
 **When to Adjust Limits**:
+
 - When building queries: You only need to verify it works correctly
 - When exporting data: You may need to remove or increase the limit to see all data
 - When using data elsewhere: Export to Power BI or other systems
@@ -206,6 +224,7 @@ SELECT * FROM sales;
 ...
 
 **Explanation**:
+
 - `SELECT *` means select everything (all columns)
 - `FROM sales` specifies the table name
 - Displays all rows and all columns from the sales table
@@ -215,6 +234,7 @@ SELECT * FROM sales;
 ### SELECT Specific Columns
 
 **Query**:
+
 ```sql
 SELECT saledate, amount, customers FROM sales;
 ```
@@ -230,6 +250,7 @@ SELECT saledate, amount, customers FROM sales;
 ...
 
 **Explanation**:
+
 - Specify only the columns you want to see
 - Columns are separated by commas
 - Result shows only these three columns for all rows
@@ -237,6 +258,7 @@ SELECT saledate, amount, customers FROM sales;
 **Auto-Suggest Feature**: Type the table name first, then add columns. This enables auto-suggest to help prevent spelling mistakes.
 
 **Better Practice**:
+
 ```sql
 SELECT 
 FROM sales
@@ -247,6 +269,7 @@ Then come back and add columns between SELECT and FROM.
 ### Reordering Columns
 
 **Query**:
+
 ```sql
 SELECT amount, customers, geoid FROM sales;
 ```
@@ -262,6 +285,7 @@ SELECT amount, customers, geoid FROM sales;
 ...
 
 **Explanation**:
+
 - Columns do not have to appear in their original database order
 - They display in the order you specify in the SELECT statement
 - Results are rearranged automatically based on your specification
@@ -289,6 +313,7 @@ FROM sales;
 ...
 
 **Explanation**:
+
 - You can perform arithmetic operations directly in SELECT statements
 - Operations include addition (+), subtraction (-), multiplication (*), division (/)
 - Results appear as an extra column in the output
@@ -299,6 +324,7 @@ FROM sales;
 **Problem**: Column name `amount / boxes` is not user-friendly
 
 **Solution: Add Column Aliases Using AS**:
+
 ```sql
 SELECT 
   saledate,
@@ -319,6 +345,7 @@ FROM sales;
 ...
 
 **Alternative Without AS Keyword**:
+
 ```sql
 SELECT 
   saledate,
@@ -391,6 +418,7 @@ flowchart LR
 ### Basic WHERE Clause with Greater Than
 
 **Query**:
+
 ```sql
 SELECT * FROM sales
 WHERE amount > 10000;
@@ -407,12 +435,14 @@ WHERE amount > 10000;
 ...
 
 **Explanation**:
+
 - `WHERE` specifies the filter condition
 - `amount > 10000` means only rows where amount is greater than 10,000
 - All rows where amount is NOT greater than 10,000 are excluded
 - Only qualifying rows display in results
 
 **Comparison Operators**:
+
 - `>` Greater than
 - `<` Less than
 - `=` Equal to
@@ -423,6 +453,7 @@ WHERE amount > 10000;
 ### Combining WHERE with ORDER BY
 
 **Query**:
+
 ```sql
 SELECT * FROM sales
 WHERE amount > 10000
@@ -440,11 +471,13 @@ ORDER BY amount;
 ...
 
 **Explanation**:
+
 - Filters results to show only amounts greater than 10,000
 - Orders results by amount in ascending order (lowest to highest)
 - Results start at 10,000+ and increase gradually
 
 **Ascending Order (Default)**:
+
 ```sql
 SELECT * FROM sales
 WHERE amount > 10000
@@ -462,6 +495,7 @@ ORDER BY amount;
 ...
 
 **Descending Order (Highest to Lowest)**:
+
 ```sql
 SELECT * FROM sales
 WHERE amount > 10000
@@ -481,6 +515,7 @@ ORDER BY amount DESC;
 ### Multiple Sort Criteria
 
 **Query**:
+
 ```sql
 SELECT * FROM sales
 WHERE geoid = 'g1'
@@ -498,12 +533,14 @@ ORDER BY pid, amount DESC;
 ...
 
 **Explanation**:
+
 - Filters to show only GeoID 'g1' records
 - First sorts by product ID (pid)
 - Within each product ID, sorts by amount in descending order
 - You can specify multiple ORDER BY columns separated by commas
 
 **Result Structure**:
+
 - All p01 items grouped together, sorted by amount (highest first)
 - Then p02 items grouped together, sorted by amount
 - Then p03, p04, etc.
@@ -513,6 +550,7 @@ ORDER BY pid, amount DESC;
 **Scenario**: Find all sales with amount > 10,000 in the year 2022
 
 **Query Method 1 - Using Date Comparison**:
+
 ```sql
 SELECT * FROM sales
 WHERE amount > 10000
@@ -531,6 +569,7 @@ AND saledate >= '2022-01-01';
 ...
 
 **Explanation**:
+
 - Filters to amount greater than 10,000
 - AND date is within 2022 or later
 - Both conditions must be true for rows to display
@@ -542,6 +581,7 @@ AND saledate >= '2022-01-01';
 ### Using YEAR Function with WHERE
 
 **Query Method 2 - Using YEAR Function**:
+
 ```sql
 SELECT saledate, amount 
 FROM sales
@@ -561,6 +601,7 @@ ORDER BY amount DESC;
 ...
 
 **Explanation**:
+
 - `YEAR()` is a built-in SQL function that extracts the year from a date
 - Works similar to YEAR function in Excel
 - Returns a number, so no quotes needed around 2022
@@ -573,6 +614,7 @@ ORDER BY amount DESC;
 **Scenario**: Find all sales with boxes between 0 and 50
 
 **Query Method 1 - Using AND**:
+
 ```sql
 SELECT * FROM sales
 WHERE boxes > 0
@@ -590,6 +632,7 @@ AND boxes <= 50;
 ...
 
 **Query Method 2 - Using BETWEEN(it includes limits)**:
+
 ```sql
 SELECT * FROM sales
 WHERE boxes BETWEEN 0 AND 50;
@@ -606,6 +649,7 @@ WHERE boxes BETWEEN 0 AND 50;
 ...
 
 **Explanation**:
+
 - BETWEEN is inclusive on both ends
 - **Range includes 0 and 50**
 - Both methods produce the same results
@@ -618,6 +662,7 @@ WHERE boxes BETWEEN 0 AND 50;
 **Scenario**: Find all sales that occurred on Fridays
 
 **Query**:
+
 ```sql
 SELECT 
   saledate,
@@ -637,12 +682,14 @@ WHERE WEEKDAY(saledate) = 4;
 | 2021-01-01 00:00:00 | 5530   | 179   | 4           |
 
 **Explanation**:
+
 - `WEEKDAY()` is a built-in function that returns day of week as a number
 - Weekday numbering: 0=Monday, 1=Tuesday, 2=Wednesday, 3=Thursday, 4=Friday, 5=Saturday, 6=Sunday
 - Friday = 4, so the condition is `WEEKDAY(SaleDate) = 4`
 - Can also create alias `AS day_of_week` for clarity
 
 **Important Note**: When using a calculated column in WHERE clause, you cannot reference the alias. You must repeat the calculation:
+
 ```sql
 -- CORRECT:
 WHERE WEEKDAY(SaleDate) = 4
@@ -660,6 +707,7 @@ WHERE day_of_week = 4
 **Scenario**: Find all people in either "Delish" or "Juices" team
 
 **Query Method 1 - Using Multiple OR Conditions**:
+
 ```sql
 SELECT * FROM people
 WHERE team = 'Delish'
@@ -677,6 +725,7 @@ OR team = 'Juices';
 ...
 
 **Explanation**:
+
 - Shows results where team equals 'Delish' OR team equals 'Juices'
 - Either condition being true includes the row
 - Person cannot be in both teams, so OR is appropriate
@@ -686,6 +735,7 @@ OR team = 'Juices';
 ### The IN Operator
 
 **Query Method 2 - Using IN (Cleaner Approach)**:
+
 ```sql
 SELECT * FROM people
 WHERE team IN ('Delish', 'Juices');
@@ -702,6 +752,7 @@ WHERE team IN ('Delish', 'Juices');
 ...
 
 **Explanation**:
+
 - `IN` is shorthand for multiple OR conditions
 - Specify multiple values in parentheses, separated by commas
 - All text values must be in single quotes
@@ -715,6 +766,7 @@ WHERE team IN ('Delish', 'Juices');
 **Scenario**: Find all people whose name begins with 'B'
 
 **Query**:
+
 ```sql
 SELECT * FROM people
 WHERE salesperson LIKE 'B%';
@@ -730,6 +782,7 @@ WHERE salesperson LIKE 'B%';
 ...
 
 **Explanation**:
+
 - `LIKE` operator performs pattern matching
 - `B%` means: starts with 'B', followed by anything (%)
 - `%` is a wildcard meaning "any character, zero or more times"
@@ -738,6 +791,7 @@ WHERE salesperson LIKE 'B%';
 **Pattern Matching Examples**:
 
 **Find names starting with B**:
+
 ```sql
 SELECT * FROM people
 WHERE salesperson LIKE 'B%';
@@ -751,6 +805,7 @@ WHERE salesperson LIKE 'B%';
 | Benny Karolovsky | SP32 | Jucies  | Paris      |
 
 **Find names containing B anywhere**:
+
 ```sql
 SELECT * FROM people
 WHERE salesperson LIKE '%B%';
@@ -767,6 +822,7 @@ WHERE salesperson LIKE '%B%';
 ...
 
 **Find names ending with l**:
+
 ```sql
 SELECT * FROM people
 WHERE salesperson LIKE '%l';
@@ -799,6 +855,7 @@ LIKE '_B%'
 **Scenario**: Find sales where the team is NOT equal to a specific value
 
 **Query**:
+
 ```sql
 select * from products
 where Category != 'Bars';
@@ -822,6 +879,7 @@ where not (Category = 'Bars');
 ...
 
 **Explanation**:
+
 - `!=` and `<>` both mean "not equal to"
 - `NOT` operator reverses a condition
 - All three queries produce identical results
@@ -835,6 +893,7 @@ where not (Category = 'Bars');
 **Purpose**: Create **categorizations** or conditional logic within SELECT statements
 
 **Scenario**: Categorize sales amounts into different tiers:
+
 - Under $1,000: "Under 1K"
 - $1,000 to $5,000: "Under 5K"
 - $5,000 to $10,000: "Under 10K"
@@ -864,6 +923,7 @@ flowchart TD
 ### CASE Statement Structure
 
 **Query**:
+
 ```sql
 select SaleDate,Amount ,case when Amount < 1000 then 'Under 1K' when Amount < 5000 then 'Under 2K' when Amount < 10000 then 'Under 10K' else '10K or More' end as amount_category from sales ;
 ```
@@ -879,6 +939,7 @@ select SaleDate,Amount ,case when Amount < 1000 then 'Under 1K' when Amount < 50
 ...
 
 **Explanation**:
+
 - `CASE` begins the conditional logic
 - `WHEN condition THEN result` checks each condition sequentially
 - Conditions are evaluated in order from top to bottom
@@ -894,6 +955,7 @@ You can use multiple WHEN statements and combine conditions as needed.
 **Query Structure Best Practices**:
 
 For clarity in longer queries, break CASE statements into multiple lines:
+
 ```sql
 SELECT 
   saledate,
@@ -967,6 +1029,7 @@ flowchart LR
 ### Database Relationships in Awesome Chocolates
 
 **Table Relationships**:
+
 - Sales table contains: `SPID` (links to People table)
 - Sales table contains: `pid` (links to Products table)
 - Sales table contains: `GeoID` (links to Geography table)
@@ -978,6 +1041,7 @@ flowchart LR
 **Scenario**: Show sales data with the person's name instead of just ID
 
 **Without JOIN - Problem**:
+
 ```sql
 SELECT * FROM sales;
 -- Shows sp01, sp02, etc. but we don't know who these people are
@@ -994,6 +1058,7 @@ SELECT * FROM sales;
 ...
 
 **With JOIN - Solution**:
+
 ```sql
 select 
   s.SaleDate,
@@ -1024,6 +1089,7 @@ from sales s
   join people p on p.SPID = s.SPID
 ;
 ```
+
 | SaleDate            | Amount | Salesperson         | SPID |
 | ------------------- | ------ | ------------------- | ---- |
 | 2021-01-01 00:00:00 | 8414   | Barr Faughny        | SP01 |
@@ -1033,6 +1099,7 @@ from sales s
 | 2021-01-01 00:00:00 | 5530   | Beverie Moffet      | SP19 |
 
 **Explanation**:
+
 - `FROM sales s` starts with sales table, aliased as 's'
 - `JOIN people p` adds the people table, aliased as 'p'
 - `ON p.SPID = s.SPID` specifies the join condition - matching IDs
@@ -1051,6 +1118,7 @@ FROM sales AS s
 ```
 
 **Consistency Practice**: Use consistent aliases within your query. Example:
+
 - `s` for sales
 - `p` for people
 - `pr` for products
@@ -1061,6 +1129,7 @@ FROM sales AS s
 **Why Qualify Columns with Table Prefix?**
 
 When columns have the same name in multiple tables, prefix with table alias:
+
 ```sql
 s.SPID    -- sales table's SPID
 p.SPID    -- people table's SPID
@@ -1071,16 +1140,19 @@ p.SPID    -- people table's SPID
 ### LEFT JOIN vs JOIN
 
 **JOIN (INNER JOIN)**:
+
 - Returns only rows where IDs match in BOTH tables
 - If sales table has SPID that doesn't exist in people table, that row is excluded
 
 **LEFT JOIN**:
+
 - Returns ALL rows from the left table (first table after FROM)
 - Includes matching rows from the right table
 - If no match found, right table columns show as blank/NULL
 - Used to preserve all data from the primary table
 
 **Visual Representation**:
+
 ```
 Sales table (LEFT) ----------- People table (RIGHT)
 [Keep ALL from sales]
@@ -1136,6 +1208,7 @@ from sales s
 **Scenario**: Show sales under $500 for people in the "Delish" team
 
 **Query**:
+
 ```sql
 SELECT 
   s.SaleDate,
@@ -1159,11 +1232,13 @@ AND p.team = 'Delish';
 ...
 
 **Explanation**:
+
 - JOIN combines the tables
 - WHERE clause filters results on joined data
 - Can filter on any column from either table
 
 for fun, see the empty stuff !!!
+
 ```sql
 select
   s.SaleDate,
@@ -1199,7 +1274,6 @@ from sales s
 
 ...
 
-
 ```sql
 select
   s.SaleDate,
@@ -1228,6 +1302,7 @@ from sales s
 **Scenario**: Show sales with person name, product name, and team
 
 **Query**:
+
 ```sql
 SELECT 
   s.SaleDate,
@@ -1252,6 +1327,7 @@ JOIN products pr ON pr.pid = s.pid;
 ...
 
 **Explanation**:
+
 - Chain multiple JOINs by adding additional JOIN clauses
 - Each JOIN specifies its own ON condition
 - Data from all three tables appears in result
@@ -1262,6 +1338,7 @@ JOIN products pr ON pr.pid = s.pid;
 **Problem**: Some people records might not have a team assigned **(blank or NULL)**
 
 **Query**:
+
 ```sql
 SELECT 
   s.SaleDate,
@@ -1285,20 +1362,24 @@ AND p.team IS NULL; -- p.team = ''
 ...
 
 **Explanation**:
+
 - `IS NULL` checks for NULL values (true null, not blank spaces)
 - `IS NOT NULL` checks for non-null values
 
 **Database Nuance**: Null vs Blank
+
 - **NULL**: Truly no value assigned (appears as "NULL" in results)
 - **Blank**: Empty string or spaces (appears as empty in results)
 
 Different filtering required for each:
+
 - NULL: `WHERE column IS NULL`
 - Blank: `WHERE column = ''`
 
 ### Three-Table JOIN Example
 
 **Complete Query with Multiple Filters**:
+
 ```sql
 SELECT 
   s.SaleDate,
@@ -1327,6 +1408,7 @@ ORDER BY s.SaleDate;
 ...
 
 **Explanation**:
+
 - Combines data from 4 tables
 - Multiple WHERE conditions filter results
 - ORDER BY sorts by date chronologically
@@ -1363,6 +1445,7 @@ Common SQL aggregation functions:
 **Scenario**: Total sales amount by geo
 
 **Query**:
+
 ```sql
 SELECT 
   GeoID,
@@ -1383,6 +1466,7 @@ GROUP BY GeoID;
 ...
 
 **Explanation**:
+
 - `SUM(amount)` adds up all amounts within each group
 - `GROUP BY GeoID` creates one row for each unique GeoID value
 - Results show: g1, g2, g3, g4, etc. with their total amounts
@@ -1390,6 +1474,7 @@ GROUP BY GeoID;
 ### Multiple Aggregation Functions
 
 **Query**:
+
 ```sql
 SELECT 
   GeoID,
@@ -1410,6 +1495,7 @@ GROUP BY GeoID;
 | G5    | 7263151      | 5755.2702      | 482536      |
 
 **Explanation**:
+
 - Multiple aggregation functions on same GROUP BY
 - Each function operates within the group
 - Results show summary statistics for each geo
@@ -1419,6 +1505,7 @@ GROUP BY GeoID;
 **Scenario**: Total sales amount by country (using geo table)
 
 **Query**:
+
 ```sql
 SELECT 
   g.geo,
@@ -1440,6 +1527,7 @@ GROUP BY g.geo;
 | Australia   | 7263151      | 5755.2702      | 482536      |
 
 **Explanation**:
+
 - JOIN merges tables first
 - Then GROUP BY operates on joined data
 - GROUP BY uses the column being displayed (geo name from geo table)
@@ -1450,6 +1538,7 @@ GROUP BY g.geo;
 **Scenario**: Total sales by product category AND team
 
 **Query**:
+
 ```sql
 SELECT 
   pr.category,
@@ -1479,6 +1568,7 @@ ORDER BY pr.category, p.team;
 | Other    | Yummies | 184056      | 2311428      |
 
 **Explanation**:
+
 - `GROUP BY pr.category, p.team` groups by two levels
 - Creates combinations like: Bars-Team1, Bars-Team2, Chocolate-Team1, etc.
 - Any column displayed must either be:
@@ -1492,6 +1582,7 @@ ORDER BY pr.category, p.team;
 ### Filtering GROUP BY Results with WHERE
 
 **Query**:
+
 ```sql
 SELECT 
   pr.category,
@@ -1505,6 +1596,7 @@ WHERE p.team IS NOT NULL
 GROUP BY pr.category, p.team
 ORDER BY total_amount DESC;
 ```
+
 | category | team    | total_boxes | total_amount |
 | -------- | ------- | ----------- | ------------ |
 | Bars     | Delish  | 456609      | 6862975      |
@@ -1521,6 +1613,7 @@ ORDER BY total_amount DESC;
 | Other    |         | 93928       | 1188208      |
 
 **Explanation**:
+
 - `WHERE` filters BEFORE grouping
 - Removes blank team records before aggregation
 - Results only include non-null teams
@@ -1530,6 +1623,7 @@ ORDER BY total_amount DESC;
 ### Sorting GROUP BY Results
 
 **Query**:
+
 ```sql
 SELECT 
   g.geo,
@@ -1539,6 +1633,7 @@ JOIN geo g ON g.GeoID = s.GeoID
 GROUP BY g.geo
 ORDER BY total_amount DESC;
 ```
+
 | geo         | total_amount |
 | ----------- | ------------ |
 | New Zealand | 7435918      |
@@ -1549,6 +1644,7 @@ ORDER BY total_amount DESC;
 | USA         | 7012523      |
 
 **Explanation**:
+
 - `ORDER BY total_amount DESC` sorts results by aggregated column
 - DESC = descending (highest to lowest)
 - Highest total amount countries appear first
@@ -1558,6 +1654,7 @@ ORDER BY total_amount DESC;
 **Scenario**: Show only top 10 products by sales
 
 **Query**:
+
 ```sql
 SELECT 
   pr.product,
@@ -1568,6 +1665,7 @@ GROUP BY pr.product
 ORDER BY total_amount DESC
 LIMIT 10;
 ```
+
 | product              | total_amount |
 | -------------------- | ------------ |
 | After Nines          | 2112502      |
@@ -1582,11 +1680,13 @@ LIMIT 10;
 | 50% Dark Bites       | 1991836      |
 
 **Explanation**:
+
 - `LIMIT 10` restricts output to first 10 rows
 - Works on sorted data, so first 10 are the TOP 10
 - Applies AFTER ordering
 
 **Query Execution Order**:
+
 1. FROM/JOIN (get data and combine tables)
 2. WHERE (filter rows)
 3. GROUP BY (aggregate)
@@ -1619,39 +1719,47 @@ flowchart LR
 ### Query Writing Best Practices
 
 **1. Write FROM clause first**:
+
 ```sql
 SELECT 
 FROM table_name
 ```
+
 Then fill in SELECT columns using auto-suggest.
 
 **2. Format for readability**:
+
 - Put SELECT, FROM, WHERE, GROUP BY, ORDER BY on separate lines
 - Use proper indentation
 - Use table aliases consistently
 
 **3. Use meaningful aliases**:
+
 ```sql
 FROM sales s        -- Clear alias
 JOIN people p ON ... -- Consistent naming
 ```
 
 **4. Always qualify columns**:
+
 ```sql
 s.amount         -- Clear which table
 p.salesperson    -- No ambiguity
 ```
 
 **5. Include semicolons**:
+
 ```sql
 SELECT * FROM sales;
 SELECT * FROM people;
 ```
+
 Semicolon marks end of statement, allows multiple queries in one file.
 
 ### Common Mistakes to Avoid
 
 **Mistake 1**: Forgetting GROUP BY
+
 ```sql
 -- WRONG:
 SELECT category, amount FROM sales;
@@ -1662,6 +1770,7 @@ SELECT category, SUM(amount) FROM sales GROUP BY category;
 ```
 
 **Mistake 2**: Using unaggregated column in GROUP BY
+
 ```sql
 -- WRONG:
 SELECT category, product, SUM(amount)
@@ -1676,6 +1785,7 @@ GROUP BY category, product;
 ```
 
 **Mistake 3**: Referencing alias in WHERE clause
+
 ```sql
 -- WRONG:
 SELECT amount AS amt
@@ -1688,6 +1798,7 @@ WHERE amount > 1000;
 ```
 
 **Mistake 4**: Missing ON condition in JOIN
+
 ```sql
 -- WRONG:
 SELECT * FROM sales JOIN people;
@@ -1701,10 +1812,12 @@ JOIN people ON people.SPID = sales.SPID;
 ### Understanding NULL in SQL
 
 **NULL vs Blank**:
+
 - **NULL**: No value assigned in database
 - **Blank**: Empty string or spaces
 
 **Checking for NULL**:
+
 ```sql
 WHERE column IS NULL        -- Check for true NULL
 WHERE column IS NOT NULL    -- Check for non-NULL
@@ -1716,6 +1829,7 @@ WHERE column != NULL        -- WRONG! Always false
 ### Date Functions
 
 **Extract components**:
+
 ```sql
 YEAR(SaleDate)      -- Returns year as number
 MONTH(SaleDate)     -- Returns month as number
@@ -1728,6 +1842,7 @@ WEEKDAY(SaleDate)   -- Returns day of week (0-6)
 ### Saving Your Work
 
 **To save queries**:
+
 1. Go to File menu
 2. Select "Save Script"
 3. Choose location and filename
@@ -1750,6 +1865,7 @@ WEEKDAY(SaleDate)   -- Returns day of week (0-6)
 ### Where to Use SQL
 
 After mastering SQL queries, use your data with:
+
 - **Power BI**: Data visualization and analysis
 - **Excel**: Data analysis and reporting
 - **Python**: Data science and machine learning
@@ -1760,6 +1876,7 @@ After mastering SQL queries, use your data with:
 **Key Principle**: Learning SQL requires consistent practice. Without practice, you will forget most concepts.
 
 **Practice Strategy**:
+
 - Download provided homework problems
 - Solve easy problems first
 - Progress to hard problems
